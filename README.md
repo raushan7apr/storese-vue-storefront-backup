@@ -1,3 +1,5 @@
+# storese-vue-storefront
+E-Commerce Storefront (UI) layer
 
 <img src="https://d9hhrg4mnvzow.cloudfront.net/www.vuestorefront.io/280b19d0-logo-vs_0by02c0by02c000000.jpg"></img>
 
@@ -35,7 +37,7 @@ See the ideas behind Vue Storefront [here](https://www.slideshare.net/FilipRakow
 PS: Check [StorefrontUI](https://github.com/DivanteLtd/storefront-ui/) - our UI library for eCommerce.
 ## Vue Storefront Next
 
-We're developing a next version of Vue Storefront on the [`next` branch](https://github.com/DivanteLtd/vue-storefront/tree/next). 
+We're developing a next version of Vue Storefront on the [`next` branch](https://github.com/DivanteLtd/vue-storefront/tree/next).
 
 We're building the following integrations within Next architecture:
 - Shopware 6 (developer preview)
@@ -75,7 +77,7 @@ Starting new project on Vue Storefront? Try out the new <a href="https://github.
     <tr>
       <td align="center" valign="middle">
         <a href="https://capybara.storefrontcloud.io/">
-          <img width="290" 
+          <img width="290"
             src="http://i3.ytimg.com/vi/x2_w-ZBOfqE/maxresdefault.jpg"
             alt="B2C Theme demo" />
         </a>
