@@ -131,4 +131,9 @@ declare namespace DataResolver {
     subscribe: (email: string) => Promise<boolean>,
     unsubscribe: (email: string) => Promise<boolean>
   }
+
+  // Location Service
+  interface LocationService {
+    getStores: (lat: number, lng: number) => Promise<any>
+  }
 }

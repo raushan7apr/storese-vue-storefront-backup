@@ -16,7 +16,7 @@
           </div>
           <div class="col-md-4 col-xs-4 center-xs pt5">
             <div>
-              <logo width="auto" height="41px" />
+              <location-input></location-input>
             </div>
           </div>
           <div class="col-xs-2 visible-xs">
@@ -74,10 +74,12 @@ import Logo from 'theme/components/core/Logo'
 import MicrocartIcon from 'theme/components/core/blocks/Header/MicrocartIcon'
 import SearchIcon from 'theme/components/core/blocks/Header/SearchIcon'
 import WishlistIcon from 'theme/components/core/blocks/Header/WishlistIcon'
+import LocationInput from 'src/modules/location/components/Location';
 
 export default {
   name: 'Header',
   components: {
+    LocationInput,
     AccountIcon,
     CompareIcon,
     HamburgerIcon,
@@ -153,6 +155,7 @@ header {
   top: -55px;
   z-index: 3;
   transition: top 0.2s ease-in-out;
+  background-color: #68bd48;
   &.is-visible {
     top: 0;
   }
