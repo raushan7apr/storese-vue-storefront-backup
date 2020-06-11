@@ -29,7 +29,7 @@
     ],
     "invalidateCacheKey": "aeSu7aip",
     "invalidateCacheForwarding": false,
-    "invalidateCacheForwardUrl": "http://localhost:8080/invalidate?key=aeSu7aip&tag=",
+    "invalidateCacheForwardUrl": "https://vuefront.store-se.in/invalidate?key=aeSu7aip&tag=",
     "dynamicConfigReload": true,
     "dynamicConfigContinueOnError": false,
     "dynamicConfigExclude": [
@@ -105,7 +105,7 @@
     "port": 8080
   },
   "api": {
-    "url": "http://localhost:8080",
+    "url": "https://vuefront.store-se.in",
     "saveBandwidthOverCache": true
   },
   "elasticsearch": {
@@ -175,11 +175,12 @@
   },
   "defaultStoreCode": "",
   "storeViews": {
-    "multistore": false,
+    "multistore": true,
     "commonCache": false,
     "mapStoreUrlsFor": [
       "de",
-      "it"
+      "it",
+      "more_basavangudi"
     ],
     "de": {
       "storeCode": "de",
@@ -234,6 +235,54 @@
       },
       "seo": {
         "defaultTitle": "Vue Storefront"
+      }
+    },
+    "more_basavangudi": {
+      "storeCode": "more_basavangudi",
+      "storeId": 61,
+      "name": "More Basavanagudi",
+      "url": "/more_basavangudi",
+      "appendStoreCode": true,
+      "elasticsearch": {
+        "host": "/api/catalog",
+        "index": "vue_storefront_catalog_basavanagudi"
+      },
+      "tax": {
+        "defaultCountry": "IN"
+      },
+      "i18n": {
+        "fullCountryName": "India",
+        "fullLanguageName": "English",
+        "defaultCountry": "IN",
+        "defaultLanguage": "EN",
+        "defaultLocale": "en-US"
+      },
+      "seo": {
+        "defaultTitle": "More Basavanagudi"
+      }
+    },
+    "test_more_view": {
+      "storeCode": "test_more_view",
+      "storeId": 67,
+      "name": "More Indore",
+      "url": "/test_more_view",
+      "appendStoreCode": true,
+      "elasticsearch": {
+        "host": "/api/catalog",
+        "index": "vue_storefront_catalog_indore"
+      },
+      "tax": {
+        "defaultCountry": "IN"
+      },
+      "i18n": {
+        "fullCountryName": "India",
+        "fullLanguageName": "English",
+        "defaultCountry": "IN",
+        "defaultLanguage": "EN",
+        "defaultLocale": "en-US"
+      },
+      "seo": {
+        "defaultTitle": "More Indore"
       }
     }
   },
@@ -712,7 +761,7 @@
     "endpoint": "/api/user",
     "history_endpoint": "/api/user/order-history?token={{token}}&pageSize={{pageSize}}&currentPage={{currentPage}}",
     "resetPassword_endpoint": "/api/user/reset-password",
-    "createPassword_endpoint": "http://localhost:8080/api/user/create-password",
+    "createPassword_endpoint": "https://vuefront.store-se.in/api/user/create-password",
     "changePassword_endpoint": "/api/user/change-password?token={{token}}",
     "login_endpoint": "/api/user/login",
     "create_endpoint": "/api/user/create",
