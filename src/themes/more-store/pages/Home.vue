@@ -1,8 +1,16 @@
 <template>
   <div id="home">
     <head-image />
-
-    <promoted-offers />
+    <section class="container pb60 px15">
+      <div class="row center-xs">
+        <header class="col-md-12">
+          <h2 class="cl-accent uppercase">
+            {{ $t('Shop by Category') }}
+          </h2>
+        </header>
+        <home-categories />
+      </div>
+    </section>
 
     <section class="new-collection container px15">
       <div>
@@ -19,18 +27,6 @@
         <product-listing v-else columns="4" :products="getEverythingNewCollection" />
       </div>
     </section>
-
-    <section v-if="isOnline" class="container pb60 px15">
-      <div class="row center-xs">
-        <header class="col-md-12" :class="{ pt40: getEverythingNewCollection && getEverythingNewCollection.length }">
-          <h2 class="align-center cl-accent">
-            {{ $t('Get inspired') }}
-          </h2>
-        </header>
-      </div>
-      <tile-links />
-    </section>
-    <Onboard />
   </div>
 </template>
 
@@ -44,7 +40,7 @@ import ProductListing from 'theme/components/core/ProductListing'
 import HeadImage from 'theme/components/core/blocks/MainSlider/HeadImage'
 // Theme local components
 import Onboard from 'theme/components/theme/blocks/Home/Onboard'
-import PromotedOffers from 'theme/components/theme/blocks/PromotedOffers/PromotedOffers'
+import HomeCategories from 'theme/components/theme/blocks/HomeCategories/HomeCategories'
 import TileLinks from 'theme/components/theme/blocks/TileLinks/TileLinks'
 import { Logger } from '@vue-storefront/core/lib/logger'
 import { mapGetters } from 'vuex'
@@ -60,11 +56,10 @@ export default {
   },
   components: {
     HeadImage,
+    HomeCategories,
     Onboard,
     ProductListing,
-    PromotedOffers,
-    TileLinks,
-    LazyHydrate
+    TileLinks
   },
   computed: {
     ...mapGetters('user', ['isLoggedIn']),

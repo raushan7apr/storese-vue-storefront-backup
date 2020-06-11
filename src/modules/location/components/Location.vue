@@ -6,7 +6,7 @@
         <span>Delivering to</span>
         <i class="material-icons">arrow_forward</i>
         <div class="dynamic-address">
-          {{ selectedAddress }}
+          {{ errorMessage.length ? 'Choose location' : selectedAddress }}
         </div>
         <i class="material-icons">arrow_drop_down</i>
       </div>
@@ -19,13 +19,15 @@
                alt="search location"
                src="https://cdn.shopify.com/s/files/1/0385/5889/2171/files/StoreSe_App-113.png?v=1589971320"
           >
-          <input aria-label="search location" ref="address" type="text" id="search-rest" placeholder="search location" class="pac-target-input" autocomplete="off">
+          <input aria-label="search location" v-model="locationSearch" ref="address" type="text" id="search-rest" placeholder="search location" class="pac-target-input" autocomplete="off">
         </form>
         <button class="detect-btn btn" ref="detectBtn" @click="detectLocation">
           <img src="https://cdn.shopify.com/s/files/1/0385/5889/2171/files/StoreSe_App-114.png?v=1589971320" alt="detect location"> Detect
         </button>
       </div>
-      <span class="error-message">{{ errorMessage }}</span>
+      <div class="pt-10">
+        <span class="error-message">{{ errorMessage }}</span>
+      </div>
       <div class="loc-footer-wrap">
         <span>Now delivering in Bangalore &amp; Delhi-NCR</span>
         <span>Launching soon in Hyderabad, Lucknow, Jaipur &amp; many more cities.</span>
@@ -39,6 +41,7 @@
         </button>
       </div>
     </div>
+    <div class="overlay-wrap" @click="handleOverlay" style="display: none"></div>
   </div>
 </template>
 
@@ -55,7 +58,9 @@ export default {
   name: 'LocationInput',
   data: function () {
     return {
-      selectedAddress: 'Choose Location',
+      selectedAddress: 'Choose location',
+      defaultLocation: 'Choose location',
+      locationValue: '',
       locationSearch: '',
       showLocationWrap: true,
       errorMessage: '',
@@ -84,7 +89,6 @@ export default {
           action: async () => {
             // We just need to clear cart on frontend and backend.
             // but cart token can be reused
-            await this.$store.dispatch('cart/clear', { disconnect: false });
             this.selectedAddress = place.name;
             this.updateAddress(latitude, longitude);
             this.getStores(latitude, longitude);
@@ -110,7 +114,7 @@ export default {
           this.longitude = place.geometry.location.lng();
           console.log(latitude, 'latitude');
           console.log(longitude, 'longitude');
-          if (locationData) {
+          if (locationData && this.quantity > 0) {
             this.clearCart(place, latitude, longitude);
           } else {
             this.getStores(latitude, longitude);
@@ -125,6 +129,7 @@ export default {
         }
         this.showLocationWrap = !this.showLocationWrap;
         this.showLocationWrap ? this.preventBodyScroll(true) : this.preventBodyScroll(false);
+        this.showLocationWrap ? this.toggleOverlay(false) : this.toggleOverlay(true);
       });
     },
     initLocation () {
@@ -132,10 +137,13 @@ export default {
       if (!locationData) {
         this.showLocationWrap = true;
         this.preventBodyScroll(true);
+        this.toggleOverlay(false);
       } else {
         // when you have location
         this.storedLocationInfo = locationData;
         this.showLocationWrap = false;
+        this.selectedAddress = locationData.address;
+        this.toggleOverlay(true);
         this.updateAddress(locationData.lat, locationData.lng, true);
       }
     },
@@ -176,7 +184,6 @@ export default {
     },
     onLocationSuccess (position) {
       window.localStorage.setItem('location_set', JSON.stringify(true));
-      console.log('position', position);
       this.latitude = position.coords.latitude;
       this.longitude = position.coords.longitude;
 
@@ -186,8 +193,8 @@ export default {
     onLocationError (error) {
       switch (error.code) {
         case error.PERMISSION_DENIED:
-          //alert('Location is mandatory to proceed.');
           this.showNotification('Location is mandatory to proceed');
+          this.selectedAddress = 'Choose location';
           break;
         case error.POSITION_UNAVAILABLE:
           alert('Unable to retrieve your location. Please check your permissions.');
@@ -223,7 +230,7 @@ export default {
       geocoder.geocode(request, (results, status) => {
         if (results && results.length) {
           this.locationSearch = results[0].formatted_address;
-          this.selectedAddress = results[0].formatted_address;
+          this.locationValue = results[0].formatted_address;
         }
       });
     },
@@ -236,16 +243,12 @@ export default {
 
       geocoder.geocode(request, (results, status) => {
         if (results && results.length) {
-          console.log(results);
           this.locationSearch = results[0].formatted_address;
-          this.selectedAddress = results[0].formatted_address;
-          console.log('results[0].formatted_address', results[0].formatted_address);
-          console.log('flag', apiNotReqd);
+          this.locationValue = results[0].formatted_address;
         }
       });
     },
     getStores (lat, lng) {
-      this.errorMessage = '';
       fetch(`https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation?lat=${lat}&lng=${lng}`, {
         method: 'GET',
         headers: {
@@ -258,7 +261,8 @@ export default {
             let locationObj = {
               lat: lat,
               lng: lng,
-              url: response.stores[0].storeAppUrl
+              url: response.stores[0].storeAppUrl,
+              address: this.locationValue
             }
             window.localStorage.setItem('user_add_data', JSON.stringify(locationObj));
             if (response.stores[0].storeAppUrl === window.location.href) {
@@ -266,28 +270,41 @@ export default {
               this.preventBodyScroll(false);
             }
             window.location.href = response.stores[0].storeAppUrl;
+            this.selectedAddress = this.locationValue;
           });
         } else {
-          this.errorMessage = 'Sorry!We don\'t serve at your location currently.';
+          this.selectedAddress = this.defaultLocation;
+          this.errorMessage = 'Sorry! We don\'t serve at your location currently.';
           let locationData = JSON.parse(window.localStorage.getItem('user_add_data'));
           if (locationData) {
             this.updateAddressWithoutAPI(locationData.lat, locationData.lng);
-          } else {
-            this.locationSearch = '';
-            this.selectedAddress = 'Choose Location';
           }
           if (!locationData) {
             this.preventBodyScroll(true);
             this.showLocationWrap = true;
           }
         }
-      }).catch(error => {
-        this.errorMessage = 'Sorry!We don\'t serve at your location currently.';
+      }).catch(() => {
+        this.errorMessage = 'Sorry! We don\'t serve at your location currently.';
       })
     },
     preventBodyScroll (flag) {
       let body = document.getElementsByTagName('body')[0];
       flag ? body.style.overflow = 'hidden' : body.style.overflow = 'auto';
+    },
+    toggleOverlay (remove) { // false means show
+      let overlay = document.getElementsByClassName('overlay-wrap')[0];
+      if (overlay) {
+        remove ? overlay.style.display = 'none' : overlay.style.display = 'block';
+      }
+    },
+    handleOverlay () {
+      let locationData = JSON.parse(window.localStorage.getItem('user_add_data'));
+      if (locationData) {
+        this.showLocationWrap = false;
+        this.toggleOverlay(true);
+        this.preventBodyScroll(false);
+      }
     },
     showNotification (message) {
       this.$store.dispatch('notification/spawnNotification', {
@@ -296,6 +313,11 @@ export default {
         action1: { label: this.$t('OK'), action: 'close' },
         hasNoTimeout: true
       })
+    }
+  },
+  computed: {
+    quantity () {
+      return this.$store.getters['cart/getItemsTotalQuantity']
     }
   }
 }
@@ -308,6 +330,13 @@ export default {
   .d-none {
     display: none;
   }
+  .pt-10 {
+    padding-top: 10px;
+  }
+  .location {
+    display: flex;
+    justify-content: center;
+  }
   .address-wrap {
     display: flex;
     justify-content: center;
@@ -315,6 +344,7 @@ export default {
     cursor: pointer;
     z-index: 1;
     color: #fff;
+    padding: 5px 0;
   }
 
   .static-wrap {
@@ -337,7 +367,7 @@ export default {
     z-index: 9999;
     background-color: #fff;
     padding: 1rem;
-    width: 350px;
+    max-width: 350px;
     height: 213px;
     justify-content: center;
     align-items: center;
@@ -357,10 +387,10 @@ export default {
     border-right: 10px solid transparent;
     border-bottom: 10px solid #ffffff;
     position: absolute;
-    top: -10px;
+    top: -9px;
   }
   .loc-main-title {
-    color: #68bd48;
+    color: #f04d24;
     font-size: 1.1rem;
     padding-top: 8px;
     font-weight: 600;
@@ -429,20 +459,23 @@ export default {
     font-size: 1.1rem;
     font-weight: 900;
     color: #878585;
+    line-height: 1.5;
   }
   .loc-footer-wrap span:nth-child(2) {
     font-size: 0.9rem;
     color: #878585;
+    line-height: 1.5;
+    text-align: center;
+    font-weight: 200;
   }
   .overlay-wrap {
     position: absolute;
     width: 100%;
-    height: 1000vh;
+    height: 100vh;
     background-color: #333;
     opacity: 0.7;
-    display: none;
   }
-  .btn, .product-form__item--payment-button .product-form__cart-submit {
+  .btn {
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
@@ -459,7 +492,7 @@ export default {
     border: 1px solid transparent;
     border-radius: 2px;
     padding: 8px 15px;
-    background-color: #68bd48;
+    background-color: #DB5E32;
     color: #fff;
     font-family: Rajdhani, sans-serif;
     font-style: normal;
