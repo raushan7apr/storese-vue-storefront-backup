@@ -874,5 +874,18 @@
   },
   "location": {
     "endpoint": "https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation"
+  },
+  "razorpay" : {
+  "method_code": "razorpay",
+  "title": "Razorpay",
+  "endpoint": "http://localhost:8080/api/ext/payment-razorpay",
+  "api_url": "https://checkout.razorpay.com/v1/checkout.js",
+  "key": "rzp_test_9DP0EQp7MFfqzm",
+  "keySecret": "eD8oFPOlLFGQK7vpZAFMfedu",
+  "merchant": "Magento",
+  "theme": "#F37254",
+  "notes": {
+    "Title": "Description"
   }
+}
 }
