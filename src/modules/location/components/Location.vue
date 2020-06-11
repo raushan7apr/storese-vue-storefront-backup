@@ -193,7 +193,7 @@ export default {
     onLocationError (error) {
       switch (error.code) {
         case error.PERMISSION_DENIED:
-          this.showNotification('Location is mandatory to proceed');
+          this.showNotification('Location is mandatory to proceed. Please enable location in your browser settings');
           this.selectedAddress = 'Choose location';
           break;
         case error.POSITION_UNAVAILABLE:
