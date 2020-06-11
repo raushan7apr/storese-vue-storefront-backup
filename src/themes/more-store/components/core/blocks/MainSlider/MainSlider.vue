@@ -30,6 +30,7 @@ import sliderData from 'theme/resource/slider.json'
 import ButtonOutline from 'theme/components/theme/ButtonOutline'
 
 export default {
+  name: 'CarouselSlide',
   data () {
     return {
       currentSlide: 1,

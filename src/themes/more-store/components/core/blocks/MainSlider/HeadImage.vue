@@ -8,11 +8,13 @@
 
 <script>
 // import ButtonOutline from 'theme/components/theme/ButtonOutline'
+import MainSlider from 'theme/components/core/blocks/MainSlider/MainSlider';
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     // ButtonOutline
+    MainSlider
   },
   data () {
     return {
