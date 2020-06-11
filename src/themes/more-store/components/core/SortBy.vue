@@ -56,7 +56,9 @@ export default {
     .sort-by {
         display: inline-flex;
         position: relative;
-        border-bottom: 1px solid $color-tertiary;
+        border: 1px solid $color-tertiary;
+        margin-left: 12px;
+        padding-left: 12px;
         select {
             @extend .h4;
             font-size: 14px;

@@ -1,8 +1,8 @@
 <template>
-  <div id="product">
+  <div id="product" class="product-page">
     <section class="bg-cl-secondary px20 product-top-section">
       <div class="container">
-        <section class="row m0 between-xs">
+        <section class="row m0 between-xs bg-cl-white shadow-box">
           <div class="col-xs-12 col-md-6 center-xs middle-xs image">
             <product-gallery
               :offline="getOfflineImage"
@@ -444,6 +444,16 @@ $color-tertiary: color(tertiary);
 $color-secondary: color(secondary);
 $color-white: color(white);
 $bg-secondary: color(secondary, $colors-background);
+
+.product-page {
+  margin-top: 180px;
+}
+
+.shadow-box {
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;  
+}
 
 .product {
   &__add-to-compare {

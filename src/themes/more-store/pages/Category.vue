@@ -1,17 +1,18 @@
 <template>
-  <div id="category">
+  <div id="category" class="category">
     <header class="bg-cl-secondary py35 pl20">
       <div class="container">
         <breadcrumbs />
-        <div class="row middle-sm">
-          <h1 class="col-sm-8 category-title mb10">
-            {{ getCurrentCategory.name }}
-          </h1>
-          <div class="sorting col-sm-2 align-right mt50">
+        <div class="row middle-sm item-sort-by-container">
+          <div class="col-sm-9 category-title">
+            {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
+          </div>
+          <!--<div class="sorting col-sm-2">
             <label class="mr10">{{ $t('Columns') }}:</label>
             <columns @change-column="columnChange" />
-          </div>
-          <div class="sorting col-sm-2 align-right mt50">
+          </div>-->
+          <div class="sorting col-sm-3">
+            Sort By
             <sort-by
               :has-label="true"
               @change="changeFilter"
@@ -37,7 +38,7 @@
         </div>
       </div>
     </header>
-    <div class="container pb60">
+    <div class="container pb60 bgd1d1d1">
       <div class="row m0 pt15">
         <div class="col-md-3 start-xs category-filters">
           <sidebar :filters="getAvailableFilters" @changeFilter="changeFilter" />
@@ -58,9 +59,9 @@
           </button-full>
         </div>
         <div class="col-md-9 px10 border-box products-list">
-          <p class="col-xs-12 end-md m0 pb20 cl-secondary">
+          <!--<p class="col-xs-12 end-md m0 pb20 cl-secondary">
             {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
-          </p>
+          </p>-->
           <div v-if="isCategoryEmpty" class="hidden-xs">
             <h4 data-testid="noProductsInfo">
               {{ $t('No products found!') }}
@@ -216,6 +217,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .bgd1d1d1 {
+    background-color: rgb(242, 242, 242);
+  }
+  
+  .category {
+    margin-top: 172px;
+    background-color: rgb(242, 242, 242);
+  }
+
+  .item-sort-by-container {
+    background-color: #fff;
+    margin-top: 36px;
+    box-shadow: 2px 2px 5px 1px #e1e1e1;
+    -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  }
+
   .btn {
     &__filter {
       min-width: 100px;
