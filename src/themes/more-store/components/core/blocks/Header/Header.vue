@@ -4,9 +4,9 @@
       class="fixed w-100 brdr-bottom-1 bg-cl-primary brdr-cl-secondary"
       :class="{ 'is-visible': navVisible }"
     >
-      <div class="container px15">
-        <div class="row between-xs middle-xs" v-if="!isCheckoutPage || isThankYouPage">
-          <div class="col-md-4 col-xs-2 middle-xs">
+      <div class="container-fluid">
+        <div class="row between-xs" v-if="!isCheckoutPage || isThankYouPage">
+          <div class="col-md-4 col-xs-2 middle-xs" style="display: none;">
             <div>
               <hamburger-icon class="p15 icon bg-cl-secondary pointer" />
             </div>
@@ -14,19 +14,19 @@
           <div class="col-xs-2 visible-xs">
             <search-icon class="p15 icon pointer" />
           </div>
-          <div class="col-md-4 col-xs-4 center-xs pt5">
+          <div class="col-md-4 col-xs-4 pt25">
             <div>
-              <logo width="auto" height="41px" />
+              <logo width="auto" height="132px" />
             </div>
           </div>
-          <div class="col-xs-2 visible-xs">
+          <!--<div class="col-xs-2 visible-xs">
             <wishlist-icon class="p15 icon pointer" />
-          </div>
+          </div>-->
           <div class="col-md-4 col-xs-2 end-xs">
             <div class="inline-flex right-icons">
-              <search-icon class="p15 icon hidden-xs pointer" />
-              <wishlist-icon class="p15 icon hidden-xs pointer" />
-              <compare-icon class="p15 icon hidden-xs pointer" />
+              <search-icon style="display: none;" class="p15 icon hidden-xs pointer" />
+              <!--<wishlist-icon class="p15 icon hidden-xs pointer" />
+              <compare-icon class="p15 icon hidden-xs pointer" />-->
               <microcart-icon class="p15 icon pointer" />
               <account-icon class="p15 icon hidden-xs pointer" />
             </div>
@@ -55,6 +55,34 @@
                 class="cl-tertiary links"
               >{{ $t('Login to your account') }}</a>
               <span v-else>{{ $t('You are logged in as {firstname}', currentUser) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid search-and-category">
+        <div class="row" v-if="!isCheckoutPage || isThankYouPage">
+          <div class="col-md-9 col-xs-4 categories-bar">
+            <ul>
+              <li><a href="">Personal Care</a></li>
+              <li><a href="">Household Care</a></li>
+              <li><a href="">Staples</a></li>
+              <li><a href="">Snacks & Food</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 col-xs-2">
+            <div class="search-input-group">
+              <input
+                ref="search"
+                id="search"
+                v-model="search"
+                @input="makeSearch"
+                @blur="$v.search.$touch()"
+                class="search-panel-input"
+                :placeholder="$t('SEARCH PRODUCT HERE...')"
+                type="search"
+                autofocus="true"
+              >
+              <i class="material-icons search-icon">search</i>
             </div>
           </div>
         </div>
@@ -148,9 +176,54 @@ export default {
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
 
+.categories-bar {
+  ul {
+    display:flex;  
+    list-style:none;
+    text-transform: uppercase;
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
+    li {
+      padding: 15px 60px 16px 0px;   
+    }
+  }
+}
+
+.search-input-group {
+  display: flex;
+}
+
+.search-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.search-panel-input {
+  width: 100%;
+  height: 60px;
+  padding-bottom: 0;
+  padding-top: 0;
+  border: none;
+  outline: 0;
+  font-size: 16px;
+}
+
+.no-results {
+  top: 80px;
+  width: 100%;
+}
+
+i {
+  opacity: 0.6;
+}
+
 header {
-  height: 54px;
-  top: -55px;
+  height: 158px;
+  //top: -55px;
   z-index: 3;
   transition: top 0.2s ease-in-out;
   &.is-visible {
@@ -174,6 +247,13 @@ header {
 }
 .links {
   text-decoration: underline;
+}
+.search-and-category {
+  background-color: #fff;
+}
+
+.categories-bar {
+  border-right: 1px solid #d1d1d1;
 }
 @media (max-width: 767px) {
   .row.middle-xs {
