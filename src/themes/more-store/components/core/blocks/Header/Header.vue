@@ -4,7 +4,7 @@
       <location-input />
     </div>
     <header
-      class="fixed w-100 brdr-bottom-1 bg-cl-primary brdr-cl-secondary"
+      class="w-100 brdr-bottom-1 bg-cl-primary brdr-cl-secondary"
       :class="{ 'is-visible': navVisible }"
     >
       <div class="container-fluid">
@@ -27,10 +27,15 @@
           </div>-->
           <div class="col-md-4 col-xs-2 end-xs">
             <div class="inline-flex right-icons">
-              <search-icon style="display: none;" class="p15 icon hidden-xs pointer" />
+              <!--<search-icon style="display: none;" class="p15 icon hidden-xs pointer" />-->
               <!--<wishlist-icon class="p15 icon hidden-xs pointer" />
               <compare-icon class="p15 icon hidden-xs pointer" />-->
               <microcart-icon class="p15 icon pointer" />
+              <span
+                class="minicart-count absolute flex center-xs middle-xs border-box py0 px2 h6 lh16 weight-700 cl-white bg-cl-silver"
+              >
+                0
+              </span>
               <account-icon class="p15 icon hidden-xs pointer" />
             </div>
           </div>
@@ -196,6 +201,7 @@ $color-icon-hover: color(secondary, $colors-background);
 
 .search-input-group {
   display: flex;
+  font: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
 .search-icon {
@@ -215,6 +221,7 @@ $color-icon-hover: color(secondary, $colors-background);
   border: none;
   outline: 0;
   font-size: 16px;
+  font-style: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
 .no-results {
@@ -250,7 +257,7 @@ header {
   opacity: 0.6;
   &:hover,
   &:focus {
-    background-color: $color-icon-hover;
+    color: #30794a;
     opacity: 1;
   }
 }
@@ -266,10 +273,11 @@ header {
 }
 .search-and-category {
   background-color: #fff;
+  margin-top: -2px;
 }
 
 .categories-bar {
-  border-right: 1px solid #d1d1d1;
+  border-right: 1px solid rgb(242, 242, 242);
 }
 @media (max-width: 767px) {
   .row.middle-xs {

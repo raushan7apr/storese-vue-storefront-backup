@@ -11,22 +11,6 @@
         <home-categories />
       </div>
     </section>
-
-    <section class="new-collection container px15">
-      <div>
-        <header class="col-md-12">
-          <h2 class="align-center cl-accent">
-            {{ $t('Everything new') }}
-          </h2>
-        </header>
-      </div>
-      <div class="row center-xs">
-        <lazy-hydrate :trigger-hydration="!loading" v-if="isLazyHydrateEnabled">
-          <product-listing columns="4" :products="getEverythingNewCollection" />
-        </lazy-hydrate>
-        <product-listing v-else columns="4" :products="getEverythingNewCollection" />
-      </div>
-    </section>
   </div>
 </template>
 

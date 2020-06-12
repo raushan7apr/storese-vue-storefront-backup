@@ -8,11 +8,6 @@
   >
     <i class="material-icons">shopping_cart</i>
     <span class="cart-amount border-box center-xs middle-xs weight-600">&#8377;0.00</span>
-    <span
-      class="minicart-count absolute flex center-xs middle-xs border-box py0 px2 h6 lh16 weight-700 cl-white bg-cl-silver"
-    >
-      {{ totalQuantity }}
-    </span>
   </button>
 </template>
 
