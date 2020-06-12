@@ -1,7 +1,7 @@
 <template>
   <div id="category" class="category">
     <header class="bg-cl-secondary py35 pl20">
-      <div class="container">
+      <div class="container-fluid">
         <breadcrumbs />
         <div class="row middle-sm item-sort-by-container">
           <div class="col-sm-9 category-title">
@@ -11,7 +11,7 @@
             <label class="mr10">{{ $t('Columns') }}:</label>
             <columns @change-column="columnChange" />
           </div>-->
-          <div class="sorting col-sm-3">
+          <div class="sorting col-sm-3 end-xs">
             Sort By
             <sort-by
               :has-label="true"
@@ -38,7 +38,7 @@
         </div>
       </div>
     </header>
-    <div class="container pb60 bgd1d1d1">
+    <div class="container-fluid pb60 bgd1d1d1">
       <div class="row m0 pt15">
         <div class="col-md-3 start-xs category-filters">
           <sidebar :filters="getAvailableFilters" @changeFilter="changeFilter" />

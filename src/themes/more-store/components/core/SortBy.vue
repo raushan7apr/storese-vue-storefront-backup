@@ -59,6 +59,7 @@ export default {
         border: 1px solid $color-tertiary;
         margin-left: 12px;
         padding-left: 12px;
+        margin-right: 32px;
         select {
             @extend .h4;
             font-size: 14px;

@@ -1,7 +1,12 @@
 <template>
   <div id="product" class="product-page">
+    <header class="bg-cl-secondary py35 pl20">
+      <div class="container-fluid">
+        <breadcrumbs />
+      </div>
+    </header>
     <section class="bg-cl-secondary px20 product-top-section">
-      <div class="container">
+      <div class="container-fluid">
         <section class="row m0 between-xs bg-cl-white shadow-box">
           <div class="col-xs-12 col-md-6 center-xs middle-xs image">
             <product-gallery
@@ -12,9 +17,6 @@
             />
           </div>
           <div class="col-xs-12 col-md-5 data">
-            <breadcrumbs
-              class="pt40 pb20 hidden-xs"
-            />
             <h1
               class="mb20 mt0 cl-mine-shaft product-name"
               data-testid="productName"
@@ -122,7 +124,7 @@
               <add-to-cart
                 :product="getCurrentProduct"
                 :disabled="isAddToCartDisabled"
-                class="col-xs-12 col-sm-4 col-md-6"
+                class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium col-xs-12 col-sm-4 col-md-6"
               />
             </div>
             <div class="row py40 add-to-buttons">
