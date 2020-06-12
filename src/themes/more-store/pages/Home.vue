@@ -121,6 +121,10 @@ export default {
     font-size: 28px;
     margin-bottom: -12px;
     text-transform: capitalize;
+    @media (max-width: 767px) {
+      margin-top: 20px;
+      font-size: 20px;
+    }
   }
 
   .bg-d1d1d1 {

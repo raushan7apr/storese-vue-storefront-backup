@@ -7,7 +7,7 @@
       class="w-100 brdr-bottom-1 bg-cl-primary brdr-cl-secondary"
       :class="{ 'is-visible': navVisible }"
     >
-      <div class="container-fluid">
+      <div class="container-fluid large-screen">
         <div class="row between-xs" v-if="!isCheckoutPage || isThankYouPage">
           <div class="col-md-4 col-xs-2 middle-xs" style="display: none;">
             <div>
@@ -70,6 +70,23 @@
               >{{ $t('Login to your account') }}</a>
               <span v-else>{{ $t('You are logged in as {firstname}', currentUser) }}</span>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid mobile-screen">
+        <div class="row">
+          <div class="col-xs-2 start-xs">
+            <div>
+              <hamburger-icon class="p15 bg-f04d24cf icon" />
+            </div>
+          </div>
+          <div class="col-xs-8 center-xs">
+            <div>
+              <logo width="auto" height="60px" />
+            </div>
+          </div>
+          <div class="col-xs-2 end-xs">
+            <search-icon class="p15 bg-f04d24cf icon pointer" />
           </div>
         </div>
       </div>
@@ -195,6 +212,24 @@ export default {
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
 
+.large-screen {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.mobile-screen {
+  display: none;
+  @media (max-width: 767px) {
+    display: block;
+  }
+}
+
+.bg-f04d24cf {
+  color: #f04d24cf;
+  font-weight: 600;
+}
+
 .minicart-count {
   min-width: 30px;
   min-height: 30px;
@@ -273,6 +308,9 @@ header {
   &.is-visible {
     top: 0;
   }
+  @media (max-width: 767px) {
+    height: 60px;
+  }
 }
 .icon {
   opacity: 0.6;
@@ -288,6 +326,9 @@ header {
 }
 .header-placeholder {
   height: 54px;
+  @media (max-width: 767px) {
+    height: 0px;
+  }
 }
 .links {
   text-decoration: underline;
@@ -295,6 +336,9 @@ header {
 .search-and-category {
   background-color: #fff;
   margin-top: -2px;
+  @media (max-width: 767px) {
+    display: none;
+  }
 }
 
 .categories-bar {
