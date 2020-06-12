@@ -1,7 +1,57 @@
 <template>
   <section class="container bg-d1d1d1 w-100 my30">
     <div class="row">
-      <div
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <a href="/women/women-20">
+          <div class="offer offer-product border-box flex">
+            <img src="https://indore-more.storese.in/pub/media/wysiwyg/Personal_Care_1.png" alt="" width="132" height="132">
+            <div class="category-name title m0 h1">
+              Women
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <a href="/men/men-11">
+          <div class="offer offer-product border-box flex">
+            <img src="https://indore-more.storese.in/pub/media/wysiwyg/Household_Care.png" alt="" width="132" height="132">
+            <div class="category-name title m0 h1">
+              Men
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <a href="/gear/gear-3">
+          <div class="offer offer-product border-box flex">
+            <img src="https://indore-more.storese.in/pub/media/wysiwyg/Snacks_and_Packaged_Food.png" alt="" width="132" height="132">
+            <div class="category-name title m0 h1">
+              Gear
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <a href="/training/training-9">
+          <div class="offer offer-product border-box flex">
+            <img src="https://indore-more.storese.in/pub/media/wysiwyg/Beverages_1.png" alt="" width="132" height="132">
+            <div class="category-name title m0 h1">
+              Training
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <a href="/sales/sales-50">
+          <div class="offer offer-product border-box flex">
+            <img src="https://indore-more.storese.in/pub/media/wysiwyg/Bread_and_Milk-new.png" alt="" width="132" height="132">
+            <div class="category-name title m0 h1">
+              Sales
+            </div>
+          </div>
+        </a>
+      </div>
+      <!--<div
         class="col-xs-12 col-sm-6 col-md-4"
         v-for="(category, index) in visibleCategories"
         :key="index"
@@ -14,7 +64,7 @@
             </div>
           </div>
         </router-link>
-      </div>
+      </div>-->
     </div>
   </section>
 </template>

@@ -6,7 +6,7 @@
     data-testid="openMicrocart"
     :aria-label="$t('Open microcart')"
   >
-    <i class="material-icons">shopping_cart</i>
+    <i class="material-icons cart-icon">shopping_cart</i>
     <span class="cart-amount border-box center-xs middle-xs weight-600">&#8377;0.00</span>
   </button>
 </template>
@@ -37,15 +37,9 @@ export default {
 </script>
 
 <style scoped>
-  .minicart-count {
-    top: 30px;
-    left: 130px;
-    min-width: 30px;
-    min-height: 30px;
-    border-radius: 36px;
-    font-size: 20px;
-    color: #000;
-    font-weight: 500;
+  .cart-icon {
+    font-size: 34px;
+    color: #a8aeba;
   }
 
   .cart {

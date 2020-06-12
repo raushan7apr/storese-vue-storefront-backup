@@ -25,18 +25,24 @@
           <!--<div class="col-xs-2 visible-xs">
             <wishlist-icon class="p15 icon pointer" />
           </div>-->
-          <div class="col-md-4 col-xs-2 end-xs">
-            <div class="inline-flex right-icons">
+          <div class="col-md-3 col-xs-2 end-xs">
+            <div class="row">
               <!--<search-icon style="display: none;" class="p15 icon hidden-xs pointer" />-->
               <!--<wishlist-icon class="p15 icon hidden-xs pointer" />
               <compare-icon class="p15 icon hidden-xs pointer" />-->
-              <microcart-icon class="p15 icon pointer" />
-              <span
+              <div class="col-md-4">
+                <microcart-icon class="p15 icon pointer" />
+              </div>
+              <div class="col-md-1">
+                <span
                 class="minicart-count absolute flex center-xs middle-xs border-box py0 px2 h6 lh16 weight-700 cl-white bg-cl-silver"
-              >
-                0
-              </span>
-              <account-icon class="p15 icon hidden-xs pointer" />
+                >
+                  {{ totalQuantity }}
+                </span>
+              </div>
+              <div class="col-md-7">
+                <account-icon class="p15 icon hidden-xs pointer" />
+              </div>
             </div>
           </div>
         </div>
@@ -101,7 +107,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import CurrentPage from 'theme/mixins/currentPage'
 import AccountIcon from 'theme/components/core/blocks/Header/AccountIcon'
 import CompareIcon from 'theme/components/core/blocks/Header/CompareIcon'
@@ -135,6 +141,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      totalQuantity: 'cart/getItemsTotalQuantity'
+    }),
     ...mapState({
       isOpenLogin: state => state.ui.signUp,
       currentUser: state => state.user.current
@@ -185,6 +194,18 @@ export default {
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
+
+.minicart-count {
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 36px;
+  font-size: 20px;
+  opacity: 0.6;
+  color: #000;
+  font-weight: 500;
+  margin-top: 16px;
+  background-color: #a8aeba;
+}
 
 .categories-bar {
   ul {
