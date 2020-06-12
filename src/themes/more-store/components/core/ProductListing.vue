@@ -3,8 +3,8 @@
     <div
       v-for="(product, key) in products"
       :key="product.id"
-      class="col-sm-6 flex"
-      :class="['col-md-' + (12/columns)%10, wide(product.sale, product.new, key)]"
+      class="col-sm-6 flex pd-8"
+      :class="['col-md-' + 3/*(12/columns)%10*/, wide(product.sale, product.new, key)]"
     >
       <product-tile :product="product" />
     </div>
@@ -42,3 +42,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.pd-8 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+</style>
