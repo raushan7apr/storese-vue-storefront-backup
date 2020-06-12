@@ -1,16 +1,17 @@
 <template>
-  <section class="container my30 px15">
+  <section class="container bg-d1d1d1 w-100 my30">
     <div class="row">
       <div
-        class="col-xs-12 col-sm-6 col-md-3 card"
+        class="col-xs-12 col-sm-6 col-md-4"
         v-for="(category, index) in visibleCategories"
         :key="index"
       >
         <router-link :to="categoryLink(category)">
-          <div class="offer offer-product border-box p5 flex">
-            <h2 class="title m0 h1">
+          <div class="offer offer-product border-box flex">
+            <img src="https://indore-more.storese.in/pub/media/wysiwyg/Household_Care.png" alt="" width="132" height="132">
+            <div class="category-name title m0 h1">
               {{ category.name }}
-            </h2>
+            </div>
           </div>
         </router-link>
       </div>
@@ -49,6 +50,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .category-name {
+    font-size: 16px;
+    color: #232d5f;
+    font-weight: bold;
+  }
+
+  .bg-d1d1d1 {
+    background-color: rgb(242, 242, 242);
+  }
+
   .card {
     background-color: #e6e6e6;
     margin: 5px;
@@ -68,6 +79,10 @@ export default {
     background-repeat: no-repeat;
     opacity: 1;
     transition: 0.3s all;
+    background-color: #fff;
+    margin: 8px 0;
+    box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
 
     &:hover {
       opacity: 0.9;
@@ -79,7 +94,7 @@ export default {
 
     .title {
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 0.5rem;
       @media (max-width: 767px) {
         background-color: rgba(255,255,255,0.4);
         padding: 0.5rem;
@@ -103,7 +118,7 @@ export default {
     }
   }
   .offer-product {
-    height: 330px;
+    height: 168px;
     background-position: 50% 20%;
 
     @media (max-width: 767px) {

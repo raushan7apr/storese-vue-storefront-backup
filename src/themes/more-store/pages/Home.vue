@@ -1,12 +1,12 @@
 <template>
   <div id="home">
     <head-image />
-    <section class="container pb60 px15">
+    <section class="container-fluid bg-d1d1d1 pb60 px15">
       <div class="row center-xs">
-        <header class="col-md-12">
-          <h2 class="cl-accent uppercase">
+        <header class="col-md-12 start-xs">
+          <div class="header-text">
             {{ $t('Shop by Category') }}
-          </h2>
+          </div>
         </header>
         <home-categories />
       </div>
@@ -129,6 +129,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .header-text {
+    font: 600 20px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    color: #232d5f;
+    margin-top: 80px;
+    font-size: 28px;
+    margin-bottom: -12px;
+    text-transform: capitalize;
+  }
+
+  .bg-d1d1d1 {
+    background-color: rgb(242, 242, 242);
+  }
+
   .new-collection {
     @media (max-width: 767px) {
       padding-top: 0;
