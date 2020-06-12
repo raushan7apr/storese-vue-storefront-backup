@@ -15,11 +15,6 @@
                 <h1 class="title mt0 mb30 align-center" data-testid="mainSliderTitle">
                   {{ slide.title }}
                 </h1>
-                <div class="align-center inline-flex">
-                  <button-outline :link="slide.link" color="light">
-                    {{ slide.button_text }}
-                  </button-outline>
-                </div>
               </div>
             </div>
           </div>
@@ -35,6 +30,7 @@ import sliderData from 'theme/resource/slider.json'
 import ButtonOutline from 'theme/components/theme/ButtonOutline'
 
 export default {
+  name: 'CarouselSlide',
   data () {
     return {
       currentSlide: 1,
@@ -69,11 +65,6 @@ export default {
 @import '~theme/css/helpers/functions/color';
 $color-white: color(white);
 .main-slider {
-
-  @media (max-width: 767px) {
-    display: none;
-  }
-
   .VueCarousel-pagination {
     position: absolute;
     bottom: 15px;

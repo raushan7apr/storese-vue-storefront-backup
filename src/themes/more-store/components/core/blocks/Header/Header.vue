@@ -1,5 +1,8 @@
 <template>
   <div class="header">
+    <div class="nav-wrap">
+      <location-input />
+    </div>
     <header
       class="fixed w-100 brdr-bottom-1 bg-cl-primary brdr-cl-secondary"
       :class="{ 'is-visible': navVisible }"
@@ -102,10 +105,12 @@ import Logo from 'theme/components/core/Logo'
 import MicrocartIcon from 'theme/components/core/blocks/Header/MicrocartIcon'
 import SearchIcon from 'theme/components/core/blocks/Header/SearchIcon'
 import WishlistIcon from 'theme/components/core/blocks/Header/WishlistIcon'
+import LocationInput from 'src/modules/location/components/Location';
 
 export default {
   name: 'Header',
   components: {
+    LocationInput,
     AccountIcon,
     CompareIcon,
     HamburgerIcon,
@@ -219,6 +224,17 @@ $color-icon-hover: color(secondary, $colors-background);
 
 i {
   opacity: 0.6;
+}
+
+.nav-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: #fff;
+  font-weight: 600;
+  z-index: 999;
+  background-color: #f04d24cf;
 }
 
 header {
