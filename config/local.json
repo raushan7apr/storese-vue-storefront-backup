@@ -180,7 +180,9 @@
     "mapStoreUrlsFor": [
       "de",
       "it",
-      "more_basavangudi"
+      "more_basavangudi",
+      "test_more_view",
+      "tmc_storeview"
     ],
     "de": {
       "storeCode": "de",
@@ -269,7 +271,7 @@
       "appendStoreCode": true,
       "elasticsearch": {
         "host": "/api/catalog",
-        "index": "vue_storefront_catalog_indore"
+        "index": "vue_storefront_catalog_indore_1591896249"
       },
       "tax": {
         "defaultCountry": "IN"
@@ -283,6 +285,30 @@
       },
       "seo": {
         "defaultTitle": "More Indore"
+      }
+    },
+    "tmc_storeview": {
+      "storeCode": "tmc_storeview",
+      "storeId": 18,
+      "name": "The Man Company",
+      "url": "/tmc_storeview",
+      "appendStoreCode": true,
+      "elasticsearch": {
+        "host": "/api/catalog",
+        "index": "vue_storefront_catalog_tmc_storeview_1591945695"
+      },
+      "tax": {
+        "defaultCountry": "IN"
+      },
+      "i18n": {
+        "fullCountryName": "The Man Company",
+        "fullLanguageName": "English",
+        "defaultCountry": "IN",
+        "defaultLanguage": "EN",
+        "defaultLocale": "en-US"
+      },
+      "seo": {
+        "defaultTitle": "The Man Company"
       }
     }
   },
@@ -775,7 +801,7 @@
   },
   "images": {
     "useExactUrlsNoProxy": false,
-    "baseUrl": "https://demo.vuestorefront.io/img/",
+    "baseUrl": "https://vuefront.store-se.in/img/",
     "useSpecificImagePaths": false,
     "paths": {
       "product": "/catalog/product"
@@ -927,7 +953,7 @@
   "razorpay" : {
   "method_code": "razorpay",
   "title": "Razorpay",
-  "endpoint": "http://localhost:8080/api/ext/payment-razorpay",
+  "endpoint": "https://vuefront.store-se.in/api/ext/payment-razorpay",
   "api_url": "https://checkout.razorpay.com/v1/checkout.js",
   "key": "rzp_test_9DP0EQp7MFfqzm",
   "keySecret": "eD8oFPOlLFGQK7vpZAFMfedu",
