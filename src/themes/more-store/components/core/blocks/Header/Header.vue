@@ -1,11 +1,130 @@
 <template>
-  <div class="nav-wrap">
-    <location-input />
+  <div class="header">
+    <div class="nav-wrap">
+      <location-input />
+    </div>
+    <header
+      class="w-100 brdr-bottom-1 bg-cl-primary brdr-cl-secondary"
+      :class="{ 'is-visible': navVisible }"
+    >
+      <div class="container-fluid large-screen">
+        <div class="row between-xs" v-if="!isCheckoutPage || isThankYouPage">
+          <div class="col-md-4 col-xs-2 middle-xs" style="display: none;">
+            <div>
+              <hamburger-icon class="p15 icon bg-cl-secondary pointer" />
+            </div>
+          </div>
+          <div class="col-xs-2 visible-xs">
+            <search-icon class="p15 icon pointer" />
+          </div>
+          <div class="col-md-4 col-xs-4 pt25">
+            <div>
+              <logo width="auto" height="132px" />
+            </div>
+          </div>
+          <!--<div class="col-xs-2 visible-xs">
+            <wishlist-icon class="p15 icon pointer" />
+          </div>-->
+          <div class="col-md-3 col-xs-2 end-xs">
+            <div class="row">
+              <!--<search-icon style="display: none;" class="p15 icon hidden-xs pointer" />-->
+              <!--<wishlist-icon class="p15 icon hidden-xs pointer" />
+              <compare-icon class="p15 icon hidden-xs pointer" />-->
+              <div class="col-md-4">
+                <microcart-icon class="p15 icon pointer" />
+              </div>
+              <div class="col-md-1">
+                <span
+                class="minicart-count absolute flex center-xs middle-xs border-box py0 px2 h6 lh16 weight-700 cl-white bg-cl-silver"
+                >
+                  {{ totalQuantity }}
+                </span>
+              </div>
+              <div class="col-md-7">
+                <account-icon class="p15 icon hidden-xs pointer" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row between-xs middle-xs px15 py5" v-if="isCheckoutPage && !isThankYouPage">
+          <div class="col-xs-5 col-md-3 middle-xs">
+            <div>
+              <router-link
+                :to="localizedRoute('/')"
+                class="cl-tertiary links"
+              >
+                {{ $t('Return to shopping') }}
+              </router-link>
+            </div>
+          </div>
+          <div class="col-xs-2 col-md-6 center-xs">
+            <logo width="auto" height="41px" />
+          </div>
+          <div class="col-xs-5 col-md-3 end-xs">
+            <div>
+              <a
+                v-if="!currentUser"
+                href="#"
+                @click.prevent="gotoAccount"
+                class="cl-tertiary links"
+              >{{ $t('Login to your account') }}</a>
+              <span v-else>{{ $t('You are logged in as {firstname}', currentUser) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid mobile-screen">
+        <div class="row">
+          <div class="col-xs-2 start-xs">
+            <div>
+              <hamburger-icon class="p15 bg-f04d24cf icon" />
+            </div>
+          </div>
+          <div class="col-xs-8 center-xs">
+            <div>
+              <logo width="auto" height="60px" />
+            </div>
+          </div>
+          <div class="col-xs-2 end-xs">
+            <search-icon class="p15 bg-f04d24cf icon pointer" />
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid search-and-category">
+        <div class="row" v-if="!isCheckoutPage || isThankYouPage">
+          <div class="col-md-9 col-xs-4 categories-bar">
+            <ul>
+              <li><a href="">Personal Care</a></li>
+              <li><a href="">Household Care</a></li>
+              <li><a href="">Staples</a></li>
+              <li><a href="">Snacks & Food</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 col-xs-2">
+            <div class="search-input-group">
+              <input
+                ref="search"
+                id="search"
+                v-model="search"
+                @input="makeSearch"
+                @blur="$v.search.$touch()"
+                class="search-panel-input"
+                :placeholder="$t('SEARCH PRODUCT HERE...')"
+                type="search"
+                autofocus="true"
+              >
+              <i class="material-icons search-icon">search</i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="header-placeholder" />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import CurrentPage from 'theme/mixins/currentPage'
 import AccountIcon from 'theme/components/core/blocks/Header/AccountIcon'
 import CompareIcon from 'theme/components/core/blocks/Header/CompareIcon'
@@ -39,6 +158,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      totalQuantity: 'cart/getItemsTotalQuantity'
+    }),
     ...mapState({
       isOpenLogin: state => state.ui.signUp,
       currentUser: state => state.user.current
@@ -90,6 +212,83 @@ export default {
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
 
+.large-screen {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.mobile-screen {
+  display: none;
+  @media (max-width: 767px) {
+    display: block;
+  }
+}
+
+.bg-f04d24cf {
+  color: #f04d24cf;
+  font-weight: 600;
+}
+
+.minicart-count {
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 36px;
+  font-size: 20px;
+  opacity: 0.6;
+  color: #000;
+  font-weight: 500;
+  margin-top: 16px;
+  background-color: #a8aeba;
+}
+
+.categories-bar {
+  ul {
+    display:flex;  
+    list-style:none;
+    text-transform: uppercase;
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
+    li {
+      padding: 15px 60px 16px 0px;   
+    }
+  }
+}
+
+.search-input-group {
+  display: flex;
+  font: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+}
+
+.search-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.search-panel-input {
+  width: 100%;
+  height: 60px;
+  padding-bottom: 0;
+  padding-top: 0;
+  border: none;
+  outline: 0;
+  font-size: 16px;
+  font-style: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+}
+
+.no-results {
+  top: 80px;
+  width: 100%;
+}
+
+i {
+  opacity: 0.6;
+}
+
 .nav-wrap {
   display: flex;
   justify-content: center;
@@ -102,19 +301,22 @@ $color-icon-hover: color(secondary, $colors-background);
 }
 
 header {
-  height: 54px;
-  top: -55px;
+  height: 158px;
+  //top: -55px;
   z-index: 3;
   transition: top 0.2s ease-in-out;
   &.is-visible {
     top: 0;
+  }
+  @media (max-width: 767px) {
+    height: 60px;
   }
 }
 .icon {
   opacity: 0.6;
   &:hover,
   &:focus {
-    background-color: $color-icon-hover;
+    color: #30794a;
     opacity: 1;
   }
 }
@@ -124,9 +326,23 @@ header {
 }
 .header-placeholder {
   height: 54px;
+  @media (max-width: 767px) {
+    height: 0px;
+  }
 }
 .links {
   text-decoration: underline;
+}
+.search-and-category {
+  background-color: #fff;
+  margin-top: -2px;
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.categories-bar {
+  border-right: 1px solid rgb(242, 242, 242);
 }
 @media (max-width: 767px) {
   .row.middle-xs {

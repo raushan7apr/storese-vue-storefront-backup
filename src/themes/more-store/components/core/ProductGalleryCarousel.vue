@@ -18,7 +18,7 @@
         :key="images.src"
       >
         <div
-          class="product-image-container bg-cl-secondary"
+          class="product-image-container bg-cl-white"
           :class="{'video-container w-100 h-100 flex relative': images.video}"
         >
           <product-image

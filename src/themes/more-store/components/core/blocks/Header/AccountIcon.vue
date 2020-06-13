@@ -12,9 +12,9 @@
   >
     <button
       type="button"
-      class="bg-cl-transparent brdr-none p0"
+      class="account-btn bg-cl-transparent p0"
     >
-      <i class="material-icons block">account_circle</i>
+    Your Account
     </button>
 
     <no-ssr>
@@ -83,6 +83,15 @@ $color-icon-hover: color(secondary, $colors-background);
 
   button {
     pointer-events: none;
+  }
+
+  .account-btn {
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    color: #a8aeba;
+    border-color: #a8aeba;
+    font-weight: 600;
   }
 
   .dropdown-content {

@@ -1,5 +1,5 @@
 <template>
-  <div class="breadcrumbs h5 cl-gray">
+  <div class="breadcrumbs h4 cl-gray">
     <span v-for="link in paths" :key="link.route_link">
       <router-link :to="link.route_link">
         {{ link.name | htmlDecode }}

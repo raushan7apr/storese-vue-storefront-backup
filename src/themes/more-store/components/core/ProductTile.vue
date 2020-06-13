@@ -26,7 +26,7 @@
       data-testid="productLink"
     >
       <div
-        class="product-cover bg-cl-secondary"
+        class="product-cover"
         :class="[{ sale: labelsActive && isOnSale }, { new: labelsActive && isNew }]"
       >
         <product-image
@@ -38,25 +38,37 @@
         />
       </div>
 
-      <p class="mb0 cl-accent mt10" v-if="!onlyImage">
+      <p class="product-name mb5 cl-accent mt10" v-if="!onlyImage">
         {{ product.name | htmlDecode }}
       </p>
 
       <span
-        class="price-original mr5 lh30 cl-secondary"
+        class="price-original price mr5 lh30 cl-secondary"
         v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
       >{{ product.original_price_incl_tax | price(storeView) }}</span>
 
       <span
-        class="price-special lh30 cl-accent weight-700"
+        class="price-special price lh30 cl-accent weight-700"
         v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
       >{{ product.price_incl_tax | price(storeView) }}</span>
 
       <span
-        class="lh30 cl-secondary"
+        class="lh30 cl-secondary price"
         v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
       >{{ product.price_incl_tax | price(storeView) }}</span>
     </router-link>
+    <div class="qty-container">
+      <div class="add-to-cart">
+        <div class="decrease">-</div>
+        <div class="qty">2</div>
+        <div class="increase">+</div>  
+      </div>
+    </div>
+    <add-to-cart
+      :product="product"
+      :disabled="isAddToCartDisabled"
+    >
+    </add-to-cart>
   </div>
 </template>
 
@@ -65,6 +77,7 @@ import rootStore from '@vue-storefront/core/store'
 import { ProductTile } from '@vue-storefront/core/modules/catalog/components/ProductTile.ts'
 import config from 'config'
 import ProductImage from './ProductImage'
+import AddToCart from 'theme/components/core/AddToCart.vue'
 import AddToWishlist from 'theme/components/core/blocks/Wishlist/AddToWishlist'
 import AddToCompare from 'theme/components/core/blocks/Compare/AddToCompare'
 import { IsOnWishlist } from '@vue-storefront/core/modules/wishlist/components/IsOnWishlist'
@@ -74,6 +87,7 @@ import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 export default {
   mixins: [ProductTile, IsOnWishlist, IsOnCompare],
   components: {
+    AddToCart,
     ProductImage,
     AddToWishlist,
     AddToCompare
@@ -148,8 +162,54 @@ $bg-secondary: color(secondary, $colors-background);
 $border-secondary: color(secondary, $colors-border);
 $color-white: color(white);
 
+.qty-container {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #e1e1e1;
+  margin-top: 8px;
+}
+
+.add-to-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 108px;
+  height: 36px;
+  border: 4px solid red;
+  border-radius: 30px;
+  margin-top: 8px;
+}
+
+.add-to-cart > .decrease {
+  font-size: 24px;
+  font-weight: 900;
+  padding-right: 12px;
+  padding-top: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.add-to-cart > .qty {
+  font-size: 16px;
+  font-weight: 900;
+  padding: 0px 8px 0px 8px;
+  color: #bdbdbd;
+}
+
+.add-to-cart > .increase {
+  font-size: 24px;
+  font-weight: 900;
+  padding-left: 12px;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
 .product {
   position: relative;
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #fff;
   @media (max-width: 767px) {
     padding-bottom: 10px;
   }
@@ -179,6 +239,16 @@ $color-white: color(white);
       opacity: 1;
     }
   }
+}
+
+.product-name {
+  font: 500 14px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+  font-size: 16px;
+}
+
+.price {
+  color: #242d5f;
+  font: 600 18px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
 .price-original {
@@ -222,6 +292,7 @@ $color-white: color(white);
       &.sale::after,
       &.new::after {
         opacity: 0.8;
+        display: none;
       }
     }
   }
@@ -230,12 +301,14 @@ $color-white: color(white);
     &::after {
       @extend %label;
       content: 'Sale';
+      display: none;
     }
   }
   &.new {
     &::after {
       @extend %label;
       content: 'New';
+      display: none;
     }
   }
 }

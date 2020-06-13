@@ -1,30 +1,14 @@
 <template>
   <div id="home">
     <head-image />
-    <section class="container pb60 px15">
+    <section class="container-fluid bg-d1d1d1 pb60 px15">
       <div class="row center-xs">
-        <header class="col-md-12">
-          <h2 class="cl-accent uppercase">
+        <header class="col-md-12 start-xs">
+          <div class="header-text">
             {{ $t('Shop by Category') }}
-          </h2>
+          </div>
         </header>
         <home-categories />
-      </div>
-    </section>
-
-    <section class="new-collection container px15">
-      <div>
-        <header class="col-md-12">
-          <h2 class="align-center cl-accent">
-            {{ $t('Everything new') }}
-          </h2>
-        </header>
-      </div>
-      <div class="row center-xs">
-        <lazy-hydrate :trigger-hydration="!loading" v-if="isLazyHydrateEnabled">
-          <product-listing columns="4" :products="getEverythingNewCollection" />
-        </lazy-hydrate>
-        <product-listing v-else columns="4" :products="getEverythingNewCollection" />
       </div>
     </section>
   </div>
@@ -129,6 +113,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .header-text {
+    font: 600 20px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    color: #232d5f;
+    margin-top: 80px;
+    font-size: 28px;
+    margin-bottom: -12px;
+    text-transform: capitalize;
+    @media (max-width: 767px) {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  }
+
+  .bg-d1d1d1 {
+    background-color: rgb(242, 242, 242);
+  }
+
   .new-collection {
     @media (max-width: 767px) {
       padding-top: 0;

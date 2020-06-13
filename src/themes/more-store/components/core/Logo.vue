@@ -3,7 +3,7 @@
     <img
       :width="width"
       :height="height"
-      src="/assets/logo.svg"
+      src="https://sarjapur-more.storese.in/pub/media/logo/stores/86/More_Logo.png"
       :alt="$t(defaultTitle)"
     >
   </router-link>
