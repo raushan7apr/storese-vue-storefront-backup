@@ -61,14 +61,15 @@
       <div class="add-to-cart">
         <div class="decrease">-</div>
         <div class="qty">2</div>
-        <div class="increase">+</div>  
+        <div class="increase">
+          <add-to-cart-plus
+            :product="product"
+            :disabled="isAddToCartDisabled"
+          >
+          </add-to-cart-plus>
+        </div>  
       </div>
     </div>
-    <add-to-cart
-      :product="product"
-      :disabled="isAddToCartDisabled"
-    >
-    </add-to-cart>
   </div>
 </template>
 
@@ -78,6 +79,7 @@ import { ProductTile } from '@vue-storefront/core/modules/catalog/components/Pro
 import config from 'config'
 import ProductImage from './ProductImage'
 import AddToCart from 'theme/components/core/AddToCart.vue'
+import AddToCartPlus from 'theme/components/core/AddToCartPlus.vue'
 import AddToWishlist from 'theme/components/core/blocks/Wishlist/AddToWishlist'
 import AddToCompare from 'theme/components/core/blocks/Compare/AddToCompare'
 import { IsOnWishlist } from '@vue-storefront/core/modules/wishlist/components/IsOnWishlist'
@@ -88,6 +90,7 @@ export default {
   mixins: [ProductTile, IsOnWishlist, IsOnCompare],
   components: {
     AddToCart,
+    AddToCartPlus,
     ProductImage,
     AddToWishlist,
     AddToCompare

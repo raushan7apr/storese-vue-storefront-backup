@@ -223,7 +223,7 @@ export default {
   }
   
   .category {
-    margin-top: 172px;
+    margin-top: 12px;
     background-color: rgb(242, 242, 242);
   }
 

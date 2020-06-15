@@ -94,10 +94,11 @@
         <div class="row" v-if="!isCheckoutPage || isThankYouPage">
           <div class="col-md-9 col-xs-4 categories-bar">
             <ul>
-              <li><a href="">Personal Care</a></li>
-              <li><a href="">Household Care</a></li>
-              <li><a href="">Staples</a></li>
-              <li><a href="">Snacks & Food</a></li>
+              <li v-for="(category, index) in visibleCategories" :key="index">
+                <router-link :to="categoryLink(category)">
+                  {{ category.name }}
+                </router-link>
+              </li>
             </ul>
           </div>
           <div class="col-md-3 col-xs-2">
@@ -124,7 +125,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import CurrentPage from 'theme/mixins/currentPage'
 import AccountIcon from 'theme/components/core/blocks/Header/AccountIcon'
 import CompareIcon from 'theme/components/core/blocks/Header/CompareIcon'
@@ -134,6 +135,8 @@ import MicrocartIcon from 'theme/components/core/blocks/Header/MicrocartIcon'
 import SearchIcon from 'theme/components/core/blocks/Header/SearchIcon'
 import WishlistIcon from 'theme/components/core/blocks/Header/WishlistIcon'
 import LocationInput from 'src/modules/location/components/Location';
+import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/SidebarMenu/SidebarMenu';
+import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
 
 export default {
   name: 'Header',
@@ -147,7 +150,7 @@ export default {
     SearchIcon,
     WishlistIcon
   },
-  mixins: [CurrentPage],
+  mixins: [CurrentPage, SidebarMenu],
   data () {
     return {
       navVisible: true,
@@ -169,6 +172,11 @@ export default {
       return this.$store.state.checkout.isThankYouPage
         ? this.$store.state.checkout.isThankYouPage
         : false
+    },
+    visibleCategories () {
+      return this.categories.filter(category => {
+        return category.product_count > 0 || category.children_count > 0
+      })
     }
   },
   beforeMount () {
@@ -202,6 +210,9 @@ export default {
         this.navVisible = true
       }
       this.lastScrollTop = this.scrollTop
+    },
+    categoryLink (category) {
+      return formatCategoryLink(category)
     }
   }
 }

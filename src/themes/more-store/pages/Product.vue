@@ -17,8 +17,8 @@
             />
           </div>
           <div class="col-xs-12 col-md-5 data">
-            <h1
-              class="mb20 mt0 cl-mine-shaft product-name"
+            <div
+              class="mb20 mt20 product-name"
               data-testid="productName"
             >
               {{ getCurrentProduct.name | htmlDecode }}
@@ -27,7 +27,7 @@
                 text="Check this product!"
                 class="web-share"
               />
-            </h1>
+            </div>
             <div
               class="mb20 uppercase cl-secondary"
               :content="getCurrentProduct.sku"
@@ -36,7 +36,7 @@
             </div>
             <div>
               <product-price
-                class="mb40"
+                class="mb40 product-price" style="color: #009688;"
                 v-if="getCurrentProduct.type_id !== 'grouped'"
                 :product="getCurrentProduct"
                 :custom-options="getCurrentCustomOptions"
@@ -171,15 +171,15 @@
         :product="getCurrentProduct"
       />
     </lazy-hydrate>
-    <lazy-hydrate when-idle>
+    <!--<lazy-hydrate when-idle>
       <related-products type="upsell" :heading="$t('We found other products you might like')" />
-    </lazy-hydrate>
-    <lazy-hydrate when-idle>
+    </lazy-hydrate>-->
+    <!--<lazy-hydrate when-idle>
       <promoted-offers single-banner />
-    </lazy-hydrate>
-    <lazy-hydrate when-idle>
+    </lazy-hydrate>-->
+    <!--<lazy-hydrate when-idle>
       <related-products type="related" />
-    </lazy-hydrate>
+    </lazy-hydrate>-->
     <SizeGuide />
     <script v-html="getJsonLd" type="application/ld+json" />
   </div>
@@ -446,9 +446,15 @@ $color-tertiary: color(tertiary);
 $color-secondary: color(secondary);
 $color-white: color(white);
 $bg-secondary: color(secondary, $colors-background);
+$more-background: color(rgb(242, 242, 242));
+
 
 .product-page {
-  margin-top: 180px;
+  margin-top: 12px;
+}
+
+.product-price {
+  color: #009688;
 }
 
 .shadow-box {
@@ -491,6 +497,9 @@ $bg-secondary: color(secondary, $colors-background);
 }
 
 .product-name {
+  font: 600 24px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+  color: #414b56;
+  font-size: 36px;
   @media (max-width: 767px) {
     font-size: 36px;
   }
@@ -523,6 +532,7 @@ $bg-secondary: color(secondary, $colors-background);
 }
 
 .product-top-section {
+  padding-bottom: 36px;
   @media (max-width: 767px) {
     padding: 0;
     background-color: $color-white;
@@ -537,6 +547,7 @@ $bg-secondary: color(secondary, $colors-background);
 }
 
 .details {
+  background-color: $more-background;
   @media (max-width: 767px) {
     padding: 50px 15px 15px;
   }

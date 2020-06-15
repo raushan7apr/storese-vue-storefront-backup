@@ -8,7 +8,7 @@
       >
         <router-link :to="categoryLink(category)">
           <div class="offer offer-product border-box flex">
-            <img src="https://indore-more.storese.in/pub/media/wysiwyg/Household_Care.png" alt="" width="132" height="132">
+            <img v-bind:src="category.image" alt="" width="132" height="132">
             <div class="category-name m0 h1">
               {{ category.name }}
             </div>
