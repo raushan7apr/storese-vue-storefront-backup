@@ -62,7 +62,7 @@ export default {
       defaultLocation: 'Choose location',
       locationValue: '',
       locationSearch: '',
-      showLocationWrap: true,
+      showLocationWrap: false,
       errorMessage: '',
       latitude: 0,
       longitude: 0,
@@ -81,7 +81,7 @@ export default {
         message: i18n.t('Changing location will clear your cart. Do you wish to continue?'),
         action1: { label: i18n.t('Cancel'),
           action: () => {
-            this.showLocationWrap = false
+            this.showLocationWrap = false;
             this.locationSearch = '';
           }
         },
@@ -117,6 +117,7 @@ export default {
           if (locationData && this.quantity > 0) {
             this.clearCart(place, latitude, longitude);
           } else {
+            this.updateAddress(latitude, longitude);
             this.getStores(latitude, longitude);
           }
         });
