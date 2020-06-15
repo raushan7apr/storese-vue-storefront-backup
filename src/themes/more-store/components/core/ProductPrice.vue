@@ -5,14 +5,14 @@
       v-if="initialPrice.special && price.default && price.original"
     >
       <span
-        class="h2 cl-mine-shaft weight-700"
+        class="h2 weight-700"
       >{{ price.special | price(storeView) }}</span>&nbsp;
       <span
         class="price-original h3"
       >{{ price.original | price(storeView) }}</span>
     </div>
     <div
-      class="h2 cl-mine-shaft weight-700"
+      class="h2 weight-700"
       v-if="!initialPrice.special && price.default"
     >
       {{ price.default | price(storeView) }}
