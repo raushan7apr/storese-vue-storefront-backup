@@ -333,6 +333,7 @@
         "is_active",
         "level",
         "name",
+        "image",
         "parent_id",
         "path",
         "position",
