@@ -162,26 +162,6 @@
             ]"
           />
 
-          <base-input
-            class="col-xs-12 col-sm-6 mb10"
-            type="text"
-            name="zip-code"
-            :placeholder="$t('Zip-code *')"
-            v-model.trim="shipping.zipCode"
-            @blur="$v.shipping.zipCode.$touch()"
-            autocomplete="postal-code"
-            :validations="[
-              {
-                condition: $v.shipping.zipCode.$error && !$v.shipping.zipCode.required,
-                text: $t('Field is required')
-              },
-              {
-                condition: !$v.shipping.zipCode.minLength,
-                text: $t('Name must have at least 3 letters.')
-              }
-            ]"
-          />
-
           <base-select
             class="col-xs-12 col-sm-6 mb10"
             name="countries"
