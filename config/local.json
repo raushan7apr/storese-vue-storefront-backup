@@ -271,13 +271,13 @@
       "appendStoreCode": true,
       "elasticsearch": {
         "host": "/api/catalog",
-        "index": "vue_storefront_catalog_indore_1591896249"
+        "index": "vue_storefront_catalog_indore"
       },
       "tax": {
         "defaultCountry": "IN"
       },
       "i18n": {
-        "fullCountryName": "India",
+        "fullCountryName": "More Indore",
         "fullLanguageName": "English",
         "defaultCountry": "IN",
         "defaultLanguage": "EN",
@@ -295,7 +295,7 @@
       "appendStoreCode": true,
       "elasticsearch": {
         "host": "/api/catalog",
-        "index": "vue_storefront_catalog_tmc_storeview_1591945695"
+        "index": "vue_storefront_catalog_tmc_storeview"
       },
       "tax": {
         "defaultCountry": "IN"
@@ -333,6 +333,7 @@
         "is_active",
         "level",
         "name",
+        "image",
         "parent_id",
         "path",
         "position",

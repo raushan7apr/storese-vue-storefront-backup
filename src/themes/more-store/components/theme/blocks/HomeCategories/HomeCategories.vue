@@ -8,7 +8,8 @@
       >
         <router-link :to="categoryLink(category)">
           <div class="offer offer-product border-box flex">
-            <img v-bind:src="category.image" alt="" width="132" height="132">
+            <img v-if="category.image" v-bind:src="category.image" alt="" width="132" height="132">
+            <img v-else src="/assets/placeholder.svg" style="opacity: 0.4" width="132" height="132">
             <div class="category-name m0 h1">
               {{ category.name }}
             </div>
@@ -37,6 +38,9 @@ export default {
   computed: {
     visibleCategories () {
       return this.categories.filter(category => {
+        if(category.image) {
+          category.image = "https://preprod-admin.storese.in/pub/media/catalog/category/" + category.image;
+        }
         return category.product_count > 0 || category.children_count > 0
       })
     }
