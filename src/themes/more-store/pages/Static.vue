@@ -35,6 +35,7 @@ import i18n from '@vue-storefront/i18n'
 import Breadcrumbs from 'theme/components/core/Breadcrumbs'
 import StaticExample from 'theme/components/theme/blocks/Static/Example'
 import StaticShortExample from 'theme/components/theme/blocks/Static/Short'
+import TermsAndCondition from 'theme/components/theme/blocks/Static/T&C'
 import { getPathForStaticPage } from 'theme/helpers'
 import { localizedRoute } from '@vue-storefront/core/lib/multistore'
 
@@ -74,7 +75,8 @@ export default {
         { title: i18n.t('Return policy'), link: '/returns', component: StaticExample },
         { title: i18n.t('Privacy policy'), link: '/privacy', component: StaticShortExample },
         { title: i18n.t('Size guide'), link: '/size-guide', component: StaticExample },
-        { title: i18n.t('Contact us'), link: '/contact', component: StaticShortExample }
+        { title: i18n.t('Contact us'), link: '/contact', component: StaticShortExample },
+        { title: i18n.t('Terms & Condition'), link: '/terms-and-condition', component: TermsAndCondition }
       ]
     }
   }

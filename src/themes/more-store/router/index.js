@@ -16,6 +16,7 @@ let routes = [
   { name: 'legal', path: '/legal', component: Static, props: { page: 'lorem', title: 'Legal Notice' }, meta: { title: 'Legal Notice', description: 'Legal Notice - example of description usage' } },
   { name: 'privacy', path: '/privacy', component: Static, props: { page: 'lorem', title: 'Privacy' } },
   { name: 'magazine', path: '/magazine', component: Static, props: { page: 'lorem', title: 'Magazine' } },
+  { name: 'terms-and-condition', path: '/terms-and-condition', component: Static, props: { page: 'lorem', title: 'Terms & Conditions' } },
   { name: 'sale', path: '/sale', component: Static, props: { page: 'lorem', title: 'Sale' } },
   { name: 'order-tracking', path: '/order-tracking', component: Static, props: { page: 'lorem', title: 'Track my Order' } },
   { name: 'my-account', path: '/my-account', component: MyAccount },
