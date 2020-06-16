@@ -137,6 +137,7 @@ import WishlistIcon from 'theme/components/core/blocks/Header/WishlistIcon'
 import LocationInput from 'src/modules/location/components/Location';
 import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/SidebarMenu/SidebarMenu';
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
+import SearchPanel from 'theme/components/core/blocks/SearchPanel/SearchPanel';
 
 export default {
   name: 'Header',
@@ -255,13 +256,13 @@ $color-icon-hover: color(secondary, $colors-background);
 
 .categories-bar {
   ul {
-    display:flex;  
+    display:flex;
     list-style:none;
     text-transform: uppercase;
     margin-block-start: 0.5rem;
     margin-block-end: 0.5rem;
     li {
-      padding: 15px 60px 16px 0px;   
+      padding: 15px 60px 16px 0px;
     }
   }
 }

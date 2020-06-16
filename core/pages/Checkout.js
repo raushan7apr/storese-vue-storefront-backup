@@ -60,6 +60,7 @@ export default {
     this.$bus.$on('checkout-before-edit', this.onBeforeEdit)
     this.$bus.$on('order-after-placed', this.onAfterPlaceOrder)
     this.$bus.$on('checkout-before-shippingMethods', this.onBeforeShippingMethods)
+    this.$bus.$on('region-before-shippingMethods', this.onRegionBeforeShippingMethods)
     this.$bus.$on('checkout-after-shippingMethodChanged', this.onAfterShippingMethodChanged)
     this.$bus.$on('checkout-after-validationError', this.focusField)
     if (!this.isThankYouPage) {
@@ -103,7 +104,6 @@ export default {
     }
     const storeView = currentStoreView()
     let country = this.$store.state.checkout.shippingDetails.country
-    if (!country) country = storeView.i18n.defaultCountry
     this.$bus.$emit('checkout-before-shippingMethods', country)
   },
   beforeDestroy () {
@@ -119,6 +119,7 @@ export default {
     this.$bus.$off('checkout-before-edit', this.onBeforeEdit)
     this.$bus.$off('order-after-placed', this.onAfterPlaceOrder)
     this.$bus.$off('checkout-before-shippingMethods', this.onBeforeShippingMethods)
+    this.$bus.$off('region-before-shippingMethods', this.onRegionBeforeShippingMethods)
     this.$bus.$off('checkout-after-shippingMethodChanged', this.onAfterShippingMethodChanged)
     this.$bus.$off('checkout-after-validationError', this.focusField)
   },
@@ -139,6 +140,11 @@ export default {
     },
     onBeforeShippingMethods (country) {
       this.$store.dispatch('checkout/updatePropValue', ['country', country])
+      this.$store.dispatch('cart/syncTotals', { forceServerSync: true })
+      this.$forceUpdate()
+    },
+    onRegionBeforeShippingMethods (regionId) {
+      this.$store.dispatch('checkout/updatePropValue', ['region_id', regionId])
       this.$store.dispatch('cart/syncTotals', { forceServerSync: true })
       this.$forceUpdate()
     },
