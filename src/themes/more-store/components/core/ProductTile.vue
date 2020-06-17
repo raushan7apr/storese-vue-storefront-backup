@@ -59,8 +59,8 @@
     </router-link>
     <div class="qty-container">
       <div class="add-to-cart">
-        <div class="decrease">-</div>
-        <div class="qty">2</div>
+        <div @click="updateProductQty(product, productsInCart)" class="decrease">-</div>
+        <div class="qty">{{ cartQuantity(product, productsInCart) }}</div>
         <div class="increase">
           <add-to-cart-plus
             :product="product"
@@ -74,7 +74,9 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import rootStore from '@vue-storefront/core/store'
+import { Product } from '@vue-storefront/core/modules/checkout/components/Product'
 import { ProductTile } from '@vue-storefront/core/modules/catalog/components/ProductTile.ts'
 import config from 'config'
 import ProductImage from './ProductImage'
@@ -87,7 +89,7 @@ import { IsOnCompare } from '@vue-storefront/core/modules/compare/components/IsO
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 
 export default {
-  mixins: [ProductTile, IsOnWishlist, IsOnCompare],
+  mixins: [ProductTile, IsOnWishlist, IsOnCompare, Product],
   components: {
     AddToCart,
     AddToCartPlus,
@@ -106,6 +108,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      productsInCart: 'cart/getCartItems'
+    }),
     thumbnailObj () {
       return {
         src: this.thumbnail,
@@ -117,9 +122,37 @@ export default {
     },
     storeView () {
       return currentStoreView()
-    }
+    },
   },
   methods: {
+    cartQuantity(product, cart) {
+      let cartItem = this.cartItem(product, cart);
+      if(cartItem) {
+        return cartItem.qty;
+      } else {
+        return 0;
+      }
+    },
+    cartItem(product, cart) {
+      let cartItem = cart.find( item => item.name === product.name );
+      return cartItem;
+    },
+    updateProductQty (product, productsInCart) {
+      this.updateQuantity(product, productsInCart);
+    },
+    updateQuantity (product, productsInCart) {
+      let cartItem = this.cartItem(product, productsInCart);
+      let qty = 0;
+      if(cartItem.qty) {
+        qty = cartItem.qty;
+      }
+      if(qty===1) {
+        this.$store.dispatch('cart/removeItem', { product: cartItem })
+      } else if (qty > 1) {
+        qty = qty - 1;
+        this.$store.dispatch('cart/updateQuantity', { product: cartItem, qty: qty });
+      }
+    },
     onProductPriceUpdate (product) {
       if (product.sku === this.product.sku) {
         Object.assign(this.product, product)
@@ -196,7 +229,7 @@ $color-white: color(white);
   font-size: 16px;
   font-weight: 900;
   padding: 0px 8px 0px 8px;
-  color: #bdbdbd;
+  color: #aaaaaa;
 }
 
 .add-to-cart > .increase {

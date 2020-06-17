@@ -124,13 +124,22 @@
             ]"
           />
 
-          <base-input
+          <base-select
             class="col-xs-12 col-sm-6 mb10"
-            type="text"
-            name="state"
-            :placeholder="$t('State / Province')"
-            v-model.trim="shipping.state"
-            autocomplete="address-level1"
+            name="states"
+            :options="stateOptions"
+            :selected="shipping.region_id"
+            :placeholder="$t('State / Region *')"
+            :validations="[
+              {
+                condition: $v.shipping.region_id.$error && !$v.shipping.region_id.required,
+                text: $t('Field is required')
+              }
+            ]"
+            v-model="shipping.region_id"
+            autocomplete="region-name"
+            @blur="$v.shipping.region_id.$touch()"
+            @change.native="$v.shipping.region_id.$touch(); changeRegion();"
           />
 
           <base-input
@@ -168,14 +177,28 @@
             v-model="shipping.country"
             autocomplete="country-name"
             @blur="$v.shipping.country.$touch()"
-            @change.native="$v.shipping.country.$touch(); changeCountry();"
           />
 
           <base-input
             class="col-xs-12 mb10"
-            type="text"
+            type="number"
             name="phone-number"
-            :placeholder="$t('Phone Number')"
+            :placeholder="$t('Phone Number *')"
+            @blur="$v.shipping.phoneNumber.$touch()"
+            :validations="[
+              {
+                condition: $v.shipping.phoneNumber.$error && !$v.shipping.phoneNumber.required,
+                text: $t('Field is required')
+              },
+              {
+                condition: !$v.shipping.phoneNumber.minLength,
+                text: $t('Phone number must be 10 digits')
+              },
+              {
+                condition: !$v.shipping.phoneNumber.maxLength,
+                text: $t('Phone number must be 10 digits')
+              }
+            ]"
             v-model.trim="shipping.phoneNumber"
             autocomplete="tel"
           />
@@ -262,7 +285,7 @@
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import { unicodeAlpha, unicodeAlphaNum } from '@vue-storefront/core/helpers/validators'
 import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping'
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
@@ -291,6 +314,14 @@ export default {
         }
       })
     },
+    stateOptions () {
+      return this.states.map((item) => {
+        return {
+          value: item.region_id,
+          label: item.name
+        }
+      })
+    },
     storeView () {
       return currentStoreView()
     }
@@ -309,6 +340,9 @@ export default {
       country: {
         required
       },
+      region_id: {
+        required
+      },
       streetAddress: {
         required,
         unicodeAlphaNum
@@ -324,6 +358,11 @@ export default {
         required,
         minLength: minLength(3),
         unicodeAlphaNum
+      },
+      phoneNumber: {
+        required,
+        minLength: minLength(10),
+        maxLength: maxLength(10)
       },
       city: {
         required,

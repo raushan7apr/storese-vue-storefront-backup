@@ -103,18 +103,7 @@
           </div>
           <div class="col-md-3 col-xs-2">
             <div class="search-input-group">
-              <input
-                ref="search"
-                id="search"
-                v-model="search"
-                @input="makeSearch"
-                @blur="$v.search.$touch()"
-                class="search-panel-input"
-                :placeholder="$t('SEARCH PRODUCT HERE...')"
-                type="search"
-                autofocus="true"
-              >
-              <i class="material-icons search-icon">search</i>
+              <search-panel />
             </div>
           </div>
         </div>
@@ -137,10 +126,12 @@ import WishlistIcon from 'theme/components/core/blocks/Header/WishlistIcon'
 import LocationInput from 'src/modules/location/components/Location';
 import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/SidebarMenu/SidebarMenu';
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
+import SearchPanel from '../SearchPanel/SearchPanel';
 
 export default {
   name: 'Header',
   components: {
+    SearchPanel,
     LocationInput,
     AccountIcon,
     CompareIcon,
@@ -255,13 +246,13 @@ $color-icon-hover: color(secondary, $colors-background);
 
 .categories-bar {
   ul {
-    display:flex;  
+    display:flex;
     list-style:none;
     text-transform: uppercase;
     margin-block-start: 0.5rem;
     margin-block-end: 0.5rem;
     li {
-      padding: 15px 60px 16px 0px;   
+      padding: 15px 60px 16px 0px;
     }
   }
 }
