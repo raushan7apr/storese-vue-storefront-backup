@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="container">
+    <div class="container">
       <div class="row middle-xs px15 bottom-links">
         <div class="col-xs-5 col-sm-3 cl-tertiary">
           <language-switcher v-if="multistoreEnabled" />
@@ -57,7 +57,7 @@
           </ul>
         </div>
       </div>
-    </div> -->
+    </div>
     <back-to-top bottom="20px" right="20px" visibleoffset="200">
       <button type="button" class="btn-top button no-outline brdr-none cl-white bg-cl-mine-shaft :bg-cl-th-secondary py10 px10">
         <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
@@ -72,7 +72,7 @@
 import { mapGetters } from 'vuex'
 import { currentStoreView, localizedRoute } from '@vue-storefront/core/lib/multistore'
 import CurrentPage from 'theme/mixins/currentPage'
-// import LanguageSwitcher from '../../LanguageSwitcher.vue'
+import LanguageSwitcher from '../../LanguageSwitcher.vue'
 import Newsletter from 'theme/components/core/blocks/Footer/Newsletter'
 import BackToTop from 'theme/components/core/BackToTop'
 import { getPathForStaticPage } from 'theme/helpers'
@@ -101,8 +101,8 @@ export default {
     }
   },
   components: {
-    // Newsletter,
-    // LanguageSwitcher,
+    Newsletter,
+    LanguageSwitcher,
     BackToTop
   }
 }
