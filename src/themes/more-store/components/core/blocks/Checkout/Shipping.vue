@@ -180,7 +180,7 @@
             autocomplete="tel"
           />
 
-          <h4 class="col-xs-12">
+          <!-- <h4 class="col-xs-12">
             {{ $t('Shipping method') }}
           </h4>
           <div v-for="(method, index) in shippingMethods" :key="index" class="col-md-6">
@@ -197,7 +197,7 @@
           </div>
           <span class="validation-error" v-if="$v.shipping.shippingMethod.$error && !$v.shipping.shippingMethod.required">
             {{ $t('Field is required') }}
-          </span>
+          </span> -->
         </div>
       </div>
     </div>
@@ -206,10 +206,14 @@
       <div class="col-xs-12 col-sm-9 col-md-11">
         <div class="row">
           <div class="col-xs-12 col-md-8 my30 px20">
-            <button-full
+            <!-- <button-full
               data-testid="shippingSubmit"
               @click.native="sendDataToCheckout"
               :disabled="$v.shipping.$invalid || shippingMethods.length <= 0"
+            > -->
+            <button-full
+              data-testid="shippingSubmit"
+              @click.native="sendDataToCheckout"
             >
               {{ $t('Continue to payment') }}
             </button-full>

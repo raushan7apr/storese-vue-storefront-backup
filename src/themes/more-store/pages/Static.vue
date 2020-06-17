@@ -4,7 +4,7 @@
       <div class="container">
         <breadcrumbs :with-homepage="true" :routes="[]" :active-route="$props.title" />
         <h2 class="fs-big">
-          {{ $props.title }}
+          <!-- {{ $props.title }} -->
         </h2>
       </div>
     </div>
