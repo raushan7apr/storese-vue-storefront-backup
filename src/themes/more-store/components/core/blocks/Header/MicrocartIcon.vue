@@ -7,7 +7,8 @@
     :aria-label="$t('Open microcart')"
   >
     <i class="material-icons cart-icon">shopping_cart</i>
-    <span class="cart-amount border-box center-xs middle-xs weight-600">&#8377;{{ totals[0].value }}.00</span>
+    <span v-if="totalQuantity" class="cart-amount border-box center-xs middle-xs weight-600">&#8377;{{ totals[0].value }}.00</span>
+    <span v-else class="cart-amount border-box center-xs middle-xs weight-600">&#8377;0.00</span>
   </button>
 </template>
 
