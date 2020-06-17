@@ -1,6 +1,6 @@
 <template>
   <footer :class="{ 'brdr-top-1 brdr-cl-secondary': isCheckoutPage }">
-    <newsletter class=" flex brdr-bottom-1 brdr-cl-secondary" v-if="!isCheckoutPage" />
+    <!-- <newsletter class=" flex brdr-bottom-1 brdr-cl-secondary" v-if="!isCheckoutPage" /> -->
     <div
       class="footer-links flex pt30 pb60 px40 bg-cl-secondary"
       v-if="!isCheckoutPage"
@@ -11,16 +11,13 @@
             class="row m0 col-lg-7 col-md-8 col-xs-12 start-md between-md between-xs no-mobile"
           >
             <div class="start-md">
-              <h3 class="cl-accent weight-400">
-                {{ $t('Terms and Conditions') }}
-              </h3>
               <div class="mt15">
                 <router-link class="cl-secondary" :to="localizedRoute('/terms-and-condition')" exact>
                   {{ $t('Terms and Conditions') }}
                 </router-link>
               </div>
               <div class="mt15">
-                <a class="cl-secondary" href="tel:8108138000" >
+                <a class="cl-secondary" href="tel:8108138000">
                   {{ $t('Call Us 8108138000') }}
                 </a>
               </div>
