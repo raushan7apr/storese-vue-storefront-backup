@@ -13,42 +13,45 @@
             :placeholder="$t('Search')"
             type="search"
             autofocus="true"
+            @click="open = true"
           >
           <i class="material-icons search-icon">search</i>
         </div>
       </div>
     </div>
-    <div v-if="visibleProducts.length && categories.length > 1" class="categories">
-      <category-panel :categories="categories" v-model="selectedCategoryIds" />
-    </div>
-    <div class="product-listing row">
-      <product-tile
-        v-for="product in visibleProducts"
-        :key="product.id"
-        :product="product"
-        @click.native="closeSearchpanel"
-      />
-      <transition name="fade">
-        <div
-          v-if="getNoResultsMessage"
-          class="no-results relative center-xs h4 col-md-12"
-        >
-          {{ $t(getNoResultsMessage) }}
-        </div>
-      </transition>
-    </div>
-    <div
-      v-show="OnlineOnly"
-      v-if="visibleProducts.length >= 18"
-      class="buttons-set align-center py35 mt20 px40"
-    >
-      <button
-        @click="seeMore" v-if="readMore"
-        class="no-outline brdr-none py15 px20 bg-cl-mine-shaft :bg-cl-th-secondary cl-white fs-medium-small"
-        type="button"
+    <div v-if="open">
+      <div v-if="visibleProducts.length && categories.length > 1" class="categories">
+        <category-panel :categories="categories" v-model="selectedCategoryIds" />
+      </div>
+      <div class="product-listing row">
+        <product-tile
+          v-for="product in visibleProducts"
+          :key="product.id"
+          :product="product"
+          @click.native="closeSearchpanel"
+        />
+        <transition name="fade">
+          <div
+            v-if="getNoResultsMessage"
+            class="no-results relative center-xs h4 col-md-12"
+          >
+            {{ $t(getNoResultsMessage) }}
+          </div>
+        </transition>
+      </div>
+      <div
+        v-show="OnlineOnly"
+        v-if="visibleProducts.length >= 18"
+        class="buttons-set align-center py35 mt20 px40"
       >
-        {{ $t('Load more') }}
-      </button>
+        <button
+          @click="seeMore" v-if="readMore"
+          class="no-outline brdr-none py15 px20 bg-cl-mine-shaft :bg-cl-th-secondary cl-white fs-medium-small"
+          type="button"
+        >
+          {{ $t('Load more') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -74,7 +77,21 @@ export default {
   },
   data () {
     return {
-      selectedCategoryIds: []
+      selectedCategoryIds: [],
+      open: true
+    }
+  },
+  created () {
+    window.addEventListener('click', this.close);
+  },
+  beforeDestroy () {
+    window.removeEventListener('click', this.close);
+  },
+  methods: {
+    close (e) {
+      if (!this.$el.contains(e.target)) {
+        this.open = false;
+      }
     }
   },
   computed: {
@@ -108,7 +125,7 @@ export default {
   mounted () {
     // add autofocus to search input field
     this.$refs.search.focus()
-    //disableBodyScroll(this.$el)
+    // disableBodyScroll(this.$el)
   },
   destroyed () {
     clearAllBodyScrollLocks()
