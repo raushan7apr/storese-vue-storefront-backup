@@ -4,14 +4,14 @@
       <div class="container">
         <breadcrumbs :with-homepage="true" :routes="[]" :active-route="$props.title" />
         <h2 class="fs-big">
-          {{ $props.title }}
+          <!-- {{ $props.title }} -->
         </h2>
       </div>
     </div>
 
     <div class="container pt45 pb70">
       <div class="row pl20 pt0">
-        <div class="col-sm-3">
+        <!-- <div class="col-sm-3">
           <nav class="static-menu serif h4 mb35">
             <ul class="m0 p0">
               <li class="mb10" v-for="element in navigation" :key="element.id">
@@ -21,7 +21,7 @@
               </li>
             </ul>
           </nav>
-        </div>
+        </div> -->
         <div class="static-content h4 lh35 col-sm-9">
           <component :is="activeComponent" />
         </div>
@@ -35,6 +35,7 @@ import i18n from '@vue-storefront/i18n'
 import Breadcrumbs from 'theme/components/core/Breadcrumbs'
 import StaticExample from 'theme/components/theme/blocks/Static/Example'
 import StaticShortExample from 'theme/components/theme/blocks/Static/Short'
+import TermsAndCondition from 'theme/components/theme/blocks/Static/T&C'
 import { getPathForStaticPage } from 'theme/helpers'
 import { localizedRoute } from '@vue-storefront/core/lib/multistore'
 
@@ -74,7 +75,8 @@ export default {
         { title: i18n.t('Return policy'), link: '/returns', component: StaticExample },
         { title: i18n.t('Privacy policy'), link: '/privacy', component: StaticShortExample },
         { title: i18n.t('Size guide'), link: '/size-guide', component: StaticExample },
-        { title: i18n.t('Contact us'), link: '/contact', component: StaticShortExample }
+        { title: i18n.t('Contact us'), link: '/contact', component: StaticShortExample },
+        { title: i18n.t('Terms & Condition'), link: localizedRoute('/terms-and-condition'), component: TermsAndCondition }
       ]
     }
   }

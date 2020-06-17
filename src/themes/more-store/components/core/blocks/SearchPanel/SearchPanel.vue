@@ -1,78 +1,54 @@
 <template>
-  <div
-    class="searchpanel fixed mw-100 bg-cl-primary cl-accent"
-    data-testid="searchPanel"
-  >
-    <div class="close-icon-row">
-      <i
-        class="material-icons pointer cl-accent close-icon"
-        @click="closeSearchpanel"
-        data-testid="closeSearchPanel"
-      >
-        close
-      </i>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 end-xs">
-          <label for="search" class="visually-hidden">
-            {{ $t('Search') }}
-          </label>
-          <div class="search-input-group">
-            <i class="material-icons search-icon">search</i>
-            <input
-              ref="search"
-              id="search"
-              v-model="search"
-              @input="makeSearch"
-              @blur="$v.search.$touch()"
-              class="search-panel-input"
-              :placeholder="$t('Type what you are looking for...')"
-              type="search"
-              autofocus="true"
-            >
-          </div>
+  <div class="searchpanel">
+    <div>
+      <div>
+        <div class="search-input-group">
+          <input
+            ref="search"
+            id="search"
+            v-model="search"
+            @input="makeSearch"
+            @blur="$v.search.$touch()"
+            class="search-panel-input"
+            :placeholder="$t('Search')"
+            type="search"
+            autofocus="true"
+          >
+          <i class="material-icons search-icon">search</i>
         </div>
       </div>
-      <div v-if="visibleProducts.length && categories.length > 1" class="categories">
-        <category-panel :categories="categories" v-model="selectedCategoryIds" />
-      </div>
-      <div class="product-listing row">
-        <product-tile
-          v-for="product in visibleProducts"
-          :key="product.id"
-          :product="product"
-          @click.native="closeSearchpanel"
-        />
-        <transition name="fade">
-          <div
-            v-if="getNoResultsMessage"
-            class="no-results relative center-xs h4 col-md-12"
-          >
-            {{ $t(getNoResultsMessage) }}
-          </div>
-        </transition>
-      </div>
-      <div
-        v-show="OnlineOnly"
-        v-if="visibleProducts.length >= 18"
-        class="buttons-set align-center py35 mt20 px40"
+    </div>
+    <div v-if="visibleProducts.length && categories.length > 1" class="categories">
+      <category-panel :categories="categories" v-model="selectedCategoryIds" />
+    </div>
+    <div class="product-listing row">
+      <product-tile
+        v-for="product in visibleProducts"
+        :key="product.id"
+        :product="product"
+        @click.native="closeSearchpanel"
+      />
+      <transition name="fade">
+        <div
+          v-if="getNoResultsMessage"
+          class="no-results relative center-xs h4 col-md-12"
+        >
+          {{ $t(getNoResultsMessage) }}
+        </div>
+      </transition>
+    </div>
+    <div
+      v-show="OnlineOnly"
+      v-if="visibleProducts.length >= 18"
+      class="buttons-set align-center py35 mt20 px40"
+    >
+      <button
+        @click="seeMore" v-if="readMore"
+        class="no-outline brdr-none py15 px20 bg-cl-mine-shaft :bg-cl-th-secondary cl-white fs-medium-small"
+        type="button"
       >
-        <button
-          @click="seeMore" v-if="readMore"
-          class="no-outline brdr-none py15 px20 bg-cl-mine-shaft :bg-cl-th-secondary cl-white fs-medium-small"
-          type="button"
-        >
-          {{ $t('Load more') }}
-        </button>
-        <button
-          @click="closeSearchpanel"
-          class="no-outline brdr-none p15 fs-medium-small close-button"
-          type="button"
-        >
-          {{ $t('Close') }}
-        </button>
-      </div>
+        {{ $t('Load more') }}
+      </button>
     </div>
   </div>
 </template>
@@ -112,16 +88,7 @@ export default {
       return productList
     },
     categories () {
-      const categories = this.products
-        .filter(p => p.category)
-        .map(p => p.category)
-        .flat()
-
-      const discinctCategories = Array.from(
-        new Set(categories.map(c => c.category_id))
-      ).map(catId => categories.find(c => c.category_id === catId))
-
-      return discinctCategories
+      return []
     },
     getNoResultsMessage () {
       let msg = ''
@@ -141,7 +108,7 @@ export default {
   mounted () {
     // add autofocus to search input field
     this.$refs.search.focus()
-    disableBodyScroll(this.$el)
+    //disableBodyScroll(this.$el)
   },
   destroyed () {
     clearAllBodyScrollLocks()

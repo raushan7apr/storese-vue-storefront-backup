@@ -253,7 +253,7 @@
         "defaultCountry": "IN"
       },
       "i18n": {
-        "fullCountryName": "India",
+        "fullCountryName": "More Basavangudi",
         "fullLanguageName": "English",
         "defaultCountry": "IN",
         "defaultLanguage": "EN",
@@ -333,6 +333,7 @@
         "is_active",
         "level",
         "name",
+        "image",
         "parent_id",
         "path",
         "position",
@@ -951,16 +952,16 @@
     "endpoint": "https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation"
   },
   "razorpay" : {
-  "method_code": "razorpay",
-  "title": "Razorpay",
-  "endpoint": "https://vuefront.store-se.in/api/ext/payment-razorpay",
-  "api_url": "https://checkout.razorpay.com/v1/checkout.js",
-  "key": "rzp_test_9DP0EQp7MFfqzm",
-  "keySecret": "eD8oFPOlLFGQK7vpZAFMfedu",
-  "merchant": "Magento",
-  "theme": "#F37254",
-  "notes": {
-    "Title": "Description"
+    "method_code": "razorpay",
+    "title": "Razorpay",
+    "endpoint": "https://vuefront.store-se.in/api/ext/payment-razorpay",
+    "api_url": "https://checkout.razorpay.com/v1/checkout.js",
+    "key": "rzp_test_9DP0EQp7MFfqzm",
+    "keySecret": "eD8oFPOlLFGQK7vpZAFMfedu",
+    "merchant": "Magento",
+    "theme": "#F37254",
+    "notes": {
+      "Title": "Description"
+    }
   }
-}
 }

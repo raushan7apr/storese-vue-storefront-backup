@@ -55,9 +55,14 @@
       <h3 class="m0 pt40 mb30 weight-400 summary-heading">
         {{ $t('Shopping summary') }}
       </h3>
-      <div v-for="(segment, index) in totals" :key="index" class="row py20" v-if="segment.code !== 'grand_total'">
+      <div v-for="(segment, index) in totals" :key="index" class="row py20" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
         <div class="col-xs">
-          {{ segment.title }}
+          <div v-if="segment.code === 'shipping'">
+            Shipping Fee
+          </div>
+          <div v-if="segment.code !== 'shipping'">
+            {{ segment.title }}
+          </div>
           <button v-if="appliedCoupon && segment.code === 'discount'" type="button" class="p0 brdr-none bg-cl-transparent close delete-button ml10" @click="clearCoupon">
             <i class="material-icons cl-accent">
               close
@@ -68,7 +73,7 @@
           {{ segment.value | price(storeView) }}
         </div>
       </div>
-      <div class="row py20">
+      <!-- <div class="row py20">
         <div v-if="OnlineOnly && !addCouponPressed" class="col-xs-12">
           <button
             class="p0 brdr-none serif fs-medium-small cl-accent bg-cl-transparent"
@@ -87,7 +92,7 @@
             {{ $t('Add discount code') }}
           </button-outline>
         </div>
-      </div>
+      </div> -->
 
       <div class="row pt30 pb20 weight-700 middle-xs" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">
         <div class="col-xs h4 total-price-label">
@@ -134,10 +139,10 @@ import onEscapePress from '@vue-storefront/core/mixins/onEscapePress'
 import InstantCheckout from 'src/modules/instant-checkout/components/InstantCheckout.vue'
 import { registerModule } from '@vue-storefront/core/lib/modules'
 
-import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
+// import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
 import ClearCartButton from 'theme/components/core/blocks/Microcart/ClearCartButton'
 import ButtonFull from 'theme/components/theme/ButtonFull'
-import ButtonOutline from 'theme/components/theme/ButtonOutline'
+// import ButtonOutline from 'theme/components/theme/ButtonOutline'
 import Product from 'theme/components/core/blocks/Microcart/Product'
 import EditMode from './EditMode'
 import { InstantCheckoutModule } from 'src/modules/instant-checkout'
@@ -147,8 +152,8 @@ export default {
     Product,
     ClearCartButton,
     ButtonFull,
-    ButtonOutline,
-    BaseInput,
+    // ButtonOutline,
+    // BaseInput,
     InstantCheckout
   },
   mixins: [
