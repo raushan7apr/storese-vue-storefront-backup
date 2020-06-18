@@ -1,6 +1,6 @@
 <template>
   <div class="product align-center w-100 pb20" v-observe-visibility="visibilityChanged">
-    <div class="product__icons">
+    <!-- <div class="product__icons">
       <AddToWishlist :product="product">
         <div
           class="product__icon"
@@ -19,7 +19,7 @@
           <i class="material-icons">compare</i>
         </div>
       </AddToCompare>
-    </div>
+    </div> -->
     <router-link
       class="block no-underline product-link"
       :to="productLink"
@@ -292,8 +292,8 @@ $color-white: color(white);
 }
 
 .product-details-container {
-  min-height: 80px;
-}
+    min-height: 120px;
+  }
 
 .price-original {
   text-decoration: line-through;

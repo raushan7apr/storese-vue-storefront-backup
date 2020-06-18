@@ -127,14 +127,14 @@
                 class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium col-xs-12 col-sm-4 col-md-6"
               />
             </div>
-            <div class="row py40 add-to-buttons">
+            <!-- <div class="row py40 add-to-buttons">
               <div class="col-xs-6 col-sm-3 col-md-6">
                 <AddToWishlist :product="getCurrentProduct" />
               </div>
               <div class="col-xs-6 col-sm-3 col-md-6">
                 <AddToCompare :product="getCurrentProduct" />
               </div>
-            </div>
+            </div> -->
           </div>
         </section>
       </div>
