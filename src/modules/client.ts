@@ -20,14 +20,15 @@ import { Razorpay } from './payment-razorpay'
 
 // import { DeviceModule } from './device/index';
 import { registerModule } from '@vue-storefront/core/lib/modules'
-import {LocationModule} from "./location";
+import { LocationModule } from './location';
+import {CartExtendModule} from './cart-extend';
 
 // TODO:distributed across proper pages BEFORE 1.11
 export function registerClientModules () {
   registerModule(UrlModule)
   registerModule(CatalogModule)
   registerModule(CheckoutModule) // To Checkout
-  registerModule(CartModule)
+  registerModule(CartExtendModule)
   registerModule(PaymentBackendMethodsModule)
   registerModule(PaymentCashOnDeliveryModule)
   registerModule(WishlistModule) // Trigger on wishlist icon click
