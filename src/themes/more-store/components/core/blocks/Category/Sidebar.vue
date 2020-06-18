@@ -1,9 +1,9 @@
 <template>
   <div class="sidebar">
     <h4 class="sidebar__header relative mt35 mb20 flex">
-      <span> {{ $t('Filter') }} </span>
+      <span class="sidebar__header__text"> {{ $t('Filter') }} </span>
       <span
-        class="weight-400 sidebar__header__clear pointer sans-serif flex lh25"
+        class="weight-400 sidebar__header__clear sidebar__header__text pointer sans-serif flex lh25"
         @click="resetAllFilters"
         v-show="hasActiveFilters"
       >
@@ -14,6 +14,7 @@
       </span>
     </h4>
     <div
+      class="sidebar__elements"
       v-for="(filter, filterIndex) in availableFilters"
       :key="filterIndex"
     >
@@ -133,10 +134,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.sidebar__header {
+  color: #000;
+  background-color: #fff;
+}
+.sidebar__header__text{
+  margin: 20px 20px;
+  text-transform: uppercase;
+  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+.sidebar__elements{
+  margin: 20px 20px;
+  text-transform: uppercase;
+  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
 .sidebar {
+  background-color: #fff;
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
   &__header {
     justify-content: space-between;
     min-height: 47px;
+    box-shadow: 2px 2px 5px 1px #e1e1e1;
+    border-radius: 3px;
     flex-wrap: wrap;
     &__clear {
       font-size: .8em;

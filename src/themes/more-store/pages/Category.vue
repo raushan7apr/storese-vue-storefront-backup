@@ -3,23 +3,6 @@
     <header class="bg-cl-secondary py35 pl20">
       <div class="container-fluid">
         <breadcrumbs />
-        <div class="row middle-sm item-sort-by-container">
-          <div class="col-sm-9 category-title">
-            {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
-          </div>
-          <!--<div class="sorting col-sm-2">
-            <label class="mr10">{{ $t('Columns') }}:</label>
-            <columns @change-column="columnChange" />
-          </div>-->
-          <div class="sorting col-sm-3 end-xs">
-            Sort By
-            <sort-by
-              :has-label="true"
-              @change="changeFilter"
-              :value="getCurrentSearchQuery.sort"
-            />
-          </div>
-        </div>
       </div>
       <div class="container">
         <div class="row m0">
@@ -38,9 +21,9 @@
         </div>
       </div>
     </header>
-    <div class="container-fluid pb60 bgd1d1d1">
+    <div class="container-fluid pb60 bgd1d1d1 product-list-container">
       <div class="row m0 pt15">
-        <div class="col-md-3 start-xs category-filters">
+        <div class="col-md-2 start-xs category-filters">
           <sidebar :filters="getAvailableFilters" @changeFilter="changeFilter" />
         </div>
         <div class="col-md-3 start-xs mobile-filters" v-show="mobileFilters">
@@ -58,7 +41,24 @@
             {{ $t('Filter') }}
           </button-full>
         </div>
-        <div class="col-md-9 px10 border-box products-list">
+        <div class="col-md-10 px10 border-box products-list">
+          <div class="row middle-sm item-sort-by-container">
+            <div class="col-sm-9 category-title">
+              {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
+            </div>
+            <!--<div class="sorting col-sm-2">
+              <label class="mr10">{{ $t('Columns') }}:</label>
+              <columns @change-column="columnChange" />
+            </div>-->
+            <div class="sorting col-sm-3 end-xs">
+              Sort By
+              <sort-by
+                :has-label="true"
+                @change="changeFilter"
+                :value="getCurrentSearchQuery.sort"
+              />
+            </div>
+        </div>
           <!--<p class="col-xs-12 end-md m0 pb20 cl-secondary">
             {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
           </p>-->
@@ -221,7 +221,7 @@ export default {
   .bgd1d1d1 {
     background-color: rgb(242, 242, 242);
   }
-  
+
   .category {
     margin-top: 12px;
     background-color: rgb(242, 242, 242);
@@ -229,7 +229,7 @@ export default {
 
   .item-sort-by-container {
     background-color: #fff;
-    margin-top: 36px;
+    margin:36px 8px 0;
     box-shadow: 2px 2px 5px 1px #e1e1e1;
     -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
     -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -266,6 +266,9 @@ export default {
     line-height: 65px;
   }
 
+  .product-list-container {
+    margin-top: -60px;
+  }
   .sorting {
     label {
       margin-right: 10px;
@@ -312,7 +315,7 @@ export default {
     }
 
     .product-listing {
-      justify-content: center;;
+      justify-content: center;
     }
 
     .mobile-filters {
