@@ -25,7 +25,7 @@
           <!--<div class="col-xs-2 visible-xs">
             <wishlist-icon class="p15 icon pointer" />
           </div>-->
-          <div class="col-md-3 col-xs-2 end-xs">
+          <div class="col-md-2 col-xs-2 end-xs">
             <div class="row">
               <!--<search-icon style="display: none;" class="p15 icon hidden-xs pointer" />-->
               <!--<wishlist-icon class="p15 icon hidden-xs pointer" />
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        <div class="row between-xs middle-xs px15 py5" v-if="isCheckoutPage && !isThankYouPage">
+        <!-- <div class="row between-xs middle-xs px15 py5" v-if="isCheckoutPage && !isThankYouPage">
           <div class="col-xs-5 col-md-3 middle-xs">
             <div>
               <router-link
@@ -71,7 +71,7 @@
               <span v-else>{{ $t('You are logged in as {firstname}', currentUser) }}</span>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="container-fluid mobile-screen">
         <div class="row">
@@ -272,6 +272,7 @@ $color-icon-hover: color(secondary, $colors-background);
   font-weight: 500;
   margin-top: 16px;
   background-color: #a8aeba;
+  margin-left: 20px;
 }
 
 .categories-bar {
