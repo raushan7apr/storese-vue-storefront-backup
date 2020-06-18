@@ -6,7 +6,7 @@
         <span>Delivering to</span>
         <i class="material-icons">arrow_forward</i>
         <div class="dynamic-address">
-          {{ errorMessage.length ? 'Choose location' : selectedAddress }}
+          {{ selectedAddress }}
         </div>
         <i class="material-icons">arrow_drop_down</i>
       </div>
@@ -148,7 +148,9 @@ export default {
         this.updateAddress(locationData.lat, locationData.lng, true);
       }
     },
-    detectLocation () {
+    detectLocation (event) {
+      event.stopPropagation();
+      event.preventDefault();
       window.localStorage.setItem('location_set', JSON.stringify(false));
       this.getGeoLocation(true);
     },
@@ -232,6 +234,7 @@ export default {
         if (results && results.length) {
           this.locationSearch = results[0].formatted_address;
           this.locationValue = results[0].formatted_address;
+          console.log(this.locationValue, 'updateAddress WI')
         }
       });
     },
@@ -246,6 +249,7 @@ export default {
         if (results && results.length) {
           this.locationSearch = results[0].formatted_address;
           this.locationValue = results[0].formatted_address;
+          console.log(this.locationValue, 'updateAddress WIth')
         }
       });
     },
@@ -265,6 +269,7 @@ export default {
               url: response.stores[0].storeAppUrl,
               address: this.locationValue
             }
+            console.log(this.locationValue, 'updateAddress resp')
             window.localStorage.setItem('user_add_data', JSON.stringify(locationObj));
             if (response.stores[0].storeAppUrl === window.location.href) {
               this.showLocationWrap = false;
@@ -274,12 +279,12 @@ export default {
             this.selectedAddress = this.locationValue;
           });
         } else {
-          this.selectedAddress = this.defaultLocation;
+          //this.selectedAddress = this.defaultLocation;
           this.errorMessage = 'Sorry! We don\'t serve at your location currently.';
           let locationData = JSON.parse(window.localStorage.getItem('user_add_data'));
-          if (locationData) {
+          /*if (locationData) {
             this.updateAddressWithoutAPI(locationData.lat, locationData.lng);
-          }
+          }*/
           if (!locationData) {
             this.preventBodyScroll(true);
             this.showLocationWrap = true;
@@ -318,7 +323,7 @@ export default {
   },
   computed: {
     quantity () {
-      return this.$store.getters['cart/getItemsTotalQuantity']
+      return this.$store.getters['cart-extend/getItemsTotalQuantity']
     }
   }
 }
