@@ -2,6 +2,7 @@ import { mapState, mapGetters } from 'vuex'
 import RootState from '@vue-storefront/core/types/RootState'
 import toString from 'lodash-es/toString'
 const Countries = require('@vue-storefront/i18n/resource/countries.json')
+const States = require('@vue-storefront/i18n/resource/states.json')
 
 export const Shipping = {
   name: 'Shipping',
@@ -25,6 +26,7 @@ export const Shipping = {
     return {
       isFilled: false,
       countries: Countries,
+      states: States,
       shipping: this.$store.state.checkout.shippingDetails,
       shipToMyAddress: false,
       myAddressDetails: {
@@ -138,6 +140,7 @@ export const Shipping = {
         this.$set(this, 'shipping', this.checkoutShippingDetails)
       }
       this.changeCountry()
+      this.changeRegion()
     },
     getShippingMethod () {
       for (let i = 0; i < this.shippingMethods.length; i++) {
@@ -163,6 +166,9 @@ export const Shipping = {
     },
     changeCountry () {
       this.$bus.$emit('checkout-before-shippingMethods', this.shipping.country)
+    },
+    changeRegion () {
+      this.$bus.$emit('region-before-shippingMethods', this.shipping.region_id)
     },
     getCurrentShippingMethod () {
       let shippingCode = this.shipping.shippingMethod

@@ -3,6 +3,7 @@ import RootState from '@vue-storefront/core/types/RootState'
 import toString from 'lodash-es/toString'
 import debounce from 'lodash-es/debounce'
 const Countries = require('@vue-storefront/i18n/resource/countries.json')
+const States = require('@vue-storefront/i18n/resource/states.json')
 
 export const Payment = {
   name: 'Payment',
@@ -16,6 +17,7 @@ export const Payment = {
     return {
       isFilled: false,
       countries: Countries,
+      states: States,
       payment: this.$store.getters['checkout/getPaymentDetails'],
       generateInvoice: false,
       sendToShippingAddress: false,
@@ -165,6 +167,7 @@ export const Payment = {
         lastName: this.shippingDetails.lastName,
         country: this.shippingDetails.country,
         state: this.shippingDetails.state,
+        region_id: this.shippingDetails.region_id,
         city: this.shippingDetails.city,
         streetAddress: this.shippingDetails.streetAddress,
         apartmentNumber: this.shippingDetails.apartmentNumber,

@@ -350,7 +350,7 @@ import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
 import BaseSelect from 'theme/components/core/blocks/Form/BaseSelect'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import Tooltip from 'theme/components/core/Tooltip'
-import { Payment } from '../../../../../../modules/checkout-extend/components/Payment';
+import { Payment } from '@vue-storefront/core/modules/checkout/components/Payment';
 
 export default {
   components: {
@@ -373,11 +373,11 @@ export default {
     stateOptions () {
       return this.states.map((item) => {
         return {
-          value: item.region_id,
+          value: item.region_id.toString(),
           label: item.name
         }
       })
-    },
+    }
   },
   validations () {
     if (!this.generateInvoice) {
@@ -422,7 +422,7 @@ export default {
             required,
             minLength: minLength(10),
             maxLength: maxLength(10)
-          },
+          }
         }
       }
     } else {

@@ -143,6 +143,11 @@ export default {
       this.$store.dispatch('cart/syncTotals', { forceServerSync: true })
       this.$forceUpdate()
     },
+    onRegionBeforeShippingMethods (regionId) {
+      this.$store.dispatch('checkout/updatePropValue', ['region_id', regionId])
+      this.$store.dispatch('cart/syncTotals', { forceServerSync: true })
+      this.$forceUpdate()
+    },
     async onAfterPlaceOrder (payload) {
       this.confirmation = payload.confirmation
       this.$store.dispatch('checkout/setThankYouPage', true)
