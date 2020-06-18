@@ -46,7 +46,7 @@
           class="price-original price mr5 lh30 cl-secondary"
           v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
         >{{ product.original_price_incl_tax | price(storeView) }}</span>
-
+        <br />
         <span
           class="price-special price lh30 cl-accent weight-700"
           v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
@@ -292,7 +292,7 @@ $color-white: color(white);
 }
 
 .product-details-container {
-    min-height: 120px;
+    min-height: 140px;
   }
 
 .price-original {

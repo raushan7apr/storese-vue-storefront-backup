@@ -109,7 +109,7 @@ export default {
     },
     getNoResultsMessage () {
       let msg = ''
-      if (!this.$v.search.minLength) {
+      if (!this.$v.search.minLength && this.emptyResults) {
         msg = 'Searched term should consist of at least 3 characters.'
       } else if (this.emptyResults) {
         msg = 'No results were found.'
@@ -139,7 +139,7 @@ export default {
 @import "~theme/css/variables/typography";
 
 .searchpanel {
-  height: 100vh;
+  height: auto;
   width: 800px;
   top: 0;
   right: 0;
@@ -184,6 +184,7 @@ export default {
   }
 
   .product-listing {
+    background: #fff;
     padding-top: 30px;
   }
 

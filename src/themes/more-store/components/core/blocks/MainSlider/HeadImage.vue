@@ -52,6 +52,7 @@ export default {
 
 .head-image {
   height: 640px;
+  margin-top: 10px;
 }
 .container {
   background-size: cover;
