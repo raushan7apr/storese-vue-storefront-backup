@@ -92,14 +92,24 @@
       </div>
       <div class="container-fluid search-and-category">
         <div class="row" v-if="!isCheckoutPage || isThankYouPage">
-          <div class="col-md-9 col-xs-4 categories-bar">
-            <ul>
-              <li v-for="(category, index) in visibleCategories" :key="index">
+          <div class="col-md-8 col-xs-4 categories-bar">
+            <ul v-if="displayList" id="first-list">
+              <li v-for="(category, index) in firstCategories" :key="index">
                 <router-link :to="categoryLink(category)">
                   {{ category.name }}
                 </router-link>
               </li>
             </ul>
+            <ul v-else id="second-list">
+              <li v-for="(category, index) in secondCategories" :key="index">
+                <router-link :to="categoryLink(category)">
+                  {{ category.name }}
+                </router-link>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-1">
+            <img @click="navBarCategoryToggle" class="dot-icon" width="36" src="https://www.svgrepo.com/show/124304/three-dots.svg">
           </div>
           <div class="col-md-3 col-xs-2">
             <div class="search-input-group">
@@ -127,6 +137,7 @@ import LocationInput from 'src/modules/location/components/Location';
 import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/SidebarMenu/SidebarMenu';
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
 import SearchPanel from '../SearchPanel/SearchPanel';
+import { configureProducts } from '@vue-storefront/core/modules/catalog/helpers/configure'
 
 export default {
   name: 'Header',
@@ -144,6 +155,7 @@ export default {
   mixins: [CurrentPage, SidebarMenu],
   data () {
     return {
+      displayList: true,
       navVisible: true,
       isScrolling: false,
       scrollTop: 0,
@@ -163,6 +175,13 @@ export default {
       return this.$store.state.checkout.isThankYouPage
         ? this.$store.state.checkout.isThankYouPage
         : false
+    },
+    firstCategories () {
+      return this.visibleCategories.slice(0, 4);
+    },
+    secondCategories () {
+      let categories = this.visibleCategories;
+      return categories.slice(4, categories.length);
     },
     visibleCategories () {
       return this.categories.filter(category => {
@@ -187,6 +206,9 @@ export default {
     }, 250)
   },
   methods: {
+    navBarCategoryToggle () {
+      this.displayList = !this.displayList;
+    },
     gotoAccount () {
       this.$bus.$emit('modal-toggle', 'modal-signup')
     },
@@ -213,6 +235,14 @@ export default {
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
+
+.dot-icon {
+  margin: 20% auto;
+  display: block;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
 
 .large-screen {
   @media (max-width: 767px) {
