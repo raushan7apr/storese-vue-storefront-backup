@@ -16,7 +16,7 @@
               :product="getCurrentProduct"
             />
           </div>
-          <div class="col-xs-12 col-md-5 data">
+          <div class="col-xs-12 col-md-6 data">
             <div
               class="mb20 mt20 product-name"
               data-testid="productName"
@@ -163,14 +163,14 @@
         </div>
       </div>
     </section>
-    <lazy-hydrate when-idle>
+    <!-- <lazy-hydrate when-idle>
       <reviews
         :product-name="getCurrentProduct.name"
         :product-id="getCurrentProduct.id"
         v-show="isOnline"
         :product="getCurrentProduct"
       />
-    </lazy-hydrate>
+    </lazy-hydrate> -->
     <!--<lazy-hydrate when-idle>
       <related-products type="upsell" :heading="$t('We found other products you might like')" />
     </lazy-hydrate>-->
@@ -189,8 +189,8 @@
 import i18n from '@vue-storefront/i18n'
 import VueOfflineMixin from 'vue-offline/mixin'
 import config from 'config'
-import RelatedProducts from 'theme/components/core/blocks/Product/Related.vue'
-import Reviews from 'theme/components/core/blocks/Reviews/Reviews.vue'
+// import RelatedProducts from 'theme/components/core/blocks/Product/Related.vue'
+// import Reviews from 'theme/components/core/blocks/Reviews/Reviews.vue'
 import AddToCart from 'theme/components/core/AddToCart.vue'
 import GenericSelector from 'theme/components/core/GenericSelector'
 import ColorSelector from 'theme/components/core/ColorSelector.vue'
@@ -203,7 +203,7 @@ import ProductCustomOptions from 'theme/components/core/ProductCustomOptions.vue
 import ProductBundleOptions from 'theme/components/core/ProductBundleOptions.vue'
 import ProductGallery from 'theme/components/core/ProductGallery'
 import Spinner from 'theme/components/core/Spinner'
-import PromotedOffers from 'theme/components/theme/blocks/PromotedOffers/PromotedOffers'
+// import PromotedOffers from 'theme/components/theme/blocks/PromotedOffers/PromotedOffers'
 import focusClean from 'theme/components/theme/directives/focusClean'
 import WebShare from 'theme/components/theme/WebShare'
 import BaseInputNumber from 'theme/components/core/blocks/Form/BaseInputNumber'
@@ -211,7 +211,7 @@ import SizeGuide from 'theme/components/core/blocks/Product/SizeGuide'
 import AddToWishlist from 'theme/components/core/blocks/Wishlist/AddToWishlist'
 import AddToCompare from 'theme/components/core/blocks/Compare/AddToCompare'
 import { mapGetters } from 'vuex'
-import LazyHydrate from 'vue-lazy-hydration'
+// import LazyHydrate from 'vue-lazy-hydration'
 import { ProductOption } from '@vue-storefront/core/modules/catalog/components/ProductOption.ts'
 import { getAvailableFiltersByProduct, getSelectedFiltersByProduct } from '@vue-storefront/core/modules/catalog/helpers/filters'
 import { isOptionAvailableAsync } from '@vue-storefront/core/modules/catalog/helpers/index'
@@ -239,13 +239,13 @@ export default {
     ProductCustomOptions,
     ProductGallery,
     ProductLinks,
-    PromotedOffers,
-    RelatedProducts,
-    Reviews,
+    // PromotedOffers,
+    // RelatedProducts,
+    // Reviews,
     SizeSelector,
     WebShare,
     SizeGuide,
-    LazyHydrate,
+    // LazyHydrate,
     ProductQuantity,
     ProductPrice
   },
@@ -448,7 +448,6 @@ $color-white: color(white);
 $bg-secondary: color(secondary, $colors-background);
 $more-background: color(rgb(242, 242, 242));
 
-
 .product-page {
   margin-top: 12px;
 }
@@ -460,7 +459,7 @@ $more-background: color(rgb(242, 242, 242));
 .shadow-box {
   box-shadow: 2px 2px 5px 1px #e1e1e1;
   -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
-  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;  
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
 }
 
 .product {

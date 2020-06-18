@@ -81,7 +81,7 @@ export default {
       open: true
     }
   },
-  created () {
+  beforeMount () {
     window.addEventListener('click', this.close);
   },
   beforeDestroy () {

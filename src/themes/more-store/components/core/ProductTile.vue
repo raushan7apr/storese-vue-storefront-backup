@@ -37,37 +37,41 @@
           data-testid="productImage"
         />
       </div>
+      <div class="product-details-container">
+        <p class="product-name mb5 cl-accent mt10" v-if="!onlyImage">
+          {{ product.name | htmlDecode }}
+        </p>
 
-      <p class="product-name mb5 cl-accent mt10" v-if="!onlyImage">
-        {{ product.name | htmlDecode }}
-      </p>
+        <span
+          class="price-original price mr5 lh30 cl-secondary"
+          v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
+        >{{ product.original_price_incl_tax | price(storeView) }}</span>
 
-      <span
-        class="price-original price mr5 lh30 cl-secondary"
-        v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
-      >{{ product.original_price_incl_tax | price(storeView) }}</span>
-
-      <span
-        class="price-special price lh30 cl-accent weight-700"
-        v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
-      >{{ product.price_incl_tax | price(storeView) }}</span>
-
-      <span
-        class="lh30 cl-secondary price"
-        v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
-      >{{ product.price_incl_tax | price(storeView) }}</span>
+        <span
+          class="price-special price lh30 cl-accent weight-700"
+          v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
+        >{{ product.price_incl_tax | price(storeView) }}</span>
+        <span
+          class="lh30 cl-secondary price"
+          v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
+        >{{ product.price_incl_tax | price(storeView) }}</span>
+      </div>
     </router-link>
     <div class="qty-container">
       <div class="add-to-cart">
-        <div @click="updateProductQty(product, productsInCart)" class="decrease">-</div>
-        <div class="qty">{{ cartQuantity(product, productsInCart) }}</div>
+        <div @click="updateProductQty(product, productsInCart)" class="decrease">
+          -
+        </div>
+        <div class="qty">
+          {{ cartQuantity(product, productsInCart) }}
+        </div>
         <div class="increase">
           <add-to-cart-plus
             :product="product"
             :disabled="isAddToCartDisabled"
           >
           </add-to-cart-plus>
-        </div>  
+        </div>
       </div>
     </div>
   </div>
@@ -80,7 +84,7 @@ import { Product } from '@vue-storefront/core/modules/checkout/components/Produc
 import { ProductTile } from '@vue-storefront/core/modules/catalog/components/ProductTile.ts'
 import config from 'config'
 import ProductImage from './ProductImage'
-import AddToCart from 'theme/components/core/AddToCart.vue'
+// import AddToCart from 'theme/components/core/AddToCart.vue'
 import AddToCartPlus from 'theme/components/core/AddToCartPlus.vue'
 import AddToWishlist from 'theme/components/core/blocks/Wishlist/AddToWishlist'
 import AddToCompare from 'theme/components/core/blocks/Compare/AddToCompare'
@@ -91,7 +95,7 @@ import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 export default {
   mixins: [ProductTile, IsOnWishlist, IsOnCompare, Product],
   components: {
-    AddToCart,
+    // AddToCart,
     AddToCartPlus,
     ProductImage,
     AddToWishlist,
@@ -122,19 +126,19 @@ export default {
     },
     storeView () {
       return currentStoreView()
-    },
+    }
   },
   methods: {
-    cartQuantity(product, cart) {
+    cartQuantity (product, cart) {
       let cartItem = this.cartItem(product, cart);
-      if(cartItem) {
+      if (cartItem) {
         return cartItem.qty;
       } else {
         return 0;
       }
     },
-    cartItem(product, cart) {
-      let cartItem = cart.find( item => item.name === product.name );
+    cartItem (product, cart) {
+      let cartItem = cart.find(item => item.name === product.name);
       return cartItem;
     },
     updateProductQty (product, productsInCart) {
@@ -143,10 +147,10 @@ export default {
     updateQuantity (product, productsInCart) {
       let cartItem = this.cartItem(product, productsInCart);
       let qty = 0;
-      if(cartItem.qty) {
+      if (cartItem.qty) {
         qty = cartItem.qty;
       }
-      if(qty===1) {
+      if (qty === 1) {
         this.$store.dispatch('cart/removeItem', { product: cartItem })
       } else if (qty > 1) {
         qty = qty - 1;
@@ -287,6 +291,10 @@ $color-white: color(white);
   font: 600 18px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
+.product-details-container {
+  min-height: 80px;
+}
+
 .price-original {
   text-decoration: line-through;
 }
@@ -312,7 +320,8 @@ $color-white: color(white);
   &__thumb {
     padding-bottom: calc(143.88% / (164.5 / 100));
     @media screen and (min-width: 768px) {
-      padding-bottom: calc(300% / (276.5 / 115));
+      padding-bottom: 60%;
+      // padding-bottom: calc(300% / (276.5 / 115));
     }
     opacity: 0.8;
     will-change: opacity, transform;
