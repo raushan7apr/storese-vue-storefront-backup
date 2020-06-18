@@ -1,5 +1,6 @@
 <template>
-  <div
+  <div />
+  <!-- <div
     class="inline-flex relative dropdown"
     data-testid="accountButton"
     @click.self="goToAccount();showMenu = true;"
@@ -33,7 +34,7 @@
         </div>
       </div>
     </no-ssr>
-  </div>
+  </div> -->
 </template>
 
 <script>
