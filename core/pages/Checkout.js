@@ -180,7 +180,12 @@ export default {
       this.activateSection(section)
     },
     onBeforePlaceOrder (payload) {
-      this.configureRazorpay()
+      const paymentDetails = this.$store.getters['checkout/getPaymentDetails']
+      if (paymentDetails.paymentMethod !== 'cashondelivery') {
+        this.configureRazorpay()
+      } else {
+        this.onDoPlaceOrder()
+      }
     },
     configureRazorpay () {
       let orderOptions = {
