@@ -20,7 +20,7 @@ import { Razorpay } from './payment-razorpay'
 
 // import { DeviceModule } from './device/index';
 import { registerModule } from '@vue-storefront/core/lib/modules'
-import {LocationModule} from "./location";
+import { LocationModule } from './location';
 
 // TODO:distributed across proper pages BEFORE 1.11
 export function registerClientModules () {

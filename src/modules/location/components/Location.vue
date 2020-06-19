@@ -6,7 +6,7 @@
         <span>Delivering to</span>
         <i class="material-icons">arrow_forward</i>
         <div class="dynamic-address">
-          {{ errorMessage.length ? 'Choose location' : selectedAddress }}
+          {{ selectedAddress }}
         </div>
         <i class="material-icons">arrow_drop_down</i>
       </div>
@@ -19,9 +19,9 @@
                alt="search location"
                src="https://cdn.shopify.com/s/files/1/0385/5889/2171/files/StoreSe_App-113.png?v=1589971320"
           >
-          <input aria-label="search location" v-model="locationSearch" ref="address" type="text" id="search-rest" placeholder="search location" class="pac-target-input" autocomplete="off">
+          <input :disabled="isFetchingLocation" aria-label="search location" v-model="locationSearch" ref="address" type="text" id="search-rest" placeholder="search location" class="pac-target-input" autocomplete="off">
         </form>
-        <button class="detect-btn btn" ref="detectBtn" @click="detectLocation">
+        <button class="detect-btn btn" ref="detectBtn" @click="detectLocation" :disabled="isFetchingLocation">
           <img src="https://cdn.shopify.com/s/files/1/0385/5889/2171/files/StoreSe_App-114.png?v=1589971320" alt="detect location"> Detect
         </button>
       </div>
@@ -63,6 +63,7 @@ export default {
       locationValue: '',
       locationSearch: '',
       showLocationWrap: false,
+      isFetchingLocation: false,
       errorMessage: '',
       latitude: 0,
       longitude: 0,
@@ -90,8 +91,9 @@ export default {
             // We just need to clear cart on frontend and backend.
             // but cart token can be reused
             this.selectedAddress = place.name;
+            // await this.$store.dispatch('cart/clear', { disconnect: false })
             this.updateAddress(latitude, longitude);
-            this.getStores(latitude, longitude);
+            // this.getStores(latitude, longitude);
           }
         },
         hasNoTimeout: true
@@ -118,7 +120,6 @@ export default {
             this.clearCart(place, latitude, longitude);
           } else {
             this.updateAddress(latitude, longitude);
-            this.getStores(latitude, longitude);
           }
         });
       }
@@ -145,10 +146,12 @@ export default {
         this.showLocationWrap = false;
         this.selectedAddress = locationData.address;
         this.toggleOverlay(true);
-        this.updateAddress(locationData.lat, locationData.lng, true);
+        this.updateAddressWithoutAPI(locationData.lat, locationData.lng);
       }
     },
-    detectLocation () {
+    detectLocation (event) {
+      event.stopPropagation();
+      event.preventDefault();
       window.localStorage.setItem('location_set', JSON.stringify(false));
       this.getGeoLocation(true);
     },
@@ -168,8 +171,7 @@ export default {
         if (this.storedLocationInfo) {
           this.latitude = this.storedLocationInfo.lat;
           this.longitude = this.storedLocationInfo.lng;
-          this.getStores(this.latitude, this.longitude, true, '');
-          this.updateAddress(this.latitude, this.longitude, true)
+          this.updateAddress(this.latitude, this.longitude)
         } else {
           try {
             if (!navigator.geolocation) {
@@ -189,7 +191,6 @@ export default {
       this.longitude = position.coords.longitude;
 
       this.updateAddress(this.latitude, this.longitude, false);
-      this.getStores(this.latitude, this.longitude, true, this.locationSearch);
     },
     onLocationError (error) {
       switch (error.code) {
@@ -227,7 +228,6 @@ export default {
       const request = {
         latLng: latlng
       };
-
       geocoder.geocode(request, (results, status) => {
         if (results && results.length) {
           this.locationSearch = results[0].formatted_address;
@@ -235,7 +235,7 @@ export default {
         }
       });
     },
-    updateAddress (lat, lng, apiNotReqd) {
+    updateAddress (lat, lng) {
       const geocoder = new google.maps.Geocoder();
       const latlng = new google.maps.LatLng(lat, lng);
       const request = {
@@ -246,16 +246,21 @@ export default {
         if (results && results.length) {
           this.locationSearch = results[0].formatted_address;
           this.locationValue = results[0].formatted_address;
+          this.getStores(lat, lng);
         }
       });
     },
     getStores (lat, lng) {
+      if (this.isFetchingLocation) return;
+
+      this.isFetchingLocation = true;
       fetch(`https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation?lat=${lat}&lng=${lng}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json'
         }
       }).then(response => {
+        this.isFetchingLocation = false;
         if (response.ok) {
           response.json().then(response => {
             console.log(response.stores);
@@ -274,12 +279,12 @@ export default {
             this.selectedAddress = this.locationValue;
           });
         } else {
-          this.selectedAddress = this.defaultLocation;
+          // this.selectedAddress = this.defaultLocation;
           this.errorMessage = 'Sorry! We don\'t serve at your location currently.';
           let locationData = JSON.parse(window.localStorage.getItem('user_add_data'));
-          if (locationData) {
+          /* if (locationData) {
             this.updateAddressWithoutAPI(locationData.lat, locationData.lng);
-          }
+          } */
           if (!locationData) {
             this.preventBodyScroll(true);
             this.showLocationWrap = true;
@@ -287,6 +292,7 @@ export default {
         }
       }).catch(() => {
         this.errorMessage = 'Sorry! We don\'t serve at your location currently.';
+        this.isFetchingLocation = false;
       })
     },
     preventBodyScroll (flag) {
@@ -318,7 +324,7 @@ export default {
   },
   computed: {
     quantity () {
-      return this.$store.getters['cart/getItemsTotalQuantity']
+      return this.$store.getters['cart-extend/getItemsTotalQuantity']
     }
   }
 }

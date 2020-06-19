@@ -237,6 +237,7 @@
             <button-full
               class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
               data-testid="shippingSubmit"
+              :disabled="$v.shipping.$invalid || shippingMethods.length <= 0"
               @click.native="sendDataToCheckout"
             >
               {{ $t('Continue to payment') }}
@@ -252,8 +253,8 @@
           <div class="col-xs-12 h4" data-testid="shippingAddressSummary">
             <p>
               {{ shipping.firstName }} {{ shipping.lastName }},
-              {{ shipping.streetAddress }} {{ shipping.apartmentNumber }},
-              {{ shipping.city }} {{ shipping.zipCode }},
+              {{ shipping.streetAddress }}, {{ shipping.apartmentNumber }},
+              {{ shipping.city }}, {{ shipping.region_id }}, {{ shipping.zipCode }},
               <span v-if="shipping.state">{{ shipping.state }}, </span>
               <span>{{ getCountryName() }}</span>
             </p>
@@ -282,7 +283,6 @@
 <script>
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import { unicodeAlpha, unicodeAlphaNum } from '@vue-storefront/core/helpers/validators'
-import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping'
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 
 import BaseCheckbox from 'theme/components/core/blocks/Form/BaseCheckbox'
@@ -290,6 +290,11 @@ import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
 import BaseSelect from 'theme/components/core/blocks/Form/BaseSelect'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import Tooltip from 'theme/components/core/Tooltip'
+import Checkout from '@vue-storefront/core/pages/Checkout';
+import totalsActions from '@vue-storefront/core/modules/cart/store/actions/totalsActions';
+import { createOrderData, createShippingInfoData } from '@vue-storefront/core/modules/cart/helpers';
+import { Logger } from '@vue-storefront/core/lib/logger';
+import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping';
 
 export default {
   components: {
@@ -299,7 +304,7 @@ export default {
     BaseInput,
     BaseSelect
   },
-  mixins: [Shipping],
+  mixins: [Shipping, Checkout],
   computed: {
     countryOptions () {
       return this.countries.map((item) => {
@@ -312,7 +317,7 @@ export default {
     stateOptions () {
       return this.states.map((item) => {
         return {
-          value: item.region_id,
+          value: item.region_id.toString(),
           label: item.name
         }
       })

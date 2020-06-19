@@ -29,13 +29,22 @@ export default {
       this.$forceUpdate()
     },
     async addToCart (product) {
-      try {
-        const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
-        diffLog.clientNotifications.forEach(notificationData => {
-          this.notifyUser(notificationData)
-        })
-      } catch (message) {
-        this.notifyUser(notifications.createNotification({ type: 'error', message }))
+      const res = await this.$store.dispatch('stock/check', {
+        product: product,
+        qty: product.qty
+      })
+      let maxQuantity = res.isManageStock ? res.qty : null
+      if (maxQuantity) {
+        try {
+          const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
+          diffLog.clientNotifications.forEach(notificationData => {
+            this.notifyUser(notificationData)
+          })
+        } catch (message) {
+          this.notifyUser(notifications.createNotification({ type: 'error', message }))
+        }
+      } else {
+        this.notifyUser(notifications.outOfStock());
       }
     },
     notifyUser (notificationData) {

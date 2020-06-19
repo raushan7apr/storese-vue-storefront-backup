@@ -34,6 +34,7 @@ const createOrderData = ({
       firstname: shippingDetails.firstName,
       lastname: shippingDetails.lastName,
       city: shippingDetails.city,
+      regionId: shippingDetails.region_id,
       postcode: shippingDetails.zipCode,
       street: [shippingDetails.streetAddress]
     },
@@ -41,6 +42,7 @@ const createOrderData = ({
       firstname: paymentDetails.firstName,
       lastname: paymentDetails.lastName,
       city: paymentDetails.city,
+      regionId: shippingDetails.region_id,
       postcode: paymentDetails.zipCode,
       street: [paymentDetails.streetAddress],
       countryId: paymentDetails.country

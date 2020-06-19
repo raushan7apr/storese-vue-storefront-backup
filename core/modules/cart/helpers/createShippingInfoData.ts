@@ -1,5 +1,6 @@
 const createShippingInfoData = (methodsData) => ({
   shippingAddress: {
+    regionId: methodsData.regionId,
     countryId: methodsData.country,
     ...(methodsData.shippingAddress ? methodsData.shippingAddress : {})
   },
