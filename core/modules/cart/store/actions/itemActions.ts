@@ -9,6 +9,8 @@ import {
 } from '@vue-storefront/core/modules/cart/helpers'
 import { cartHooksExecutors } from './../../hooks'
 import config from 'config'
+import i18n from '@vue-storefront/i18n'
+import EventBus from '@vue-storefront/core/compatibility/plugins/event-bus'
 
 const itemActions = {
   async configureItem (context, { product, configuration }) {
@@ -61,7 +63,6 @@ const itemActions = {
 
       if (errors.length === 0) {
         const { status, onlineCheckTaskId } = await dispatch('checkProductStatus', { product })
-
         if (status === 'volatile' && !config.stock.allowOutOfStockInCart) {
           diffLog.pushNotification(notifications.unsafeQuantity())
         }
@@ -74,8 +75,8 @@ const itemActions = {
             product: { ...product, onlineStockCheckid: onlineCheckTaskId }
           })
         }
-        // -delete:  && (!getters.isCartSyncEnabled || forceServerSilence) Offline condition
-        if (productIndex === (productsToAdd.length - 1)) {
+        // -delete: Offline condition
+        if (productIndex === (productsToAdd.length - 1) && (!getters.isCartSyncEnabled || forceServerSilence)) {
           diffLog.pushNotification(notifications.productAddedToCart())
         }
         productIndex++
@@ -83,18 +84,18 @@ const itemActions = {
     }
 
     // Commenting out sync actions
-    // let newDiffLog = await dispatch('create')
-    // if (newDiffLog !== undefined) {
-    //   diffLog.merge(newDiffLog)
-    // }
+    let newDiffLog = await dispatch('create')
+    if (newDiffLog !== undefined) {
+      diffLog.merge(newDiffLog)
+    }
 
-    // if (getters.isCartSyncEnabled && getters.isCartConnected && !forceServerSilence) {
-    //   const syncDiffLog = await dispatch('sync', { forceClientState: true })
+    if (getters.isCartSyncEnabled && getters.isCartConnected && !forceServerSilence) {
+      const syncDiffLog = await dispatch('sync', { forceClientState: true })
 
-    //   if (!syncDiffLog.isEmpty()) {
-    //     diffLog.merge(syncDiffLog)
-    //   }
-    // }
+      if (!syncDiffLog.isEmpty()) {
+        diffLog.merge(syncDiffLog)
+      }
+    }
 
     return diffLog
   },

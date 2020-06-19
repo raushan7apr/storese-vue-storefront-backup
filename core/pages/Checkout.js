@@ -13,6 +13,7 @@ export default {
   name: 'Checkout',
   mixins: [Composite, VueOfflineMixin],
   data () {
+    const storeView = currentStoreView()
     return {
       stockCheckCompleted: false,
       stockCheckOK: false,
@@ -35,14 +36,35 @@ export default {
         shipping: { $invalid: true },
         payment: { $invalid: true }
       },
-      focusedField: null
+      focusedField: null,
+      header: i18n.t('Payment Information'),
+      currency: storeView.i18n.currencyCode,
+      razorpay: {
+        method_code: config.razorpay.method_code,
+        title: i18n.t(config.razorpay.title),
+        key: config.razorpay.key,
+        keySecret: config.razorpay.keySecret,
+        merchant: config.razorpay.merchant,
+        theme: config.razorpay.theme,
+        notes: config.razorpay.notes
+      }
     }
   },
   computed: {
     ...mapGetters({
       isVirtualCart: 'cart/isVirtualCart',
       isThankYouPage: 'checkout/isThankYouPage'
-    })
+    }),
+    getGrandTotal () {
+      let cartTotals = this.$store.getters['cart/getTotals']
+      return cartTotals.find(seg => seg.code === 'grand_total').value
+    },
+    getpersonalDetails () {
+      return this.$store.state.checkout.personalDetails
+    },
+    getshippingDetails () {
+      return this.$store.state.checkout.shippingDetails
+    }
   },
   async beforeMount () {
     await this.$store.dispatch('checkout/load')
@@ -158,6 +180,64 @@ export default {
       this.activateSection(section)
     },
     onBeforePlaceOrder (payload) {
+      this.configureRazorpay()
+    },
+    configureRazorpay () {
+      let orderOptions = {
+        amount: (this.getTransactions().amount.total * 100),
+        currency: this.getTransactions().amount.currency,
+        receipt: this.$store.state.cart.cartServerToken || this.getpersonalDetails.emailAddress,
+        payment_capture: 1
+      }
+      let self = this
+      this.$store.dispatch('razorpay/createOrder', orderOptions).then((res) => {
+        let orderId = this.$store.getters['razorpay/getRazorpayOrder'].length ? this.$store.getters['razorpay/getRazorpayOrder'][0].id : null
+        if (orderId) {
+          Logger.info('Razorpay Order Created: ' + orderId, 'Payment-Razorpay')()
+          let options = {
+            'key': this.razorpay.key,
+            'key_secret': this.razorpay.keySecret,
+            'amount': (this.getTransactions().amount.total * 100),
+            'name': this.razorpay.merchant,
+            'order_id': orderId,
+            'handler': function (response) {
+              Logger.info('Razorpay Txn Id: ' + response.razorpay_payment_id, 'Payment-Razorpay')()
+              self.placeOrderWithPayload({
+                rzp_payment_id: response.razorpay_payment_id,
+                rzp_order_id: response.razorpay_order_id,
+                rzp_signature: response.razorpay_signature
+              })
+              document.getElementsByTagName('body')[0].style.removeProperty('overflow')
+            },
+            'prefill': {
+              'name': this.getpersonalDetails.firstName + ' ' + this.getpersonalDetails.lastName,
+              'email': this.getpersonalDetails.emailAddress,
+              'contact': this.getshippingDetails.phoneNumber
+            },
+            'notes': this.razorpay.notes,
+            'theme': {
+              'color': this.razorpay.theme
+            },
+            'modal': {
+              'ondismiss': function () {
+                document.getElementsByTagName('body')[0].style.removeProperty('overflow')
+                this.$store.dispatch('razorpay/removeOrder')
+              }
+            }
+          }
+          let payment = window.Razorpay(options)
+          payment.open()
+        }
+      }).catch(e => {
+        Logger.error('Failed during Razorpay order creation' + e, 'Payment-Razorpay')()
+      })
+    },
+    getTransactions () {
+      return { amount: { total: this.getGrandTotal, currency: this.currency } }
+    },
+    placeOrderWithPayload (payload) {
+      this.$store.dispatch('razorpay/removeOrder')
+      this.$bus.$emit('checkout-do-placeOrder', payload)
     },
     onAfterCartSummary (receivedData) {
       this.cartSummary = receivedData

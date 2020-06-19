@@ -68,7 +68,6 @@
         <div class="increase">
           <add-to-cart-plus
             :product="product"
-            :disabled="isAddToCartDisabled"
           >
           </add-to-cart-plus>
         </div>
