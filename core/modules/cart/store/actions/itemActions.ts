@@ -74,25 +74,27 @@ const itemActions = {
             product: { ...product, onlineStockCheckid: onlineCheckTaskId }
           })
         }
-        if (productIndex === (productsToAdd.length - 1) && (!getters.isCartSyncEnabled || forceServerSilence)) {
+        // -delete:  && (!getters.isCartSyncEnabled || forceServerSilence) Offline condition
+        if (productIndex === (productsToAdd.length - 1)) {
           diffLog.pushNotification(notifications.productAddedToCart())
         }
         productIndex++
       }
     }
 
-    let newDiffLog = await dispatch('create')
-    if (newDiffLog !== undefined) {
-      diffLog.merge(newDiffLog)
-    }
+    // Commenting out sync actions
+    // let newDiffLog = await dispatch('create')
+    // if (newDiffLog !== undefined) {
+    //   diffLog.merge(newDiffLog)
+    // }
 
-    if (getters.isCartSyncEnabled && getters.isCartConnected && !forceServerSilence) {
-      const syncDiffLog = await dispatch('sync', { forceClientState: true })
+    // if (getters.isCartSyncEnabled && getters.isCartConnected && !forceServerSilence) {
+    //   const syncDiffLog = await dispatch('sync', { forceClientState: true })
 
-      if (!syncDiffLog.isEmpty()) {
-        diffLog.merge(syncDiffLog)
-      }
-    }
+    //   if (!syncDiffLog.isEmpty()) {
+    //     diffLog.merge(syncDiffLog)
+    //   }
+    // }
 
     return diffLog
   },

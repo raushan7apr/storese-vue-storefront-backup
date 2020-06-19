@@ -236,6 +236,7 @@
             > -->
             <button-full
               data-testid="shippingSubmit"
+              :disabled="$v.shipping.$invalid || shippingMethods.length <= 0"
               @click.native="sendDataToCheckout"
             >
               {{ $t('Continue to payment') }}
@@ -298,13 +299,8 @@ import Checkout from '@vue-storefront/core/pages/Checkout';
 import totalsActions from '@vue-storefront/core/modules/cart/store/actions/totalsActions';
 import { createOrderData, createShippingInfoData } from '@vue-storefront/core/modules/cart/helpers';
 import { Logger } from '@vue-storefront/core/lib/logger';
-import { Shipping } from '../../../../../../modules/checkout-extend/components/Shipping';
+import {Shipping} from '@vue-storefront/core/modules/checkout/components/Shipping';
 
-Checkout.methods.onRegionBeforeShippingMethods = function (regionId) {
-  this.$store.dispatch('checkout/updatePropValue', ['region_id', regionId])
-  this.$store.dispatch('cart/syncTotals', { forceServerSync: true })
-  this.$forceUpdate()
-};
 
 export default {
   components: {
@@ -327,7 +323,7 @@ export default {
     stateOptions () {
       return this.states.map((item) => {
         return {
-          value: item.region_id,
+          value: item.region_id.toString(),
           label: item.name
         }
       })
