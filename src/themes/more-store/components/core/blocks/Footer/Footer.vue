@@ -5,10 +5,10 @@
       class="footer-links flex pt30 pb60 px40 bg-cl-secondary"
       v-if="!isCheckoutPage"
     >
-      <div class="container">
+      <div class="container-fluid">
         <div class="row m0 center-xs between-md">
           <div
-            class="row m0 col-lg-7 col-md-8 col-xs-12 start-md between-md between-xs no-mobile"
+            class="row m0 col-xs-12 between-md between-xs no-mobile"
           >
             <div class="start-md">
               <div class="mt15">
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row middle-xs px15 bottom-links">
         <div class="col-xs-5 col-sm-3 cl-tertiary">
           <language-switcher v-if="multistoreEnabled" />

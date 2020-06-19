@@ -133,13 +133,22 @@
             ]"
           />
 
-          <base-input
+          <base-select
             class="col-xs-12 col-sm-6 mb10"
-            type="text"
-            name="state"
-            :placeholder="$t('State / Province')"
-            v-model.trim="payment.state"
-            autocomplete="address-level1"
+            name="states"
+            :options="stateOptions"
+            :selected="payment.region_id"
+            :placeholder="$t('State / Region *')"
+            :validations="[
+              {
+                condition: $v.payment.region_id.$error && !$v.payment.region_id.required,
+                text: $t('Field is required')
+              }
+            ]"
+            v-model="payment.region_id"
+            autocomplete="region-name"
+            @blur="$v.payment.region_id.$touch()"
+            @change.native="$v.payment.region_id.$touch(); changeRegion();"
           />
 
           <base-input
@@ -182,9 +191,24 @@
 
           <base-input
             class="col-xs-12 mb10"
-            type="text"
+            type="number"
             name="phone-number"
-            :placeholder="$t('Phone Number')"
+            :placeholder="$t('Phone Number *')"
+            @blur="$v.payment.phoneNumber.$touch()"
+            :validations="[
+              {
+                condition: $v.payment.phoneNumber.$error && !$v.payment.phoneNumber.required,
+                text: $t('Field is required')
+              },
+              {
+                condition: !$v.payment.phoneNumber.minLength,
+                text: $t('Phone number must be 10 digits')
+              },
+              {
+                condition: !$v.payment.phoneNumber.maxLength,
+                text: $t('Phone number must be 10 digits')
+              }
+            ]"
             v-model.trim="payment.phoneNumber"
             autocomplete="tel"
           />
@@ -288,7 +312,7 @@
               {{ payment.streetAddress }} {{ payment.apartmentNumber }}
             </p>
             <p>
-              {{ payment.city }} {{ payment.zipCode }}
+              {{ payment.city }} {{ payment.region_id }} {{ payment.zipCode }}
             </p>
             <p>
               <span v-if="payment.state">{{ payment.state }}, </span>
@@ -318,15 +342,15 @@
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import { unicodeAlpha, unicodeAlphaNum } from '@vue-storefront/core/helpers/validators'
-import { Payment } from '@vue-storefront/core/modules/checkout/components/Payment'
 
 import BaseCheckbox from 'theme/components/core/blocks/Form/BaseCheckbox'
 import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
 import BaseSelect from 'theme/components/core/blocks/Form/BaseSelect'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import Tooltip from 'theme/components/core/Tooltip'
+import { Payment } from '@vue-storefront/core/modules/checkout/components/Payment';
 
 export default {
   components: {
@@ -342,6 +366,14 @@ export default {
       return this.countries.map((item) => {
         return {
           value: item.code,
+          label: item.name
+        }
+      })
+    },
+    stateOptions () {
+      return this.states.map((item) => {
+        return {
+          value: item.region_id.toString(),
           label: item.name
         }
       })
@@ -363,6 +395,9 @@ export default {
           country: {
             required
           },
+          region_id: {
+            required
+          },
           streetAddress: {
             required,
             unicodeAlphaNum
@@ -382,6 +417,11 @@ export default {
           },
           paymentMethod: {
             required
+          },
+          phoneNumber: {
+            required,
+            minLength: minLength(10),
+            maxLength: maxLength(10)
           }
         }
       }
@@ -408,6 +448,9 @@ export default {
           country: {
             required
           },
+          region_id: {
+            required
+          },
           streetAddress: {
             required,
             unicodeAlphaNum
@@ -420,6 +463,11 @@ export default {
             required,
             minLength: minLength(3),
             unicodeAlphaNum
+          },
+          phoneNumber: {
+            required,
+            minLength: minLength(10),
+            maxLength: maxLength(10)
           },
           city: {
             required,

@@ -44,6 +44,9 @@ export default {
 </script>
 
 <style scoped>
+.product-listing{
+  margin-top:30px;
+}
 .pd-8 {
   padding-top: 8px;
   padding-bottom: 8px;

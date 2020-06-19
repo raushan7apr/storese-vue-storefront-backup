@@ -21,6 +21,18 @@
         </button>
       </div>
     </div>
+    <div
+      class="row py20 px40 middle-xs actions"
+      v-if="productsInCart.length && !isCheckoutMode"
+    >
+      <div class="col-xs-12 col-sm first-sm">
+        <router-link :to="localizedRoute('/')" class="no-underline cl-secondary link">
+          <span @click="closeMicrocartExtend">
+            {{ $t('Return to shopping') }}
+          </span>
+        </router-link>
+      </div>
+    </div>
     <div class="row middle-xs bg-cl-primary top-sm px40 actions">
       <div class="col-xs-12 col-sm">
         <h2
@@ -109,20 +121,15 @@
       v-if="productsInCart.length && !isCheckoutMode"
     >
       <div class="col-xs-12 col-sm first-sm">
-        <router-link :to="localizedRoute('/')" class="no-underline cl-secondary link">
-          <span @click="closeMicrocartExtend">
-            {{ $t('Return to shopping') }}
-          </span>
-        </router-link>
+        <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
       </div>
       <div class="col-xs-12 first-xs col-sm-4 end-sm">
-        <button-full
+        <button-full class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20"
           :link="{ name: 'checkout' }"
           @click.native="closeMicrocartExtend"
         >
           {{ $t('Go to checkout') }}
         </button-full>
-        <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
       </div>
     </div>
   </div>

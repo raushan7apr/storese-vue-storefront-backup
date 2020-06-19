@@ -81,8 +81,9 @@ export default {
       return this.highQualityImage
     },
     imageRatio () {
-      const { width, height } = this.$store.state.config.products.gallery
-      return `${height / (width / 100)}%`
+      return `60%`
+      // const { width, height } = this.$store.state.config.products.gallery
+      // return `${height / (width / 100)}%`
     },
     style () {
       return this.calcRatio ? { paddingBottom: this.imageRatio } : {}
@@ -119,12 +120,12 @@ export default {
     }
     &--height {
       .product-image__thumb {
-        height: 100%;
+        height: 50%;
       }
     }
     &--width {
       .product-image__thumb {
-        width: 100%;
+        width: 50%;
       }
     }
   }

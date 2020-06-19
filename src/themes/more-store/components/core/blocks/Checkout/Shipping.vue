@@ -236,6 +236,7 @@
             > -->
             <button-full
               data-testid="shippingSubmit"
+              :disabled="$v.shipping.$invalid || shippingMethods.length <= 0"
               @click.native="sendDataToCheckout"
             >
               {{ $t('Continue to payment') }}
@@ -256,7 +257,7 @@
               {{ shipping.streetAddress }} {{ shipping.apartmentNumber }}
             </p>
             <p>
-              {{ shipping.city }} {{ shipping.zipCode }}
+              {{ shipping.city }} {{ shipping.region_id }} {{ shipping.zipCode }}
             </p>
             <p>
               <span v-if="shipping.state">{{ shipping.state }}, </span>
@@ -287,7 +288,6 @@
 <script>
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import { unicodeAlpha, unicodeAlphaNum } from '@vue-storefront/core/helpers/validators'
-import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping'
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 
 import BaseCheckbox from 'theme/components/core/blocks/Form/BaseCheckbox'
@@ -295,6 +295,12 @@ import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
 import BaseSelect from 'theme/components/core/blocks/Form/BaseSelect'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import Tooltip from 'theme/components/core/Tooltip'
+import Checkout from '@vue-storefront/core/pages/Checkout';
+import totalsActions from '@vue-storefront/core/modules/cart/store/actions/totalsActions';
+import { createOrderData, createShippingInfoData } from '@vue-storefront/core/modules/cart/helpers';
+import { Logger } from '@vue-storefront/core/lib/logger';
+import {Shipping} from '@vue-storefront/core/modules/checkout/components/Shipping';
+
 
 export default {
   components: {
@@ -304,7 +310,7 @@ export default {
     BaseInput,
     BaseSelect
   },
-  mixins: [Shipping],
+  mixins: [Shipping, Checkout],
   computed: {
     countryOptions () {
       return this.countries.map((item) => {
@@ -317,7 +323,7 @@ export default {
     stateOptions () {
       return this.states.map((item) => {
         return {
-          value: item.region_id,
+          value: item.region_id.toString(),
           label: item.name
         }
       })
