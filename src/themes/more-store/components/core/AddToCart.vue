@@ -34,6 +34,15 @@ export default {
         diffLog.clientNotifications.forEach(notificationData => {
           this.notifyUser(notificationData)
         })
+        let newDiffLog = await this.$store.dispatch('cart/create')
+        if (newDiffLog !== undefined) {
+          diffLog.merge(newDiffLog)
+        }
+        const syncDiffLog = await this.$store.dispatch('cart/sync', { forceClientState: true })
+
+        if (!syncDiffLog.isEmpty()) {
+          diffLog.merge(syncDiffLog)
+        }
       } catch (message) {
         this.notifyUser(notifications.createNotification({ type: 'error', message }))
       }
