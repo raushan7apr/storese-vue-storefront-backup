@@ -35,7 +35,7 @@
               </div>
               <div class="col-md-1">
                 <span
-                class="minicart-count absolute flex center-xs middle-xs border-box py0 px2 h6 lh16 weight-700 cl-white bg-cl-silver"
+                  class="minicart-count absolute flex center-xs middle-xs border-box py0 px2 h6 lh16 weight-700 cl-white bg-cl-silver"
                 >
                   {{ totalQuantity }}
                 </span>
@@ -85,8 +85,16 @@
               <logo width="auto" height="60px" />
             </div>
           </div>
-          <div class="col-xs-2 end-xs">
+          <div class="col-xs-1 end-xs">
             <search-icon class="p15 bg-f04d24cf icon pointer" />
+          </div>
+          <div class="col-xs-1 end-xs">
+            <microcart-icon class="pt15 bg-f04d24cf icon pointer" />
+            <span
+              class="minicart-count"
+            >
+              {{ totalQuantity }}
+            </span>
           </div>
         </div>
       </div>
@@ -263,18 +271,35 @@ $color-icon-hover: color(secondary, $colors-background);
 }
 
 .minicart-count {
-  min-width: 30px;
-  min-height: 30px;
-  border-radius: 36px;
-  font-size: 20px;
-  opacity: 0.6;
-  color: #000;
-  font-weight: 500;
-  margin-top: 16px;
-  background-color: #a8aeba;
-  margin-left: 20px;
+    font-size: 12px;
+    background-color: #a8aeba;
+    color: #000;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -30px;
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    margin-top:10px;
 }
 
+@media (max-width: 45em) {
+  .minicart-count {
+    font-size: 12px;
+    background: #f04d24cf;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: 5px;
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+}
 .categories-bar {
   ul {
     display:flex;
@@ -329,7 +354,7 @@ i {
   position: relative;
   color: #fff;
   font-weight: 600;
-  z-index: 999;
+  // z-index: 999;
   background-color: #f04d24cf;
 }
 

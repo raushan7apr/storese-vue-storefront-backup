@@ -124,4 +124,24 @@ h1 {
     height: 359px;
   }
 }
+@media (max-width: 45em) {
+  .main-slider {
+    height: 200px;
+  }
+  .container {
+    background-position: left;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 14px;
+  }
+  .button {
+    font-size: 13px;
+  }
+  .row {
+    height: 200px;
+  }
+}
 </style>

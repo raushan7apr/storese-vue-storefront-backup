@@ -28,7 +28,7 @@
           v-for="product in visibleProducts"
           :key="product.id"
           :product="product"
-          @click.native="closeSearchpanel"
+          @click.native="closeSearchpanel;open = false"
         />
         <transition name="fade">
           <div
@@ -78,13 +78,14 @@ export default {
   data () {
     return {
       selectedCategoryIds: [],
-      open: true
+      open: false
     }
   },
   beforeMount () {
     window.addEventListener('click', this.close);
   },
   beforeDestroy () {
+    this.open = false
     window.removeEventListener('click', this.close);
   },
   methods: {
@@ -185,7 +186,7 @@ export default {
 
   .product-listing {
     background: #fff;
-    padding-top: 30px;
+    // padding-top: 30px;
   }
 
   .product {

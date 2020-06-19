@@ -2,14 +2,14 @@
   <section class="container bg-d1d1d1 w-100 my30">
     <div class="row">
       <div
-        class="col-xs-12 col-sm-6 col-md-4"
+        class="col-xs-4 col-sm-4 col-md-4"
         v-for="(category, index) in visibleCategories"
         :key="index"
       >
         <router-link :to="categoryLink(category)">
           <div class="offer offer-product border-box flex">
-            <img v-if="category.image" v-bind:src="category.image" alt="" width="132" height="132">
-            <img v-else src="/assets/placeholder.svg" style="opacity: 0.4" width="132" height="132">
+            <img v-if="category.image" v-bind:src="category.image" class="m10 offer-product-image">
+            <img v-else src="/assets/placeholder.svg" class="m10 offer-product-image" style="opacity: 0.4">
             <div class="category-name m0 h1">
               {{ category.name }}
             </div>
@@ -38,8 +38,8 @@ export default {
   computed: {
     visibleCategories () {
       return this.categories.filter(category => {
-        if(category.image) {
-          category.image = "https://preprod-admin.storese.in/pub/media/catalog/category/" + category.image;
+        if (category.image) {
+          category.image = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.image;
         }
         return category.product_count > 0 || category.children_count > 0
       })
@@ -55,9 +55,15 @@ export default {
 
 <style lang="scss" scoped>
   .category-name {
-    font-size: 16px;
-    color: #232d5f;
+    padding-top: 0px;
+    font-size: 12px;
+    color: #f04e23;
     font-weight: bold;
+    margin-right: 5px;
+    margin-left: 5px;
+    // font-size: 16px;
+    // color: #232d5f;
+    // font-weight: bold;
     @media (max-width: 767px) {
       height: 16px;
     }
@@ -87,7 +93,7 @@ export default {
     opacity: 1;
     transition: 0.3s all;
     background-color: #fff;
-    margin: 8px 0;
+    margin: 8px -5px;
     box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.08);
     border-radius: 3px;
 
@@ -124,8 +130,16 @@ export default {
       height: 200px;
     }
   }
+  .offer-product-image {
+    height: 132px;
+    width: 132px;
+    @media (max-width: 767px) {
+    height: 115px;
+    width: 115px;
+    }
+  }
   .offer-product {
-    height: 168px;
+    height: 180px;
     background-position: 50% 20%;
 
     @media (max-width: 767px) {
