@@ -9,13 +9,13 @@
             </h1>
           </div>
           <personal-details
-            class="line relative"
+            class="line relative ml30 mr10"
             :is-active="activeSection.personalDetails"
             :focused-field="focusedField"
           />
-          <shipping class="line relative" :is-active="activeSection.shipping" v-if="!isVirtualCart" />
-          <payment class="line relative" :is-active="activeSection.payment" />
-          <order-review class="line relative" :is-active="activeSection.orderReview" />
+          <shipping class="line relative ml30 mr10" :is-active="activeSection.shipping" v-if="!isVirtualCart" />
+          <payment class="line relative ml30 mr10" :is-active="activeSection.payment" />
+          <order-review class="line relative ml30 mr10" :is-active="activeSection.orderReview" />
           <div id="custom-steps" />
         </div>
         <div class="hidden-xs col-sm-5">

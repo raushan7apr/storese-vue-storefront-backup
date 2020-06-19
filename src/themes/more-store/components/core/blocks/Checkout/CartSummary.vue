@@ -1,29 +1,17 @@
 <template>
-  <div class="w-100 pb20" v-observe-visibility="visibilityChanged">
-    <div class="order-summary align-center brdr-bottom-1 brdr-cl-primary pb60">
+  <div class="w-100 pb20 cart-summary" v-observe-visibility="visibilityChanged">
+    <div class="order-summary align-center brdr-cl-primary">
       <div class="row summary-header-container" @click="show=!show">
-        <div class="col-xs-11 col-sm-9 col-md-11">
-          <div class="row">
+        <div class="col-xs-11 col-sm-9 col-md-11 mt20">
+          <div class="row mb15">
             <div class="col-xs-12 col-md-5">
-              <h3 class="cl-accent summary-title">
+              <h3 class="m0 mb5 summary-title">
                 {{ $t('Order Summary') }}
               </h3>
-            </div>
-            <div class="col-xs-12 col-md-7 pr30">
-              <div class="lh30 mt25 flex end-lg summary-title">
-                <span class="pr5">
-                  View Items
-                </span>
-                <i class="material-icons cl-tertiary">arrow_circle_down</i>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <collapse v-if="show">
-        <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
-      </collapse>
-      <hr />
       <div v-if="productsInCart && productsInCart.length" class="checkout pt10 serif cl-accent">
         <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
           <div class="col-xs cl-accent">
@@ -52,6 +40,32 @@
             {{ segment.value | price(storeView) }}
           </div>
         </div>
+      <!-- <div class="col-xs-1 col-sm-2 col-md-1">
+        <div
+          class="number-circle lh35 cl-white brdr-circle align-center weight-700"
+          :class="{ 'bg-cl-th-accent' : isActive || isFilled, 'bg-cl-tertiary' : !isFilled && !isActive }"
+        >
+          2
+        </div>
+      </div> -->
+        <div class="row summary-header-container" @click="show=!show">
+          <div class="col-xs-11 col-sm-9 col-md-11 mt20">
+            <div class="row mb15">
+              <div class="col-xs-12 col-md-6">
+                <h3 class="m0 mb5 summary-title">
+                  {{ $t('View Items in Cart') }}
+                </h3>
+              </div>
+              <div class="col-xs-12 col-md-6 mt10">
+                <i class="material-icons summary-title" v-if="show">arrow_circle_down</i>
+                <i class="material-icons summary-title" v-else>arrow_circle_up</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <collapse v-if="show">
+          <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
+        </collapse>
       </div>
     </div>
     <!-- <div class="py50 px25">
@@ -110,6 +124,15 @@ export default {
       margin-left: 0;
     }
   }
+  .view-cart-items-title {
+    color: #000;
+    @media (max-width: 767px) {
+      margin-left: 0;
+    }
+  }
+  .cart-summary{
+    margin-top: 118px
+  }
 .summary-header-container {
   box-shadow: 2px 2px 5px 1px #e1e1e1;
   -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -128,5 +151,7 @@ export default {
   background-color: #fff;
   margin-top:20px;
   border-radius: 0 0 3px 3px;
+  margin-right: 30px;
+  margin-left: 10px;
 }
 </style>
