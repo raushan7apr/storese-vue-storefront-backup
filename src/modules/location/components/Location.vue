@@ -91,9 +91,9 @@ export default {
             // We just need to clear cart on frontend and backend.
             // but cart token can be reused
             this.selectedAddress = place.name;
-            //await this.$store.dispatch('cart/clear', { disconnect: false })
+            // await this.$store.dispatch('cart/clear', { disconnect: false })
             this.updateAddress(latitude, longitude);
-            //this.getStores(latitude, longitude);
+            // this.getStores(latitude, longitude);
           }
         },
         hasNoTimeout: true
@@ -279,12 +279,12 @@ export default {
             this.selectedAddress = this.locationValue;
           });
         } else {
-          //this.selectedAddress = this.defaultLocation;
+          // this.selectedAddress = this.defaultLocation;
           this.errorMessage = 'Sorry! We don\'t serve at your location currently.';
           let locationData = JSON.parse(window.localStorage.getItem('user_add_data'));
-          /*if (locationData) {
+          /* if (locationData) {
             this.updateAddressWithoutAPI(locationData.lat, locationData.lng);
-          }*/
+          } */
           if (!locationData) {
             this.preventBodyScroll(true);
             this.showLocationWrap = true;

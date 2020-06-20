@@ -34,7 +34,7 @@ export default {
         qty: product.qty
       })
       let maxQuantity = res.isManageStock ? res.qty : null
-      if(maxQuantity) {
+      if (maxQuantity) {
         try {
           const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
           diffLog.clientNotifications.forEach(notificationData => {

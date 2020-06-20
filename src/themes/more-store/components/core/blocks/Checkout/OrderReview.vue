@@ -1,18 +1,18 @@
 <template>
-  <div class="order-review pt20">
-    <div class="row pl20">
-      <div class="col-xs-1 col-sm-2 col-md-1">
+  <div class="order-review">
+    <div :class="{'row pl20 checkout-step-header' : isActive }" class="row pl20 checkout-step-header-inactive">
+      <!-- <div class="col-xs-1 col-sm-2 col-md-1">
         <div
           class="number-circle lh35 cl-white brdr-circle align-center weight-700"
           :class="{ 'bg-cl-th-accent' : isActive || isFilled, 'bg-cl-tertiary' : !isFilled && !isActive }"
         >
           {{ (isVirtualCart ? 3 : 4) }}
         </div>
-      </div>
-      <div class="col-xs-11 col-sm-9 col-md-11">
-        <div class="row">
+      </div> -->
+      <div class="col-xs-11 col-sm-9 col-md-11 mt20">
+        <div class="row mb15">
           <div class="col-md-12" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
-            <h3 class="m0">
+            <h3 class="m0 mb5">
               {{ $t('Review order') }}
             </h3>
           </div>
@@ -37,7 +37,7 @@
                 <cart-summary />
               </div>
               <base-checkbox
-                class="col-xs-11 col-sm-12 col-md-8 bg-cl-secondary p15 mb35 ml10"
+                class="col-xs-11 col-sm-12 col-md-8 p15 mb35 ml10"
                 id="acceptTermsCheckbox"
                 @blur="$v.orderReview.terms.$touch()"
                 v-model="orderReview.terms"
@@ -61,14 +61,14 @@
     </div>
     <div class="row" v-show="isActive">
       <div class="hidden-xs col-sm-2 col-md-1" />
-      <div class="col-xs-12 col-sm-9 col-md-11">
+      <div class="col-xs-12 col-sm-9 col-md-11 mb30">
         <div class="row">
           <div class="col-xs-12 col-md-8 px20">
             <slot name="placeOrderButton">
               <button-full
                 @click.native="placeOrder"
                 data-testid="orderReviewSubmit"
-                class="place-order-btn"
+                class="place-order-btn no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
                 :disabled="$v.orderReview.$invalid"
               >
                 {{ $t('Place the order') }}
@@ -160,5 +160,38 @@ export default {
     @media (min-width: 767px) {
       display: none;
     }
+  }
+  checkout-order-review-additional {
+    background: #fff;
+  }
+
+.checkout-step-header-inactive {
+   box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #fff;
+  color: #000;
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 3px 3px 0 0;
+}
+  .order-review {
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #fff;
+  margin-top:10px;
+  border-radius: 0 0 3px 3px;
+  }
+  .checkout-step-header {
+    box-shadow: 2px 2px 5px 1px #e1e1e1;
+    -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    background-color: #f04d24cf;
+    color: #fff;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom:30px;
+    border-radius: 3px 3px 0 0;
   }
 </style>

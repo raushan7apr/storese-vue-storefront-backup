@@ -1,14 +1,14 @@
 <template>
   <button
     type="button"
-    class="relative bg-cl-transparent brdr-none inline-flex"
+    class="bg-cl-transparent brdr-none inline-flex"
     @click="openMicrocart"
     data-testid="openMicrocart"
     :aria-label="$t('Open microcart')"
   >
     <i class="material-icons cart-icon">shopping_cart</i>
-    <span v-if="totalQuantity" class="cart-amount border-box center-xs middle-xs weight-600">&#8377;{{ totals[0].value }}.00</span>
-    <span v-else class="cart-amount border-box center-xs middle-xs weight-600">&#8377;0.00</span>
+    <!-- <span v-if="totalQuantity" class="cart-amount border-box center-xs middle-xs weight-600">&#8377;{{ totals[0].value }}.00</span> -->
+    <!-- <span v-else class="cart-amount border-box center-xs middle-xs weight-600">&#8377;0.00</span> -->
   </button>
 </template>
 
@@ -43,12 +43,12 @@ export default {
     font-size: 34px;
     color: #a8aeba;
   }
-
-  .cart {
-    font-size: 36px;
-    color: #a8aeba;
+  @media (max-width: 45em) {
+  .cart-icon {
+    font-size: 24px;
+    color: #f04d24cf;
+    }
   }
-
   .cart-amount {
     float: right;
     display: block;

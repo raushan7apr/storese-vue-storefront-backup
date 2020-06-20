@@ -1,6 +1,6 @@
 <template>
   <div id="checkout">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row" v-show="!isThankYouPage">
         <div class="col-sm-7 col-xs-12 pb70">
           <div class="checkout-title py5 px20">
@@ -9,16 +9,16 @@
             </h1>
           </div>
           <personal-details
-            class="line relative"
+            class="line relative ml30 mr10"
             :is-active="activeSection.personalDetails"
             :focused-field="focusedField"
           />
-          <shipping class="line relative" :is-active="activeSection.shipping" v-if="!isVirtualCart" />
-          <payment class="line relative" :is-active="activeSection.payment" />
-          <order-review class="line relative" :is-active="activeSection.orderReview" />
+          <shipping class="line relative ml30 mr10" :is-active="activeSection.shipping" v-if="!isVirtualCart" />
+          <payment class="line relative ml30 mr10" :is-active="activeSection.payment" />
+          <order-review class="line relative ml30 mr10" :is-active="activeSection.orderReview" />
           <div id="custom-steps" />
         </div>
-        <div class="hidden-xs col-sm-5 bg-cl-secondary">
+        <div class="hidden-xs col-sm-5">
           <cart-summary />
         </div>
       </div>
@@ -108,6 +108,7 @@ export default {
   $color-black: color(black);
 
   #checkout {
+    background: #f7f7f7;
     .number-circle {
       width: 35px;
       height: 35px;

@@ -1,15 +1,15 @@
 <template>
-  <div class="payment pt20">
-    <div class="row pl20">
-      <div class="col-xs-1 col-sm-2 col-md-1">
+  <div class="payment">
+    <div :class="{'row pl20 checkout-step-header' : isActive }" class="row pl20 checkout-step-header-inactive">
+      <!-- <div class="col-xs-1 col-sm-2 col-md-1">
         <div
           class="number-circle lh35 cl-white brdr-circle align-center weight-700"
           :class="{ 'bg-cl-th-accent' : isActive || isFilled, 'bg-cl-tertiary' : !isFilled && !isActive }"
         >
           {{ (isVirtualCart ? 2 : 3) }}
         </div>
-      </div>
-      <div class="col-xs-11 col-sm-9 col-md-11">
+      </div> -->
+      <div class="col-xs-11 col-sm-9 col-md-11 mt20">
         <div class="row mb15">
           <div class="col-xs-12 col-md-7" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
             <h3 class="m0 mb5">
@@ -293,6 +293,7 @@
               @click.native="sendDataToCheckout"
               data-testid="paymentSubmit"
               :disabled="$v.payment.$invalid"
+              class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
             >
               {{ $t('Go review the order') }}
             </button-full>
@@ -306,15 +307,9 @@
         <div class="row fs16 mb35">
           <div class="col-xs-12 h4">
             <p>
-              {{ payment.firstName }} {{ payment.lastName }}
-            </p>
-            <p>
-              {{ payment.streetAddress }} {{ payment.apartmentNumber }}
-            </p>
-            <p>
-              {{ payment.city }} {{ payment.region_id }} {{ payment.zipCode }}
-            </p>
-            <p>
+              {{ payment.firstName }}, {{ payment.lastName }},
+              {{ payment.streetAddress }}, {{ payment.apartmentNumber }},
+              {{ payment.city }}, {{ payment.region_id }}, {{ payment.zipCode }},
               <span v-if="payment.state">{{ payment.state }}, </span>
               <span>{{ getCountryName() }}</span>
             </p>
@@ -482,3 +477,35 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.checkout-step-header-inactive {
+   box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #fff;
+  color: #000;
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 3px 3px 0 0;
+}
+.checkout-step-header {
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #f04d24cf;
+  color: #fff;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom:30px;
+  border-radius: 3px 3px 0 0;
+}
+.payment {
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #fff;
+  margin-top:10px;
+  border-radius: 0 0 3px 3px;
+}
+</style>

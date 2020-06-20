@@ -1,11 +1,18 @@
 <template>
-  <div>
-    <div class="brdr-bottom-1 brdr-cl-primary pb60">
-      <h3 class="cl-accent ml30 mt50 summary-title">
-        {{ $t('Order Summary') }}
-      </h3>
-      <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
-      <div v-if="productsInCart && productsInCart.length" class="checkout bg-cl-secondary pt10 serif cl-accent">
+  <div class="w-100 pb20 cart-summary" v-observe-visibility="visibilityChanged">
+    <div class="order-summary align-center brdr-cl-primary">
+      <div class="row summary-header-container" @click="show=!show">
+        <div class="col-xs-11 col-sm-9 col-md-11 mt20">
+          <div class="row mb15">
+            <div class="col-xs-12 col-md-5">
+              <h3 class="m0 mb5 summary-title">
+                {{ $t('Order Summary') }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="productsInCart && productsInCart.length" class="checkout pt10 serif cl-accent">
         <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
           <div class="col-xs cl-accent">
             <div v-if="segment.code === 'shipping'">
@@ -33,9 +40,35 @@
             {{ segment.value | price(storeView) }}
           </div>
         </div>
+      <!-- <div class="col-xs-1 col-sm-2 col-md-1">
+        <div
+          class="number-circle lh35 cl-white brdr-circle align-center weight-700"
+          :class="{ 'bg-cl-th-accent' : isActive || isFilled, 'bg-cl-tertiary' : !isFilled && !isActive }"
+        >
+          2
+        </div>
+      </div> -->
+        <div class="row summary-header-container" @click="show=!show">
+          <div class="col-xs-11 col-sm-9 col-md-11 mt20">
+            <div class="row mb15">
+              <div class="col-xs-12 col-md-6">
+                <h3 class="m0 mb5 summary-title">
+                  {{ $t('View Items in Cart') }}
+                </h3>
+              </div>
+              <div class="col-xs-12 col-md-6 mt10">
+                <i class="material-icons summary-title" v-if="show">arrow_circle_down</i>
+                <i class="material-icons summary-title" v-else>arrow_circle_up</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <collapse v-if="show">
+          <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
+        </collapse>
       </div>
     </div>
-    <div class="py50 px25">
+    <!-- <div class="py50 px25">
       <h4 class="h3 m0">
         {{ $t('Safety') }}
       </h4>
@@ -57,7 +90,7 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Nullam sed tempor lorem. Vivamus volutpat eros id est semper accumsan.
       </p>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -67,6 +100,11 @@ import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 import Product from './Product'
 
 export default {
+  data () {
+    return {
+      show: false
+    }
+  },
   components: {
     Product
   },
@@ -81,8 +119,39 @@ export default {
 
 <style lang="scss" scoped>
   .summary-title {
+    color: #fff;
     @media (max-width: 767px) {
       margin-left: 0;
     }
   }
+  .view-cart-items-title {
+    color: #000;
+    @media (max-width: 767px) {
+      margin-left: 0;
+    }
+  }
+  .cart-summary{
+    margin-top: 118px
+  }
+.summary-header-container {
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #f04d24cf;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom:30px;
+  border-radius: 3px 3px 0 0;
+}
+.order-summary {
+  position: relative;
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #fff;
+  margin-top:20px;
+  border-radius: 0 0 3px 3px;
+  margin-right: 30px;
+  margin-left: 10px;
+}
 </style>

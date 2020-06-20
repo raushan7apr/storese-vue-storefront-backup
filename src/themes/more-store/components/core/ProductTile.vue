@@ -286,7 +286,7 @@ $color-white: color(white);
 }
 
 .price {
-  color: #242d5f;
+  color: #f04d24cf;
   font: 600 18px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
