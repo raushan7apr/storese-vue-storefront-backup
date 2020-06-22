@@ -21,18 +21,18 @@
           </p>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
+      <div class="row center-md">
+        <div class="col-md-12 start-md">
           <p class="sub-title">
             Delivery details
           </p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 start-md">
           <p class="sub-title">Delivery For</p>
           <p>Mr. {{ personalDetails.firstName }}  {{ personalDetails.lastName }}</p>
           <p> Phone no: {{ shipping.phoneNumber }} </p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 end-md">
           <p class="sub-title">Delivery method</p>
           <p>
             {{ shipping.apartmentNumber }}, {{ shipping.streetAddress }},
@@ -41,6 +41,14 @@
             <span>{{ getCountryName() }}</span>
           </p>
         </div>
+        <p>
+          <button-outline
+            color="dark"
+            @click.native="$router.push('/')"
+          >
+            {{ $t('Return to shopping') }}
+          </button-outline>
+        </p>
       </div>
     </div>
     <!--<div class="thank-you-content align-justify py40 pl20">
