@@ -1,18 +1,49 @@
 <template>
   <div>
-    <header class="thank-you-title bg-cl-secondary py35 pl20">
-      <div class="container">
+    <header class="thank-you-title bg-cl-secondary pt20">
+      <div class="container pb15">
         <breadcrumbs
           :with-homepage="true"
           :routes="[]"
           :active-route="this.$t('Order confirmation')"
         />
-        <h2 class="category-title">
-          {{ $t('Order confirmation') }}
-        </h2>
       </div>
     </header>
-    <div class="thank-you-content align-justify py40 pl20">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="order-confirmation">
+            {{ $t('Order confirmation') }}
+          <p>
+          <p class="order-number" v-if="OnlineOnly && lastOrderConfirmation.orderNumber" v-html="this.$t('The OrderNumber is {id}', { id: lastOrderConfirmation.orderNumber })" />
+          <p class="order-receipt">
+            <i>A copy of the receipt has been sent to: {{ personalDetails.emailAddress }}</i>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p class="sub-title">
+            Delivery details
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p class="sub-title">Delivery For</p>
+          <p>Mr. {{ personalDetails.firstName }}  {{ personalDetails.lastName }}</p>
+          <p> Phone no: {{ shipping.phoneNumber }} </p>
+        </div>
+        <div class="col-md-6">
+          <p class="sub-title">Delivery method</p>
+          <p>
+            {{ shipping.apartmentNumber }}, {{ shipping.streetAddress }},
+            {{ shipping.city }}, {{ shipping.region_id }}, {{ shipping.zipCode }},
+            <span v-if="shipping.state">{{ shipping.state }}, </span>
+            <span>{{ getCountryName() }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--<div class="thank-you-content align-justify py40 pl20">
       <div class="container">
         <div class="row">
           <div class="col-md-6 pl20 pr20">
@@ -75,7 +106,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -88,12 +119,17 @@ import VueOfflineMixin from 'vue-offline/mixin'
 import { EmailForm } from '@vue-storefront/core/modules/mailer/components/EmailForm'
 import { isServer } from '@vue-storefront/core/helpers'
 import config from 'config'
+import { PersonalDetails } from '@vue-storefront/core/modules/checkout/components/PersonalDetails'
 import { registerModule } from '@vue-storefront/core/lib/modules'
 import { MailerModule } from '@vue-storefront/core/modules/mailer'
+import { CartSummary } from '@vue-storefront/core/modules/checkout/components/CartSummary'
+import { currentStoreView } from '@vue-storefront/core/lib/multistore'
+import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping';
+import Product from './Product'
 
 export default {
   name: 'ThankYouPage',
-  mixins: [Composite, VueOfflineMixin, EmailForm],
+  mixins: [Composite, VueOfflineMixin, EmailForm, PersonalDetails, CartSummary, Shipping],
   beforeCreate () {
     registerModule(MailerModule)
   },
@@ -101,6 +137,9 @@ export default {
     return {
       feedback: ''
     }
+  },
+  components: {
+    Product
   },
   computed: {
     lastOrderConfirmation () {
@@ -178,6 +217,24 @@ export default {
 </script>
 
 <style lang="scss">
+  .sub-title {
+    font-weight: 600;
+  }
+
+  .order-confirmation {
+    font-size: 28px;
+    text-align: center;
+    margin: 12px 0px;
+  }
+  .order-number {
+    text-align: center;
+    font-weight: 600;
+    margin: 0;
+  }
+  .order-receipt {
+    text-align: center;
+    font-size: 12px;
+  }
   .thank-you-content {
     padding-left: 0;
 

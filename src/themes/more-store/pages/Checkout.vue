@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <thank-you-page v-show="isThankYouPage" />
+    <thank-you-page style="background-color: #fff" v-show="isThankYouPage" />
   </div>
 </template>
 
