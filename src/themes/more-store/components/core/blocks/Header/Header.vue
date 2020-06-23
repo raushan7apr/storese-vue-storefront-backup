@@ -103,16 +103,16 @@
           <div class="col-md-8 col-xs-4 categories-bar">
             <ul v-if="displayList" id="first-list">
               <li v-for="(category, index) in firstCategories" :key="index">
-                <router-link :to="categoryLink(category)">
+                <a class="cursor_pointer" @click="categoryRedirect(category)">
                   {{ category.name }}
-                </router-link>
+                </a>
               </li>
             </ul>
             <ul v-else id="second-list">
               <li v-for="(category, index) in secondCategories" :key="index">
-                <router-link :to="categoryLink(category)">
+                <a class="cursor_pointer" @click="categoryRedirect(category)">
                   {{ category.name }}
-                </router-link>
+                </a>
               </li>
             </ul>
           </div>
@@ -234,6 +234,18 @@ export default {
     },
     categoryLink (category) {
       return formatCategoryLink(category)
+    },
+    categoryRedirect(category) {
+      if (this.$ga) {
+        this.$ga.event('Category_Viewed', 'click', JSON.stringify(this.gaData(category)));
+      }
+      this.$router.push(this.categoryLink(category));
+    },
+    gaData(category) {
+      return {
+        category_name: category.name,
+        source: "DropDown"
+      }
     }
   }
 }
@@ -243,6 +255,10 @@ export default {
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
+
+.cursor_pointer {
+  cursor: pointer;
+}
 
 .dot-icon {
   margin: 20% auto;
