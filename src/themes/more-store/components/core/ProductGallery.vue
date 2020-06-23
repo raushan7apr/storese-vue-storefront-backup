@@ -100,4 +100,9 @@ export default {
     background-image: none;
   }
 }
+@media (max-width: 767px) {
+  .media-gallery {
+    min-height:unset;
+  }
+}
 </style>

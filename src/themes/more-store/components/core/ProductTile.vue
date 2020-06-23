@@ -241,7 +241,7 @@ $color-white: color(white);
   width: 108px;
   height: 36px;
   border: 4px solid #f04d24cf;
-  border-radius: 30px;
+  border-radius: 15px;
   margin-top: 8px;
 }
 .add-button {
@@ -252,7 +252,7 @@ $color-white: color(white);
   height: 36px;
   border: 4px solid #f04d24cf;
   background: #f04d24cf;
-  border-radius: 30px;
+  border-radius: 15px;
   margin-top: 8px;
 }
 .add-to-cart > .decrease {

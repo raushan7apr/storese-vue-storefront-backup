@@ -73,15 +73,15 @@
       <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
     </ul>
     <div v-if="productsInCart.length" class="summary px40 cl-accent serif">
-      <h3 class="m0 pt40 mb30 weight-400 summary-heading">
+      <h3 class="m0 pb10 weight-400 summary-heading helvetica">
         {{ $t('Shopping summary') }}
       </h3>
-      <div v-for="(segment, index) in totals" :key="index" class="row py20" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
+      <div v-for="(segment, index) in totals" :key="index" class="helvetica row py10" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
         <div class="col-xs">
           <div v-if="segment.code === 'shipping'">
             Shipping Fee
           </div>
-          <div v-if="segment.code !== 'shipping'">
+          <div v-else>
             {{ segment.title }}
           </div>
           <button v-if="appliedCoupon && segment.code === 'discount'" type="button" class="p0 brdr-none bg-cl-transparent close delete-button ml10" @click="clearCoupon">
@@ -119,7 +119,7 @@
         <div class="col-xs h4 total-price-label">
           {{ segment.title }}
         </div>
-        <div class="col-xs align-right h2 total-price-value">
+        <div class="col-xs align-right h4 total-price-value">
           {{ segment.value | price(storeView) }}
         </div>
       </div>
@@ -277,7 +277,9 @@ export default {
 
 <style lang="scss" scoped>
   @import "~theme/css/animations/transitions";
-
+  .helvetica {
+    font-family: Helvetica;
+  }
   .close {
     i {
       opacity: 0.6;

@@ -1,6 +1,6 @@
 <template>
   <div id="product" class="product-page">
-    <header class="bg-cl-secondary py35 pl20">
+    <header class="bg-cl-secondary product-page-header">
       <div class="container-fluid">
         <breadcrumbs />
       </div>
@@ -8,15 +8,7 @@
     <section class="bg-cl-secondary px20 product-top-section">
       <div class="container-fluid">
         <section class="row m0 between-xs bg-cl-white shadow-box">
-          <div class="col-xs-12 col-md-6 center-xs middle-xs image">
-            <product-gallery
-              :offline="getOfflineImage"
-              :gallery="getProductGallery"
-              :configuration="getCurrentProductConfiguration"
-              :product="getCurrentProduct"
-            />
-          </div>
-          <div class="col-xs-12 col-md-6 data">
+          <div class="col-xs-12 data product-mobile-view">
             <div
               class="mb20 mt20 product-name"
               data-testid="productName"
@@ -30,6 +22,33 @@
             </div>
             <div
               class="mb20 uppercase cl-secondary"
+              :content="getCurrentProduct.sku"
+            >
+              {{ $t('SKU: {sku}', { sku: getCurrentProduct.sku }) }}
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6 center-xs middle-xs image">
+            <product-gallery
+              :offline="getOfflineImage"
+              :gallery="getProductGallery"
+              :configuration="getCurrentProductConfiguration"
+              :product="getCurrentProduct"
+            />
+          </div>
+          <div class="col-md-6 data">
+            <div
+              class="mb20 mt20 product-name product-view"
+              data-testid="productName"
+            >
+              {{ getCurrentProduct.name | htmlDecode }}
+              <web-share
+                :title="getCurrentProduct.name | htmlDecode"
+                text="Check this product!"
+                class="web-share"
+              />
+            </div>
+            <div
+              class="mb20 uppercase cl-secondary product-view"
               :content="getCurrentProduct.sku"
             >
               {{ $t('SKU: {sku}', { sku: getCurrentProduct.sku }) }}
@@ -447,11 +466,12 @@ $color-secondary: color(secondary);
 $color-white: color(white);
 $bg-secondary: color(secondary, $colors-background);
 $more-background: color(rgb(242, 242, 242));
-
+.product-page-header {
+  padding: 20px 35px;
+}
 .product-page {
   margin-top: 12px;
 }
-
 .product-price {
   color: #009688;
 }
@@ -462,6 +482,31 @@ $more-background: color(rgb(242, 242, 242));
   -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
 }
 
+.product-name {
+  font: 600 24px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+  color: #414b56;
+  font-size: 36px;
+  @media (max-width: 767px) {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-page-header {
+    padding: 0px 0px 1px;
+  }
+  .shadow-box{
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    }
+  .product-name {
+    font-size: 24px;
+  }
+  .product-view {
+    display: none;
+  }
+}
 .product {
   &__add-to-compare {
     display: none;
@@ -488,19 +533,14 @@ $more-background: color(rgb(242, 242, 242));
     border-bottom: 1px solid $bg-secondary;
   }
 }
-
+@media (min-width: 767px) {
+.product-mobile-view {
+    display: none;
+  }
+}
 .image {
   @media (max-width: 1023px) {
     margin-bottom: 20px;
-  }
-}
-
-.product-name {
-  font: 600 24px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
-  color: #414b56;
-  font-size: 36px;
-  @media (max-width: 767px) {
-    font-size: 36px;
   }
 }
 
