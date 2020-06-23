@@ -12,9 +12,10 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <p class="order-confirmation">
-            {{ $t('Order confirmation') }}
-          <p>
+          <div class="col-md-12 order-confirmation justify-content-center align-self-center">
+            <img src="https://cdn.pixabay.com/photo/2017/01/13/01/22/ok-1976099_960_720.png" height="90">
+            <div> Thank you we've received your Order</div>
+          </div>
           <p class="order-number" v-if="OnlineOnly && lastOrderConfirmation.orderNumber" v-html="this.$t('The OrderNumber is {id}', { id: lastOrderConfirmation.orderNumber })" />
           <p class="order-receipt">
             <i>A copy of the receipt has been sent to: {{ personalDetails.emailAddress }}</i>
@@ -24,7 +25,7 @@
       <div class="row center-md">
         <div class="col-md-12 start-md">
           <p class="sub-title">Delivery For</p>
-          <p>Mr. {{ personalDetails.firstName }}  {{ personalDetails.lastName }}</p>
+          <p>{{ personalDetails.firstName }}  {{ personalDetails.lastName }}</p>
           <p> Phone no: {{ shipping.phoneNumber }} </p>
         </div>
         <div class="col-md-12 start-md">
@@ -258,6 +259,8 @@ export default {
 <style lang="scss">
   .sub-title {
     font-weight: 600;
+    font-size: 18px;
+    color: #f04d24cf;
   }
 
   .content {
