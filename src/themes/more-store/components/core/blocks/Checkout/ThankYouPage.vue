@@ -41,15 +41,48 @@
             <span>{{ getCountryName() }}</span>
           </p>
         </div>
-        <p>
-          <button-outline
-            color="dark"
-            @click.native="$router.push('/')"
-          >
-            {{ $t('Return to shopping') }}
-          </button-outline>
-        </p>
       </div>
+      <div class="row center-md">
+        <div class="col-md-12 start-md">
+          <p class="sub-title">
+            Order Summary
+          </p>
+        </div>
+        <div v-if="productsInCart && productsInCart.length" class="col-md-12 start-md">
+          <div v-for="(segment, index) in totals" :key="index" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'" class="row">
+            <div v-if="segment.code === 'shipping'" class="col-md-6 start-md content">
+              Shipping Fee
+            </div>
+            <div v-if="segment.code !== 'shipping'" class="col-md-6 start-md content">
+              {{ segment.title }}
+            </div>
+            <div v-if="segment.value != null" class="col-md-6 start-md content">
+              {{ segment.value | price(storeView) }}
+            </div>
+          </div>
+
+          <div v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'" class="row">
+            <div v-if="segment.code === 'shipping'" class="col-md-6 start-md content">
+              Shipping Fee
+            </div>
+            <div v-if="segment.code !== 'shipping'" class="col-md-6 start-md content">
+              {{ segment.title }}
+            </div>
+            <div class="col-md-6 start-md content">
+              {{ segment.value | price(storeView) }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
+      <p>
+        <button-outline
+          color="dark"
+          @click.native="$router.push('/')"
+        >
+          {{ $t('Return to shopping') }}
+        </button-outline>
+      </p>
     </div>
     <!--<div class="thank-you-content align-justify py40 pl20">
       <div class="container">
@@ -119,6 +152,7 @@
 </template>
 
 <script>
+import Product from './Product.vue'
 import Composite from '@vue-storefront/core/mixins/composite'
 import Breadcrumbs from 'theme/components/core/Breadcrumbs'
 import BaseTextarea from 'theme/components/core/blocks/Form/BaseTextarea'
@@ -132,8 +166,7 @@ import { registerModule } from '@vue-storefront/core/lib/modules'
 import { MailerModule } from '@vue-storefront/core/modules/mailer'
 import { CartSummary } from '@vue-storefront/core/modules/checkout/components/CartSummary'
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
-import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping';
-import Product from './Product'
+import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping'
 
 export default {
   name: 'ThankYouPage',
@@ -215,6 +248,7 @@ export default {
   },
   destroyed () {
     this.$store.dispatch('checkout/setThankYouPage', false)
+    this.$store.dispatch('cart/clear', { sync: false }, { root: true })
   },
   components: {
     BaseTextarea,
@@ -227,6 +261,10 @@ export default {
 <style lang="scss">
   .sub-title {
     font-weight: 600;
+  }
+
+  .content {
+    margin: 12px 0;
   }
 
   .order-confirmation {
