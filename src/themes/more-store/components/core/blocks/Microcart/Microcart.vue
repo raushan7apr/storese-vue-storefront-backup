@@ -8,6 +8,15 @@
       <div v-if="isEditMode" class="overlay" @click="closeEditMode" />
     </transition>
     <div class="row bg-cl-primary px40 actions">
+      <div class="col-xs py30 first-sm">
+        <router-link :to="localizedRoute('/')" class="no-underline cl-secondary link">
+          <span @click="closeMicrocartExtend">
+            <strong class="text">{{ $t('Your Cart') }}</strong>
+            <span class="count">{{ totalQuantity }}</span>
+            <span>Items</span>
+          </span>
+        </router-link>
+      </div>
       <div class="col-xs end-xs">
         <button
           type="button"
@@ -21,7 +30,7 @@
         </button>
       </div>
     </div>
-    <div
+    <!-- <div
       class="row py20 px40 middle-xs actions"
       v-if="productsInCart.length && !isCheckoutMode"
     >
@@ -32,8 +41,8 @@
           </span>
         </router-link>
       </div>
-    </div>
-    <div class="row middle-xs bg-cl-primary top-sm px40 actions">
+    </div> -->
+    <!-- <div class="row middle-xs bg-cl-primary top-sm px40 actions">
       <div class="col-xs-12 col-sm">
         <h2
           v-if="productsInCart.length"
@@ -48,7 +57,7 @@
           @click.native="clearCart"
         />
       </div>
-    </div>
+    </div> -->
 
     <h4 v-if="!productsInCart.length" class="cl-accent ml30">
       {{ $t('Your shopping cart is empty.') }}
@@ -60,7 +69,7 @@
       </router-link>
       {{ $t('to find something beautiful for You!') }}
     </div>
-    <ul v-if="productsInCart.length" class="bg-cl-primary m0 px40 pb40 products">
+    <ul v-if="productsInCart.length" class="bg-cl-primary m0 pl0 pr40 pb40 products">
       <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
     </ul>
     <div v-if="productsInCart.length" class="summary px40 cl-accent serif">
@@ -117,14 +126,24 @@
     </div>
 
     <div
-      class="row py20 px40 middle-xs actions"
+      class="row py20 px40 middle-xs actions-footer"
       v-if="productsInCart.length && !isCheckoutMode"
     >
-      <div class="col-xs-12 col-sm first-sm">
-        <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
+      <div class="col-xs-6 first-xs col-sm-6 end-sm">
+        <button
+          type="button"
+          class="cart-button"
+          @click="closeMicrocartExtend"
+          data-testid="closeMicrocart"
+        >
+          {{ $t('Keep Shopping') }}
+        </button>
       </div>
-      <div class="col-xs-12 first-xs col-sm-4 end-sm">
-        <button-full class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20"
+      <!-- <div class="col-xs-12 col-sm first-sm">
+        <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
+      </div> -->
+      <div class="col-xs-6 first-xs col-sm-6 end-sm">
+        <button-full class="checkout-button"
           :link="{ name: 'checkout' }"
           @click.native="closeMicrocartExtend"
         >
@@ -196,7 +215,8 @@ export default {
       productsInCart: 'cart/getCartItems',
       appliedCoupon: 'cart/getCoupon',
       totals: 'cart/getTotals',
-      isOpen: 'cart/getIsMicroCartOpen'
+      isOpen: 'cart/getIsMicroCartOpen',
+      totalQuantity: 'cart/getItemsTotalQuantity'
     }),
     storeView () {
       return currentStoreView()
@@ -284,12 +304,23 @@ export default {
   }
 
   .products {
+    padding-right: 40px;
     @media (max-width: 767px) {
-      padding: 30px 15px;
+      // padding: 30px 15px;
     }
   }
-
+  .microcart {
+    background: #fff;
+  }
   .actions {
+    box-shadow: 2px 2px 5px 1px #e1e1e1;
+    -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    background-color: #fff;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom:30px;
+    border-radius: 3px 3px 0 0;
     @media (max-width: 767px) {
       padding: 0 15px;
     }
@@ -297,7 +328,7 @@ export default {
       @media (max-width: 767px) {
         display: flex;
         justify-content: center;
-        padding: 20px 70px;
+        // padding: 20px 70px;
         &.checkout {
           margin-top: 55px;
           padding: 0;
@@ -305,7 +336,53 @@ export default {
       }
     }
   }
+  .actions-footer {
+    background-color: #fff;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom:30px;
+    border-radius: 3px 3px 0 0;
+    @media (max-width: 767px) {
+      padding: 0 15px;
+    }
+    .link {
+      @media (max-width: 767px) {
+        display: flex;
+        justify-content: center;
+        // padding: 20px 70px;
+        &.checkout {
+          margin-top: 55px;
+          padding: 0;
+        }
+      }
+    }
+  }
+  .cart-button {
+    background-color: #fff;
+    border-color: #f04d24cf;
+    color: #f04d24cf;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    border-radius: 5px
+  }
 
+  .checkout-button {
+    background-color: #f04d24cf;
+    border-color: #f04d24cf;
+    color: #fff;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    border-radius: 5px;
+    border: 2px solid #fff;
+  }
   .summary {
     @media (max-width: 767px) {
       padding:  0 15px;
@@ -349,6 +426,12 @@ export default {
     }
   }
 
+  .text {
+    color: #f04d24cf
+  }
+  .count {
+    color: #f04d24cf
+  }
   .overlay {
     top: 0;
     bottom: 0;

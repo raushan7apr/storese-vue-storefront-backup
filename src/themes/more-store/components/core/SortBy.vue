@@ -2,7 +2,7 @@
   <div class="sort-by">
     <select
       name="sortby"
-      class="cl-secondary"
+      class="cl-secondary sort-by-select"
       v-model="sortby"
       @change="changeOrder"
     >
@@ -83,6 +83,9 @@ export default {
     @media (max-width: 770px) {
       .sort-by {
         width: 100%;
+      }
+      .sort-by-select {
+        height: 35px;
       }
     }
 </style>
