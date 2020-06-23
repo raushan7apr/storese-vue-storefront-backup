@@ -240,7 +240,7 @@ $color-white: color(white);
   align-items: center;
   width: 108px;
   height: 36px;
-  border: 4px solid red;
+  border: 4px solid #f04d24cf;
   border-radius: 30px;
   margin-top: 8px;
 }
