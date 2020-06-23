@@ -55,25 +55,25 @@
 
         <div v-if="productsInCart && productsInCart.length" class="col-md-12 start-md">
           <div v-for="(segment, index) in totals" :key="index" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'" class="row">
-            <div v-if="segment.code === 'shipping'" class="col-md-6 col-xs-6 start-md content">
+            <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
               Shipping Fee
             </div>
-            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-6 col-xs-6 start-md content">
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-8 col-xs-6 start-md content">
               {{ segment.title }}
             </div>
-            <div v-if="segment.value != null && segment.title!='Cash on delivery'" class="col-md-6 col-xs-6 end-xs start-md content">
+            <div v-if="segment.value != null && segment.title!='Cash on delivery'" class="pl20 col-md-3 col-xs-6 end-xs center-md content">
               {{ segment.value | price(storeView) }}
             </div>
           </div>
 
           <div v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'" class="row">
-            <div v-if="segment.code === 'shipping'" class="col-md-6 col-xs-6 start-md content">
+            <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
               Shipping Fee
             </div>
-            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-6 col-xs-6 start-md content">
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-8 col-xs-6 start-md content">
               {{ segment.title }}
             </div>
-            <div class="col-md-6 col-xs-6 end-xs start-md content">
+            <div class="pl20 col-md-3 col-xs-6 end-xs center-md content">
               {{ segment.value | price(storeView) }}
             </div>
           </div>
@@ -84,7 +84,7 @@
           color="dark"
           @click.native="$router.push('/')"
         >
-          {{ $t('Return to shopping') }}
+          {{ $t('Continue shopping') }}
         </button-outline>
       </p>
     </div>
