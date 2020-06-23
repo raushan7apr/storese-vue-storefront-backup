@@ -1,18 +1,94 @@
 <template>
   <div>
-    <header class="thank-you-title bg-cl-secondary py35 pl20">
-      <div class="container">
+    <header class="thank-you-title bg-cl-secondary pt20">
+      <div class="container pb15">
         <breadcrumbs
           :with-homepage="true"
           :routes="[]"
           :active-route="this.$t('Order confirmation')"
         />
-        <h2 class="category-title">
-          {{ $t('Order confirmation') }}
-        </h2>
       </div>
     </header>
-    <div class="thank-you-content align-justify py40 pl20">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="order-confirmation">
+            {{ $t('Order confirmation') }}
+          <p>
+          <p class="order-number" v-if="OnlineOnly && lastOrderConfirmation.orderNumber" v-html="this.$t('The OrderNumber is {id}', { id: lastOrderConfirmation.orderNumber })" />
+          <p class="order-receipt">
+            <i>A copy of the receipt has been sent to: {{ personalDetails.emailAddress }}</i>
+          </p>
+        </div>
+      </div>
+      <div class="row center-md">
+        <div class="col-md-12 start-md">
+          <p class="sub-title">
+            Delivery details
+          </p>
+        </div>
+        <div class="col-md-6 start-md">
+          <p class="sub-title">Delivery For</p>
+          <p>Mr. {{ personalDetails.firstName }}  {{ personalDetails.lastName }}</p>
+          <p> Phone no: {{ shipping.phoneNumber }} </p>
+        </div>
+        <div class="col-md-6 end-md">
+          <p class="sub-title">Delivery Address</p>
+          <p>
+            {{ shipping.apartmentNumber }}, {{ shipping.streetAddress }},
+            {{ shipping.city }}, {{ shipping.region_id }}, {{ shipping.zipCode }},
+            <span v-if="shipping.state">{{ shipping.state }}, </span>
+            <span>{{ getCountryName() }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="row center-md">
+        <div class="col-md-12 start-md">
+          <p class="sub-title">
+            Order Summary
+          </p>
+        </div>
+        
+        <div class="col-md-12 start-md">
+          <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
+        </div>
+
+        <div v-if="productsInCart && productsInCart.length" class="col-md-12 start-md">
+          <div v-for="(segment, index) in totals" :key="index" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'" class="row">
+            <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
+              Shipping Fee
+            </div>
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-8 col-xs-6 start-md content">
+              {{ segment.title }}
+            </div>
+            <div v-if="segment.value != null && segment.title!='Cash on delivery'" class="pl20 col-md-3 col-xs-6 end-xs center-md content">
+              {{ segment.value | price(storeView) }}
+            </div>
+          </div>
+
+          <div v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'" class="row">
+            <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
+              Shipping Fee
+            </div>
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-8 col-xs-6 start-md content">
+              {{ segment.title }}
+            </div>
+            <div class="pl20 col-md-3 col-xs-6 end-xs center-md content">
+              {{ segment.value | price(storeView) }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>
+        <button-outline
+          color="dark"
+          @click.native="$router.push('/')"
+        >
+          {{ $t('Continue shopping') }}
+        </button-outline>
+      </p>
+    </div>
+    <!--<div class="thank-you-content align-justify py40 pl20">
       <div class="container">
         <div class="row">
           <div class="col-md-6 pl20 pr20">
@@ -75,11 +151,12 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
+import Product from './Product'
 import Composite from '@vue-storefront/core/mixins/composite'
 import Breadcrumbs from 'theme/components/core/Breadcrumbs'
 import BaseTextarea from 'theme/components/core/blocks/Form/BaseTextarea'
@@ -88,12 +165,16 @@ import VueOfflineMixin from 'vue-offline/mixin'
 import { EmailForm } from '@vue-storefront/core/modules/mailer/components/EmailForm'
 import { isServer } from '@vue-storefront/core/helpers'
 import config from 'config'
+import { PersonalDetails } from '@vue-storefront/core/modules/checkout/components/PersonalDetails'
 import { registerModule } from '@vue-storefront/core/lib/modules'
 import { MailerModule } from '@vue-storefront/core/modules/mailer'
+import { CartSummary } from '@vue-storefront/core/modules/checkout/components/CartSummary'
+import { currentStoreView } from '@vue-storefront/core/lib/multistore'
+import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping'
 
 export default {
   name: 'ThankYouPage',
-  mixins: [Composite, VueOfflineMixin, EmailForm],
+  mixins: [Composite, VueOfflineMixin, EmailForm, PersonalDetails, CartSummary, Shipping],
   beforeCreate () {
     registerModule(MailerModule)
   },
@@ -168,16 +249,40 @@ export default {
   },
   destroyed () {
     this.$store.dispatch('checkout/setThankYouPage', false)
+    this.$store.dispatch('cart/clear', { sync: false }, { root: true })
   },
   components: {
     BaseTextarea,
     Breadcrumbs,
-    ButtonOutline
+    ButtonOutline,
+    Product
   }
 }
 </script>
 
 <style lang="scss">
+  .sub-title {
+    font-weight: 600;
+  }
+
+  .content {
+    margin: 12px 0;
+  }
+
+  .order-confirmation {
+    font-size: 28px;
+    text-align: center;
+    margin: 12px 0px;
+  }
+  .order-number {
+    text-align: center;
+    font-weight: 600;
+    margin: 0;
+  }
+  .order-receipt {
+    text-align: center;
+    font-size: 12px;
+  }
   .thank-you-content {
     padding-left: 0;
 
