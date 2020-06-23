@@ -23,16 +23,11 @@
       </div>
       <div class="row center-md">
         <div class="col-md-12 start-md">
-          <p class="sub-title">
-            Delivery details
-          </p>
-        </div>
-        <div class="col-md-6 start-md">
           <p class="sub-title">Delivery For</p>
           <p>Mr. {{ personalDetails.firstName }}  {{ personalDetails.lastName }}</p>
           <p> Phone no: {{ shipping.phoneNumber }} </p>
         </div>
-        <div class="col-md-6 end-md">
+        <div class="col-md-12 start-md">
           <p class="sub-title">Delivery Address</p>
           <p>
             {{ shipping.apartmentNumber }}, {{ shipping.streetAddress }},
