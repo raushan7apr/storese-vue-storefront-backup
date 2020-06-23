@@ -303,9 +303,9 @@ export default {
       padding-left: 0px;
     }
     .category-title {
-      margin: 0;
+      margin: 41px 0 27px 0;
       font-size: 16px;
-      line-height: 85px;
+      line-height: 1px;
     }
 
     .products-list {
