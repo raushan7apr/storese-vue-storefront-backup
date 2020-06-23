@@ -33,7 +33,7 @@
           <p> Phone no: {{ shipping.phoneNumber }} </p>
         </div>
         <div class="col-md-6 end-md">
-          <p class="sub-title">Delivery method</p>
+          <p class="sub-title">Delivery Address</p>
           <p>
             {{ shipping.apartmentNumber }}, {{ shipping.streetAddress }},
             {{ shipping.city }}, {{ shipping.region_id }}, {{ shipping.zipCode }},
@@ -50,25 +50,25 @@
         </div>
         <div v-if="productsInCart && productsInCart.length" class="col-md-12 start-md">
           <div v-for="(segment, index) in totals" :key="index" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'" class="row">
-            <div v-if="segment.code === 'shipping'" class="col-md-6 start-md content">
+            <div v-if="segment.code === 'shipping'" class="col-md-6 col-xs-6 start-md content">
               Shipping Fee
             </div>
-            <div v-if="segment.code !== 'shipping'" class="col-md-6 start-md content">
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-6 col-xs-6 start-md content">
               {{ segment.title }}
             </div>
-            <div v-if="segment.value != null" class="col-md-6 start-md content">
+            <div v-if="segment.value != null && segment.title!='Cash on delivery'" class="col-md-6 col-xs-6 end-xs start-md content">
               {{ segment.value | price(storeView) }}
             </div>
           </div>
 
           <div v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'" class="row">
-            <div v-if="segment.code === 'shipping'" class="col-md-6 start-md content">
+            <div v-if="segment.code === 'shipping'" class="col-md-6 col-xs-6 start-md content">
               Shipping Fee
             </div>
-            <div v-if="segment.code !== 'shipping'" class="col-md-6 start-md content">
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-6 col-xs-6 start-md content">
               {{ segment.title }}
             </div>
-            <div class="col-md-6 start-md content">
+            <div class="col-md-6 col-xs-6 end-xs start-md content">
               {{ segment.value | price(storeView) }}
             </div>
           </div>
