@@ -52,6 +52,9 @@ export default {
   padding-bottom: 8px;
 }
 @media (max-width: 767px) {
+  .product-listing{
+    margin: 0px -16px 0px;
+  }
   .pd-8 {
   padding-top: 0px;
   padding-bottom: 0px;

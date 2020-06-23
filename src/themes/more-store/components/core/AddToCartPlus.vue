@@ -86,9 +86,7 @@ export default {
 <style lang="scss" scoped>
 
   .add-to-cart-button {
-    background-color: #fff;
-    border-color: #f04d24cf;
-    color: #f04d24cf;
+    color: #fff;
     text-align: center;
     text-decoration: none;
     display: inline-block;

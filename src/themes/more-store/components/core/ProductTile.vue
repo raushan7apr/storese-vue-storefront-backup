@@ -76,12 +76,11 @@
     </div>
     <div class="qty-container">
 
-      <div class="add-to-cart" v-if="cartQuantity(product, productsInCart) === 0">
+      <div class="add-to-cart add-button" v-if="cartQuantity(product, productsInCart) === 0">
         <div class="increase">
           <add-to-cart-plus
             :product="product"
           >
-          Add to Cart
           </add-to-cart-plus>
         </div>
       </div>
@@ -245,7 +244,17 @@ $color-white: color(white);
   border-radius: 30px;
   margin-top: 8px;
 }
-
+.add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 108px;
+  height: 36px;
+  border: 4px solid #f04d24cf;
+  background: #f04d24cf;
+  border-radius: 30px;
+  margin-top: 8px;
+}
 .add-to-cart > .decrease {
   font-size: 24px;
   font-weight: 900;
