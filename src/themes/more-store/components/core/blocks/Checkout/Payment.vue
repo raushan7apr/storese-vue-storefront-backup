@@ -213,13 +213,13 @@
             autocomplete="tel"
           />
 
-          <base-checkbox
+          <!--<base-checkbox
             class="col-xs-12 mb15"
             id="generateInvoiceCheckbox"
             v-model="generateInvoice"
           >
             {{ $t('I want to generate an invoice for the company') }}
-          </base-checkbox>
+          </base-checkbox>-->
 
           <template v-if="generateInvoice">
             <base-input

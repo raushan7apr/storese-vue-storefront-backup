@@ -228,14 +228,14 @@
       <div class="hidden-xs col-sm-2 col-md-1" />
       <div class="col-xs-12 col-sm-9 col-md-11">
         <div class="row">
-          <div class="col-xs-12 col-md-8 my30 px20">
+          <div class="col-xs-12 col-md-8 mb30 px20">
             <!-- <button-full
               data-testid="shippingSubmit"
               @click.native="sendDataToCheckout"
               :disabled="$v.shipping.$invalid || shippingMethods.length <= 0"
             > -->
             <button-full
-              class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+              class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium router-link-active no-underline pointer align-center border-box"
               data-testid="shippingSubmit"
               :disabled="$v.shipping.$invalid || shippingMethods.length <= 0"
               @click.native="sendDataToCheckout"
