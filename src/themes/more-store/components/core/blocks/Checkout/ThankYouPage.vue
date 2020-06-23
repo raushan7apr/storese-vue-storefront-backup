@@ -48,6 +48,11 @@
             Order Summary
           </p>
         </div>
+        
+        <div class="col-md-12 start-md">
+          <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
+        </div>
+
         <div v-if="productsInCart && productsInCart.length" class="col-md-12 start-md">
           <div v-for="(segment, index) in totals" :key="index" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'" class="row">
             <div v-if="segment.code === 'shipping'" class="col-md-6 col-xs-6 start-md content">
@@ -74,7 +79,6 @@
           </div>
         </div>
       </div>
-      <div v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
       <p>
         <button-outline
           color="dark"
@@ -152,7 +156,7 @@
 </template>
 
 <script>
-import Product from './Product.vue'
+import Product from './Product'
 import Composite from '@vue-storefront/core/mixins/composite'
 import Breadcrumbs from 'theme/components/core/Breadcrumbs'
 import BaseTextarea from 'theme/components/core/blocks/Form/BaseTextarea'
@@ -178,9 +182,6 @@ export default {
     return {
       feedback: ''
     }
-  },
-  components: {
-    Product
   },
   computed: {
     lastOrderConfirmation () {
@@ -253,7 +254,8 @@ export default {
   components: {
     BaseTextarea,
     Breadcrumbs,
-    ButtonOutline
+    ButtonOutline,
+    Product
   }
 }
 </script>
