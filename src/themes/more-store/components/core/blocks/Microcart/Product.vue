@@ -11,11 +11,11 @@
       </button>
     </div>
     <div class="blend">
-      <div class="ml10 bg-cl-secondary">
+      <div>
         <product-image :image="image" />
       </div>
     </div>
-    <div class="col-xs pt15 flex pl35 flex-wrap">
+    <div class="col-xs flex flex-wrap">
       <div class="flex flex-nowrap details">
         <div class="flex w-100 flex-wrap between-xs">
           <div>
@@ -27,9 +27,9 @@
             >
               {{ product.name | htmlDecode }}
             </router-link>
-            <div class="h6 cl-bg-tertiary pt5 sku" data-testid="productSku">
+            <!-- <div class="h6 cl-bg-tertiary pt5 sku" data-testid="productSku">
               {{ product.sku }}
-            </div>
+            </div> -->
             <div class="h6 cl-bg-tertiary pt5 options" v-if="isTotalsActive">
               <div v-for="opt in product.totals.options" :key="opt.label">
                 <span class="opn">{{ opt.label }}: </span>
@@ -45,47 +45,50 @@
             <div class="h6 pt5 cl-error" v-if="hasProductErrors">
               {{ product.errors | formatProductMessages }}
             </div>
-            <div class="h6 pt5 cl-success" v-if="hasProductInfo && !hasProductErrors">
+            <!-- <div class="h6 pt5 cl-success" v-if="hasProductInfo && !hasProductErrors">
               {{ product.info | formatProductMessages }}
+            </div> -->
+
+            <div class="flex mr10 align-left start-xs between-sm prices">
+              <div class="prices" v-if="!displayItemDiscounts || !isOnline">
+                <span class="h4 serif cl-error price-special" v-if="product.special_price">
+                  {{ product.price_incl_tax * product.qty | price(storeView) }}
+                </span>
+                <span class="h6 serif price-original" v-if="product.special_price">
+                  {{ product.original_price_incl_tax * product.qty | price(storeView) }}
+                </span>
+                <span class="h4 serif price-regular" v-else data-testid="productPrice">
+                  {{ (product.original_price_incl_tax ? product.original_price_incl_tax : product.price_incl_tax) * product.qty | price(storeView) }}
+                </span>
+              </div>
+              <div class="prices" v-else-if="isOnline && product.totals">
+                <span class="h4 serif cl-error price-special" v-if="product.totals.discount_amount">
+                  {{ product.totals.row_total - product.totals.discount_amount + product.totals.tax_amount | price(storeView) }}
+                </span>
+                <span class="h6 serif price-original" v-if="product.totals.discount_amount">
+                  {{ product.totals.row_total_incl_tax | price(storeView) }}
+                </span>
+                <span class="h4 serif price-regular" v-if="!product.totals.discount_amount">
+                  {{ product.totals.row_total_incl_tax | price(storeView) }}
+                </span>
+              </div>
+              <div class="prices" v-else>
+                <span class="h4 serif price-regular">
+                  {{ (product.regular_price || product.price_incl_tax) * product.qty | price(storeView) }}
+                </span>
+              </div>
             </div>
-          </div>
-          <product-quantity
-            class="h5 cl-accent lh25 qty"
-            :value="productQty"
-            :max-quantity="maxQuantity"
-            :loading="isStockInfoLoading"
-            :is-simple-or-configurable="isSimpleOrConfigurable"
-            @input="updateProductQty"
-            @error="handleQuantityError"
-          />
-        </div>
-        <div class="flex mr10 align-right start-xs between-sm prices">
-          <div class="prices" v-if="!displayItemDiscounts || !isOnline">
-            <span class="h4 serif cl-error price-special" v-if="product.special_price">
-              {{ product.price_incl_tax * product.qty | price(storeView) }}
-            </span>
-            <span class="h6 serif price-original" v-if="product.special_price">
-              {{ product.original_price_incl_tax * product.qty | price(storeView) }}
-            </span>
-            <span class="h4 serif price-regular" v-else data-testid="productPrice">
-              {{ (product.original_price_incl_tax ? product.original_price_incl_tax : product.price_incl_tax) * product.qty | price(storeView) }}
-            </span>
-          </div>
-          <div class="prices" v-else-if="isOnline && product.totals">
-            <span class="h4 serif cl-error price-special" v-if="product.totals.discount_amount">
-              {{ product.totals.row_total - product.totals.discount_amount + product.totals.tax_amount | price(storeView) }}
-            </span>
-            <span class="h6 serif price-original" v-if="product.totals.discount_amount">
-              {{ product.totals.row_total_incl_tax | price(storeView) }}
-            </span>
-            <span class="h4 serif price-regular" v-if="!product.totals.discount_amount">
-              {{ product.totals.row_total_incl_tax | price(storeView) }}
-            </span>
-          </div>
-          <div class="prices" v-else>
-            <span class="h4 serif price-regular">
-              {{ (product.regular_price || product.price_incl_tax) * product.qty | price(storeView) }}
-            </span>
+            <div class="flex mr10 align-right product-qty end-xs between-sm ">
+              <product-quantity
+                class="h5 cl-accent lh25 qty"
+                :value="productQty"
+                :max-quantity="maxQuantity"
+                :loading="isStockInfoLoading"
+                :is-simple-or-configurable="isSimpleOrConfigurable"
+                @input="updateProductQty"
+                @error="handleQuantityError"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -128,7 +131,7 @@
       </div>
       <div class="w-100 flex middle-xs actions" v-if="!editMode">
         <edit-button class="mx5" @click="openEditMode" v-if="productsAreReconfigurable && !editMode" />
-        <remove-button class="mx5" @click="removeItem" />
+        <!-- <remove-button class="mx5" @click="removeItem" /> -->
       </div>
     </div>
   </li>
@@ -251,6 +254,9 @@ export default {
       this.$store.dispatch('cart/removeItem', { product: this.product })
     },
     updateQuantity (quantity) {
+      if (quantity === 0) {
+        this.removeFromCart()
+      }
       this.$store.dispatch('cart/updateQuantity', { product: this.product, qty: quantity })
     },
     async getQuantity (product) {
@@ -350,7 +356,7 @@ export default {
   }
 
   .qty {
-    padding-right: 30px;
+    padding-right: 25px;
 
     @media (max-width: 767px) {
       font-size: 12px;
@@ -390,7 +396,12 @@ export default {
   .flex-wrap {
     flex-wrap: wrap;
   }
-
+  .product-qty {
+    margin-top: 10px;
+    @media (max-width: 767px) {
+    margin-top: -25px;
+    }
+  }
   .edit-mode {
     border-bottom: 1px solid color(white-smoke);
   }

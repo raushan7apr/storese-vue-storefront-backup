@@ -1,26 +1,11 @@
 <template>
   <div id="category" class="category">
-    <header class="bg-cl-secondary py35 pl20">
+    <header class="bg-cl-secondary header-class pl20">
       <div class="container-fluid">
         <breadcrumbs />
       </div>
-      <div class="container">
-        <div class="row m0">
-          <button
-            class="col-xs-5 mt25 mr15 p15 mobile-filters-button bg-cl-th-accent brdr-none cl-white h5 sans-serif fs-medium-small"
-            @click="openFilters"
-          >
-            {{ $t('Filters') }}
-          </button>
-          <div class="mobile-sorting col-xs-6 mt25">
-            <sort-by
-              @change="changeFilter"
-              :value="getCurrentSearchQuery.sort"
-            />
-          </div>
-        </div>
-      </div>
     </header>
+    <head-image />
     <div class="container-fluid pb60 bgd1d1d1 product-list-container">
       <div class="row m0 pt15">
         <div class="col-md-2 start-xs category-filters">
@@ -41,9 +26,9 @@
             {{ $t('Filter') }}
           </button-full>
         </div>
-        <div class="col-md-10 px10 border-box products-list">
+        <div class="col-xs-12 col-md-10 border-box products-list">
           <div class="row middle-sm item-sort-by-container">
-            <div class="col-sm-9 category-title">
+            <div class="col-sm-9 pl20 col-xs-4 category-title">
               {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
             </div>
             <!--<div class="sorting col-sm-2">
@@ -57,6 +42,23 @@
                 @change="changeFilter"
                 :value="getCurrentSearchQuery.sort"
               />
+            </div>
+
+            <div class="container pr30 col-xs-8">
+              <div class="row m0">
+                <button
+                  class="col-xs-5 mt25 mr15 mobile-filters-button bg-cl-th-accent brdr-none cl-white h5 sans-serif fs-medium-small"
+                  @click="openFilters"
+                >
+                  {{ $t('Filters') }}
+                </button>
+                <div class="mobile-sorting col-xs-6 mt25">
+                  <sort-by
+                    @change="changeFilter"
+                    :value="getCurrentSearchQuery.sort"
+                  />
+                </div>
+              </div>
             </div>
         </div>
           <!--<p class="col-xs-12 end-md m0 pb20 cl-secondary">
@@ -85,6 +87,7 @@ import ProductListing from '../components/core/ProductListing.vue'
 import Breadcrumbs from '../components/core/Breadcrumbs.vue'
 import SortBy from '../components/core/SortBy.vue'
 import { isServer } from '@vue-storefront/core/helpers'
+import HeadImage from 'theme/components/core/blocks/MainSlider/HeadImage'
 import { Logger } from '@vue-storefront/core/lib/logger'
 import { getSearchOptionsFromRouteParams } from '@vue-storefront/core/modules/catalog-next/helpers/categoryHelpers'
 import config from 'config'
@@ -121,6 +124,7 @@ export default {
     ButtonFull,
     ProductListing,
     Breadcrumbs,
+    HeadImage,
     Sidebar,
     SortBy,
     Columns
@@ -223,18 +227,23 @@ export default {
   }
 
   .category {
-    margin-top: 12px;
+    // margin-top: 12px;
     background-color: rgb(242, 242, 242);
   }
-
   .item-sort-by-container {
     background-color: #fff;
     margin:36px 8px 0;
     box-shadow: 2px 2px 5px 1px #e1e1e1;
-    -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
-    -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    // -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    // -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
   }
-
+  @media (max-width: 770px) {
+   .item-sort-by-container {
+     background-color: transparent;
+     margin:0px -8px;
+     border-radius: 3px;
+   }
+  }
   .btn {
     &__filter {
       min-width: 100px;
@@ -267,14 +276,17 @@ export default {
   }
 
   .product-list-container {
-    margin-top: -60px;
+    margin-top: -30px;
   }
   .sorting {
     label {
       margin-right: 10px;
     }
   }
-
+  .header-class {
+    padding-top: 35px;
+    padding-bottom: 35px;
+  }
   @media (max-width: 64em) {
     .products-list {
       max-width: 530px;
@@ -282,10 +294,18 @@ export default {
   }
 
   @media (max-width: 770px) {
+    .header-class {
+      padding-top: 8px;
+      padding-bottom: 2px;
+    }
+    .container-fluid {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
     .category-title {
-      margin: 0;
-      font-size: 36px;
-      line-height: 40px;
+      margin: 41px 0 27px 0;
+      font-size: 16px;
+      line-height: 1px;
     }
 
     .products-list {
@@ -299,7 +319,7 @@ export default {
 
     .mobile-filters-button {
       display: block;
-      height: 45px;
+      height: 35px;
     }
 
     .sorting {
@@ -331,7 +351,7 @@ export default {
     }
 
     .mobile-filters-body {
-      padding-top: 50px;
+      margin-top: 50px;
     }
   }
 

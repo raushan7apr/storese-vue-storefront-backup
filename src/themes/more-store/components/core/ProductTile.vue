@@ -25,8 +25,9 @@
       :to="productLink"
       data-testid="productLink"
     >
+
       <div
-        class="product-cover"
+        class="product-cover sideBar"
         :class="[{ sale: labelsActive && isOnSale }, { new: labelsActive && isNew }]"
       >
         <product-image
@@ -37,28 +38,53 @@
           data-testid="productImage"
         />
       </div>
-      <div class="product-details-container">
+      <div class="product-details-container mainContent">
         <p class="product-name mb5 cl-accent mt10" v-if="!onlyImage">
           {{ product.name | htmlDecode }}
+          <br />
         </p>
-
-        <span
-          class="price-original price mr5 lh30 cl-secondary"
-          v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
-        >{{ product.original_price_incl_tax | price(storeView) }}</span>
-        <br />
-        <span
-          class="price-special price lh30 cl-accent weight-700"
-          v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
-        >{{ product.price_incl_tax | price(storeView) }}</span>
-        <span
-          class="lh30 cl-secondary price"
-          v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
-        >{{ product.price_incl_tax | price(storeView) }}</span>
+        <div class="price">
+          <span
+                class="price-original price mr5 lh30 cl-secondary"
+                v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
+              >{{ product.original_price_incl_tax | price(storeView) }}</span>
+              <span
+                class="price-special price lh30 cl-accent weight-700"
+                v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
+              >{{ product.price_incl_tax | price(storeView) }}</span>
+              <span
+                class="lh30 cl-secondary price"
+                v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
+              >{{ product.price_incl_tax | price(storeView) }}</span>
+        </div>
       </div>
     </router-link>
+    <div class="price-mobile ml5 mt5">
+      <span
+            class="price-original price-mobile mr5 lh30 cl-secondary"
+            v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
+          >MRP : {{ product.original_price_incl_tax | price(storeView) }}</span>
+          <br />
+          <span
+            class="price-special price-mobile lh30 cl-accent mt20 weight-700"
+            v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
+          >{{ product.price_incl_tax | price(storeView) }}</span>
+          <span
+            class="lh30 cl-secondary price-mobile"
+            v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
+          >MRP : {{ product.price_incl_tax | price(storeView) }}</span>
+    </div>
     <div class="qty-container">
-      <div class="add-to-cart">
+
+      <div class="add-to-cart add-button" v-if="cartQuantity(product, productsInCart) === 0">
+        <div class="increase">
+          <add-to-cart-plus
+            :product="product"
+          >
+          </add-to-cart-plus>
+        </div>
+      </div>
+      <div class="add-to-cart" v-else>
         <div @click="updateProductQty(product, productsInCart)" class="decrease">
           -
         </div>
@@ -83,7 +109,7 @@ import { Product } from '@vue-storefront/core/modules/checkout/components/Produc
 import { ProductTile } from '@vue-storefront/core/modules/catalog/components/ProductTile.ts'
 import config from 'config'
 import ProductImage from './ProductImage'
-// import AddToCart from 'theme/components/core/AddToCart.vue'
+import AddToCart from 'theme/components/core/AddToCart.vue'
 import AddToCartPlus from 'theme/components/core/AddToCartPlus.vue'
 import AddToWishlist from 'theme/components/core/blocks/Wishlist/AddToWishlist'
 import AddToCompare from 'theme/components/core/blocks/Compare/AddToCompare'
@@ -94,7 +120,7 @@ import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 export default {
   mixins: [ProductTile, IsOnWishlist, IsOnCompare, Product],
   components: {
-    // AddToCart,
+    AddToCart,
     AddToCartPlus,
     ProductImage,
     AddToWishlist,
@@ -214,11 +240,21 @@ $color-white: color(white);
   align-items: center;
   width: 108px;
   height: 36px;
-  border: 4px solid red;
+  border: 4px solid #f04d24cf;
   border-radius: 30px;
   margin-top: 8px;
 }
-
+.add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 108px;
+  height: 36px;
+  border: 4px solid #f04d24cf;
+  background: #f04d24cf;
+  border-radius: 30px;
+  margin-top: 8px;
+}
 .add-to-cart > .decrease {
   font-size: 24px;
   font-weight: 900;
@@ -291,7 +327,7 @@ $color-white: color(white);
 }
 
 .product-details-container {
-    min-height: 140px;
+    // min-height: 120px;
   }
 
 .price-original {
@@ -312,7 +348,57 @@ $color-white: color(white);
   color: $color-white;
   font-size: 12px;
 }
-
+@media (min-width: 767px) {
+  .price-mobile {
+    display: none;
+  }
+  .product-details-container {
+    min-height: 120px;
+  }
+}
+@media (max-width: 767px) {
+  .product-name {
+    font: 500 14px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    font-size: 16px;
+    text-align:left;
+  }
+  .product-link {
+    // height:100%;
+  }
+  .product-cover__thumb {
+    // left: -20%;
+  }
+  .product-cover {
+    width:30%;
+    flex-basis: 50%;
+    max-width: 50%;
+    display:block;
+    float:left;
+  }
+  .price {
+    display: none;
+  }
+  .price-mobile {
+    float: left;
+    // margin-top: 5px;
+    color: #f04d24cf;
+    font: 300 14px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    line-height: 6px;
+  }
+  .product-details-container {
+    display:block;
+    float:left;
+    flex-basis: 50%;
+    width: 67%;
+    padding-right: 3%
+  }
+  .qty-container {
+    float: right;
+    margin-top: -10px;
+    margin-right: 10px;
+    z-index: 999;
+  }
+  }
 .product-cover {
   overflow: hidden;
 

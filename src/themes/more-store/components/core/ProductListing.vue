@@ -37,7 +37,7 @@ export default {
       if (isHero) {
         lastHero = index
       }
-      return isHero ? 'col-xs-12' : 'col-xs-6'
+      return isHero ? 'col-xs-12' : 'col-xs-12'
     }
   }
 }
@@ -45,10 +45,19 @@ export default {
 
 <style scoped>
 .product-listing{
-  margin-top:30px;
+  margin: 30px -16px 0px;
 }
 .pd-8 {
   padding-top: 8px;
   padding-bottom: 8px;
+}
+@media (max-width: 767px) {
+  .product-listing{
+    margin: 0px -16px 0px;
+  }
+  .pd-8 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  }
 }
 </style>
