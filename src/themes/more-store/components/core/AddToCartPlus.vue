@@ -1,5 +1,8 @@
 <template>
-  <span @click="addToCart(product)" :disabled="isProductDisabled" data-testid="addToCart">
+  <span class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0 " @click="addToCart(product)" :disabled="isProductDisabled" data-testid="addToCart">
+    Add
+  </span>
+  <span  v-else @click="addToCart(product)" :disabled="isProductDisabled" data-testid="addToCart">
     +
   </span>
 </template>
@@ -49,11 +52,24 @@ export default {
     },
     notifyUser (notificationData) {
       this.$store.dispatch('notification/spawnNotification', notificationData, { root: true })
+    },
+    cartQuantity (product, cart) {
+      let cartItem = this.cartItem(product, cart);
+      if (cartItem) {
+        return cartItem.qty;
+      } else {
+        return 0;
+      }
+    },
+    cartItem (product, cart) {
+      let cartItem = cart.find(item => item.name === product.name);
+      return cartItem;
     }
   },
   computed: {
     ...mapGetters({
-      isAddingToCart: 'cart/getIsAdding'
+      isAddingToCart: 'cart/getIsAdding',
+      productsInCart: 'cart/getCartItems'
     }),
     isProductDisabled () {
       return this.disabled || formatProductMessages(this.product.errors) !== '' || this.isAddingToCart
@@ -67,3 +83,19 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+
+  .add-to-cart-button {
+    background-color: #fff;
+    border-color: #f04d24cf;
+    color: #f04d24cf;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    border-radius: 5px;
+    padding-bottom: 5px;
+  }
+
+</style>

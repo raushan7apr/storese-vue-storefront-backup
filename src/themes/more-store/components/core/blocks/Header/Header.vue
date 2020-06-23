@@ -354,7 +354,7 @@ i {
   position: relative;
   color: #fff;
   font-weight: 600;
-  z-index: 999;
+  z-index: 4;
   background-color: #f04d24cf;
 }
 

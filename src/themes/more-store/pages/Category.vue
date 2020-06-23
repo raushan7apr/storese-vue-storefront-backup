@@ -4,22 +4,6 @@
       <div class="container-fluid">
         <breadcrumbs />
       </div>
-      <div class="container">
-        <div class="row m0">
-          <button
-            class="col-xs-5 mt25 mr15 p15 mobile-filters-button bg-cl-th-accent brdr-none cl-white h5 sans-serif fs-medium-small"
-            @click="openFilters"
-          >
-            {{ $t('Filters') }}
-          </button>
-          <div class="mobile-sorting col-xs-6 mt25">
-            <sort-by
-              @change="changeFilter"
-              :value="getCurrentSearchQuery.sort"
-            />
-          </div>
-        </div>
-      </div>
     </header>
     <div class="container-fluid pb60 bgd1d1d1 product-list-container">
       <div class="row m0 pt15">
@@ -41,9 +25,9 @@
             {{ $t('Filter') }}
           </button-full>
         </div>
-        <div class="col-md-10 px10 border-box products-list">
+        <div class="col-xs-12 col-md-10 px10 border-box products-list">
           <div class="row middle-sm item-sort-by-container">
-            <div class="col-sm-9 category-title">
+            <div class="col-sm-9 pl20 col-xs-4 category-title">
               {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
             </div>
             <!--<div class="sorting col-sm-2">
@@ -57,6 +41,23 @@
                 @change="changeFilter"
                 :value="getCurrentSearchQuery.sort"
               />
+            </div>
+
+            <div class="container pr30 col-xs-8">
+              <div class="row m0">
+                <button
+                  class="col-xs-5 mt25 mr15 mobile-filters-button bg-cl-th-accent brdr-none cl-white h5 sans-serif fs-medium-small"
+                  @click="openFilters"
+                >
+                  {{ $t('Filters') }}
+                </button>
+                <div class="mobile-sorting col-xs-6 mt25">
+                  <sort-by
+                    @change="changeFilter"
+                    :value="getCurrentSearchQuery.sort"
+                  />
+                </div>
+              </div>
             </div>
         </div>
           <!--<p class="col-xs-12 end-md m0 pb20 cl-secondary">
@@ -226,15 +227,19 @@ export default {
     margin-top: 12px;
     background-color: rgb(242, 242, 242);
   }
-
   .item-sort-by-container {
     background-color: #fff;
     margin:36px 8px 0;
     box-shadow: 2px 2px 5px 1px #e1e1e1;
-    -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
-    -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    // -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+    // -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
   }
-
+  @media (max-width: 770px) {
+   .item-sort-by-container {
+     margin:35px -8px;
+     border-radius: 3px;
+   }
+  }
   .btn {
     &__filter {
       min-width: 100px;
@@ -282,10 +287,14 @@ export default {
   }
 
   @media (max-width: 770px) {
+    .container-fluid {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
     .category-title {
       margin: 0;
-      font-size: 36px;
-      line-height: 40px;
+      font-size: 16px;
+      line-height: 85px;
     }
 
     .products-list {
@@ -299,7 +308,7 @@ export default {
 
     .mobile-filters-button {
       display: block;
-      height: 45px;
+      height: 35px;
     }
 
     .sorting {
