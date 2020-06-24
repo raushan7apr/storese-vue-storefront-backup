@@ -68,7 +68,7 @@
     <h4 v-if="!productsInCart.length" class="cl-accent ml30">
       {{ $t('Your shopping cart is empty.') }}
     </h4>
-    <div v-if="!productsInCart.length" class="ml30" @click="closeMicrocartExtend">
+    <div v-if="!productsInCart.length" class="ml30" @click="closeMicrocartExtend(totals)">
       {{ $t("Don't hesitate and") }}
       <router-link :to="localizedRoute('/')">
         {{ $t('browse our catalog') }}
@@ -139,7 +139,7 @@
         <button
           type="button"
           class="cart-button"
-          @click="closeMicrocartExtend"
+          @click="closeMicrocartExtend(totals)"
           data-testid="closeMicrocart"
         >
           {{ $t('Keep Shopping') }}
@@ -150,8 +150,8 @@
       </div> -->
       <div class="col-xs-6 first-xs col-sm-6 end-sm">
         <button-full class="checkout-button"
-          @click.native="closeMicrocartExtend"
           :link="{ name: 'checkout' }"
+          @click.native="closeMicrocartExtend(totals)"
         >
           {{ $t('Go to checkout') }}
         </button-full>
@@ -254,7 +254,13 @@ export default {
         })
       }
     },
-    closeMicrocartExtend () {
+    closeMicrocartExtend (totals) {
+      if (this.$ga && totals[1].value) {
+        gaData = {
+          cart_amount: totals[1].value
+        }
+        this.$ga.event('Continue_Checkout', 'click', JSON.stringify(gaData));
+      }
       this.toggleMicrocart()
       this.$store.commit('ui/setSidebar', false)
       this.addCouponPressed = false

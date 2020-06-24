@@ -29,6 +29,9 @@ export default {
       this.$forceUpdate()
     },
     async addToCart (product) {
+      if (this.$ga) {
+        this.$ga.event('Add_To_Cart', 'click', JSON.stringify(this.gaData(product)));
+      }
       try {
         const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
         diffLog.clientNotifications.forEach(notificationData => {
@@ -36,6 +39,14 @@ export default {
         })
       } catch (message) {
         this.notifyUser(notifications.createNotification({ type: 'error', message }))
+      }
+    },
+    gaData(product) {
+      return {
+        product_name: product.name,
+        product_sku: product.sku,
+        product_price: product.original_price_incl_tax,
+        offer_price: product.special_price,
       }
     },
     notifyUser (notificationData) {

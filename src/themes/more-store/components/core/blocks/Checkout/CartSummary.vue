@@ -13,33 +13,16 @@
         </div>
       </div>
       <div v-if="productsInCart && productsInCart.length" class="checkout pt10 serif cl-accent helvetica">
-        <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total' && segment.code !== 'tax' && segment.code !== 'payment'">
-          <div class="col-xs cl-accent">
+        <div class="row pt10 pb20 pl20 pr45 weight-400 h3" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'">
+          <div class="col-xs-6 align-left">
             <div v-if="segment.code === 'shipping'">
               Shipping Fee
             </div>
-            <div v-if="segment.code !== 'shipping'">
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'">
               {{ segment.title }}
             </div>
           </div>
-          <div v-if="segment.value != null" class="col-xs align-right cl-accent h4">
-            {{ segment.value | price(storeView) }}
-          </div>
-          <div v-if="segment.code == 'payment'" class="col-xs align-right cl-accent h4">
-            {{ $t('Payment Method')}}
-          </div>
-        </div>
-
-        <div class="row pt20 pb20 pl30 pr55 weight-400 h3" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'">
-          <div class="col-xs">
-            <div v-if="segment.code === 'shipping'">
-              Shipping Fee
-            </div>
-            <div v-if="segment.code !== 'shipping'">
-              {{ segment.title }}
-            </div>
-          </div>
-          <div class="col-xs align-right">
+          <div class="col-xs-6 align-right">
             {{ segment.value | price(storeView) }}
           </div>
         </div>
@@ -69,9 +52,9 @@
                   {{ $t('Cart Items') }}
                 </h3>
               </div>
-              <div class="col-xs-3 col-md-6 mt10">
-                <i class="material-icons summary-title" v-if="show">arrow_circle_down</i>
-                <i class="material-icons summary-title" v-else>arrow_circle_up</i>
+              <div class="col-xs-12 col-md-6 mt10">
+                <i class="material-icons summary-title cursor-pointer" v-if="show">arrow_circle_down</i>
+                <i class="material-icons summary-title cursor-pointer" v-else>arrow_circle_up</i>
               </div>
             </div>
           </div>
@@ -135,6 +118,10 @@ export default {
   .helvetica {
     font-family: Helvetica;
   }
+  .pr45 {
+    padding-right: 45px;
+  }
+
   .summary-title {
     color: #fff;
     @media (max-width: 767px) {
@@ -190,5 +177,8 @@ export default {
 .summary-title{
     color:#000;
   }
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

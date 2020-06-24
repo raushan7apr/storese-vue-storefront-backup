@@ -171,6 +171,15 @@ export default {
       this.$forceUpdate()
     },
     async onAfterPlaceOrder (payload) {
+      let gaData = {
+        order_amount: this.getTransactions().amount.total,
+        payment_method: this.getPaymentMethod(),
+        pincode: this.shipping.zipCode,
+        city: this.shipping.city
+      }
+      if (this.$ga) {
+        this.$ga.event('Payment_Completed', 'click', JSON.stringify(gaData));
+      }
       this.confirmation = payload.confirmation
       this.$store.dispatch('checkout/setThankYouPage', true)
       this.$store.dispatch('user/getOrdersHistory', { refresh: true, useCache: true })

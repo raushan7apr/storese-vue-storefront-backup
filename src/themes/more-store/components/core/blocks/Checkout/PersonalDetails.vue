@@ -96,7 +96,7 @@
             v-model="createAccount"
           >
             {{ $t('I want to create an account') }}
-          </base-checkbox>
+          </base-checkbox>-->
 
           <template v-if="createAccount && !currentUser">
             <base-input
@@ -151,7 +151,7 @@
                 {{ $t('Terms and conditions') }}
               </span>*
             </base-checkbox>
-          </template> -->
+          </template>
         </div>
       </div>
     </div>

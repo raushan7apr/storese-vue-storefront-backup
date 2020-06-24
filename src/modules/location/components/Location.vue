@@ -189,7 +189,14 @@ export default {
       window.localStorage.setItem('location_set', JSON.stringify(true));
       this.latitude = position.coords.latitude;
       this.longitude = position.coords.longitude;
-
+      const gaData = {
+        permissions: "allowed",
+        latitude: this.latitude,
+        longitude: this.longitude,
+      }
+      if (this.$ga) {
+        this.$ga.event('Detect_Location', 'click', JSON.stringify(gaData));
+      }
       this.updateAddress(this.latitude, this.longitude, false);
     },
     onLocationError (error) {
@@ -212,6 +219,15 @@ export default {
           break;
       }
       let locationData = JSON.parse(window.localStorage.getItem('user_add_data'));
+      const gaData = {
+        permissions: "denied",
+        latitude: null,
+        longitude: null,
+        address: null,
+      }
+      if (this.$ga) {
+        this.$ga.event('Detect_Location', 'click', JSON.stringify(gaData));
+      }
       if (locationData) {
         this.updateAddressWithoutAPI(locationData.lat, locationData.lng)
       } else {
@@ -271,6 +287,9 @@ export default {
               address: this.locationValue
             }
             window.localStorage.setItem('user_add_data', JSON.stringify(locationObj));
+            if (this.$ga) {
+              this.$ga.event('StoreAvailable', 'search', JSON.stringify(locationObj));
+            }
             if (response.stores[0].storeAppUrl === window.location.href) {
               this.showLocationWrap = false;
               this.preventBodyScroll(false);
@@ -282,6 +301,15 @@ export default {
           // this.selectedAddress = this.defaultLocation;
           this.errorMessage = 'Sorry! We don\'t serve at your location currently.';
           let locationData = JSON.parse(window.localStorage.getItem('user_add_data'));
+          let locationObj = {
+            lat: lat,
+            lng: lng,
+            url: `https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation?lat=${lat}&lng=${lng}`,
+            address: this.locationValue
+          }
+          if (this.$ga) {
+            this.$ga.event('StoreUnavailable', 'search', JSON.stringify(locationObj));
+          }
           /* if (locationData) {
             this.updateAddressWithoutAPI(locationData.lat, locationData.lng);
           } */
