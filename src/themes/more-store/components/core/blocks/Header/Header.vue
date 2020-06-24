@@ -383,7 +383,7 @@ header {
   float: right;
 }
 .header-placeholder {
-  height: 54px;
+  height: 69px;
   @media (max-width: 767px) {
     height: 0px;
   }
@@ -425,7 +425,7 @@ header {
 .search-and-category {
   height: 64px;
     box-shadow: 0px 0px 10px #d7d7d7!important;
-    margin: 0px 0.6%;
+    margin: 0px 0;
     margin-top:0px;
 }
 .categories-bar a {
