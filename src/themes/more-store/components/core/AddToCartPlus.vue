@@ -1,8 +1,8 @@
 <template>
-  <span class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0" @click="addToCart(product)" :disabled="isProductDisabled" data-testid="addToCart">
+  <span class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0" @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
     Add
   </span>
-  <span v-else @click="addToCart(product)" :disabled="isProductDisabled" data-testid="addToCart">
+  <span v-else @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
     +
   </span>
 </template>
@@ -31,7 +31,7 @@ export default {
     onAfterRemovedVariant () {
       this.$forceUpdate()
     },
-    async addToCart (product) {
+    async addToCart (product, currentQuantity) {
       const res = await this.$store.dispatch('stock/check', {
         product: product,
         qty: product.qty
@@ -40,6 +40,15 @@ export default {
       if (maxQuantity) {
         try {
           const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
+          if (this.$ga && currentQuantity === 0) {
+            this.$ga.event('Add_To_Cart', 'click', JSON.stringify(this.gaData(product)));
+          }
+          if(this.$ga && currentQuantity > 0) {
+            let gaData = this.gaData(product)
+            gaData.new_quantity = currentQuantity + 1;
+            gaData.old_quantity = currentQuantity;
+            this.$ga.event('Change_Quantity', 'click', JSON.stringify(gaData));
+          }
           diffLog.clientNotifications.forEach(notificationData => {
             this.notifyUser(notificationData)
           })
@@ -47,7 +56,21 @@ export default {
           this.notifyUser(notifications.createNotification({ type: 'error', message }))
         }
       } else {
+        if (this.$ga) {
+          let gaData = {
+            product_name: product.name
+          }
+          this.$ga.event('Out_of_Stock', 'click', JSON.stringify(gaData));
+        }
         this.notifyUser(notifications.outOfStock());
+      }
+    },
+    gaData(product) {
+      return {
+        product_name: product.name,
+        product_sku: product.sku,
+        product_price: product.original_price_incl_tax,
+        offer_price: product.special_price,
       }
     },
     notifyUser (notificationData) {

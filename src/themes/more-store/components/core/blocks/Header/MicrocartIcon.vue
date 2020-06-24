@@ -27,13 +27,25 @@ export default {
   computed: {
     ...mapGetters({
       totalQuantity: 'cart/getItemsTotalQuantity',
-      totals: 'cart/getTotals'
+      totals: 'cart/getTotals',
+      productsInCart: 'cart/getCartItems'
     })
   },
   methods: {
     ...mapActions({
       openMicrocart: 'ui/toggleMicrocart'
-    })
+    }),
+    cartIconClick(totalQuantity, totals, productsInCart) {
+      const gaData = {
+        cart_total: totals[1].value,
+        total_quantity: totalQuantity,
+        num_sku: productsInCart.length
+      }
+      if (this.$ga) {
+        this.$ga.event('Cart_Page', 'click', JSON.stringify(gaData)); 
+      }
+      this.$store.dispatch('ui/toggleMicrocart')
+    }
   }
 }
 </script>

@@ -10,7 +10,7 @@
     <div class="row bg-cl-primary px40 actions">
       <div class="col-xs py30 first-sm">
         <router-link :to="localizedRoute('/')" class="no-underline cl-secondary link">
-          <span @click="closeMicrocartExtend">
+          <span @click="closeMicrocartExtend(totals)">
             <strong class="text">{{ $t('Your Cart') }}</strong>
             <span class="count">{{ totalQuantity }}</span>
             <span>Items</span>
@@ -21,7 +21,7 @@
         <button
           type="button"
           class="p0 brdr-none bg-cl-transparent close"
-          @click="closeMicrocartExtend"
+          @click="closeMicrocartExtend(totals)"
           data-testid="closeMicrocart"
         >
           <i class="material-icons py20 cl-accent">
@@ -62,7 +62,7 @@
     <h4 v-if="!productsInCart.length" class="cl-accent ml30">
       {{ $t('Your shopping cart is empty.') }}
     </h4>
-    <div v-if="!productsInCart.length" class="ml30" @click="closeMicrocartExtend">
+    <div v-if="!productsInCart.length" class="ml30" @click="closeMicrocartExtend(totals)">
       {{ $t("Don't hesitate and") }}
       <router-link :to="localizedRoute('/')">
         {{ $t('browse our catalog') }}
@@ -133,7 +133,7 @@
         <button
           type="button"
           class="cart-button"
-          @click="closeMicrocartExtend"
+          @click="closeMicrocartExtend(totals)"
           data-testid="closeMicrocart"
         >
           {{ $t('Keep Shopping') }}
@@ -145,7 +145,7 @@
       <div class="col-xs-6 first-xs col-sm-6 end-sm">
         <button-full class="checkout-button"
           :link="{ name: 'checkout' }"
-          @click.native="closeMicrocartExtend"
+          @click.native="closeMicrocartExtend(totals)"
         >
           {{ $t('Go to checkout') }}
         </button-full>
@@ -248,7 +248,13 @@ export default {
         })
       }
     },
-    closeMicrocartExtend () {
+    closeMicrocartExtend (totals) {
+      if (this.$ga && totals[1].value) {
+        gaData = {
+          cart_amount: totals[1].value
+        }
+        this.$ga.event('Continue_Checkout', 'click', JSON.stringify(gaData));
+      }
       this.toggleMicrocart()
       this.$store.commit('ui/setSidebar', false)
       this.addCouponPressed = false

@@ -6,15 +6,13 @@
         v-for="(category, index) in visibleCategories"
         :key="index"
       >
-        <router-link :to="categoryLink(category)">
-          <div class="offer offer-product border-box flex">
-            <img v-if="category.image" v-bind:src="category.image" class="m10 offer-product-image">
-            <img v-else src="/assets/placeholder.svg" class="m10 offer-product-image" style="opacity: 0.4">
-            <div class="category-name m0 h1">
-              {{ category.name }}
-            </div>
+        <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
+          <img v-if="category.image" v-bind:src="category.image" class="m10 offer-product-image">
+          <img v-else src="/assets/placeholder.svg" class="m10 offer-product-image" style="opacity: 0.4">
+          <div class="category-name m0 h1">
+            {{ category.name }}
           </div>
-        </router-link>
+        </div>
       </div>
     </div>
   </section>
@@ -48,6 +46,18 @@ export default {
   methods: {
     categoryLink (category) {
       return formatCategoryLink(category)
+    },
+    categoryRedirect(category) {
+      if (this.$ga) {
+        this.$ga.event('Category_Viewed', 'click', JSON.stringify(this.gaData(category)));
+      }
+      this.$router.push(this.categoryLink(category)); 
+    },
+    gaData(category) {
+      return {
+        category_name: category.name,
+        source: "Home Page"
+      }
     }
   }
 }
@@ -96,6 +106,7 @@ export default {
     margin: 8px -5px;
     box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.08);
     border-radius: 3px;
+    cursor: pointer;
 
     &:hover {
       opacity: 0.9;
