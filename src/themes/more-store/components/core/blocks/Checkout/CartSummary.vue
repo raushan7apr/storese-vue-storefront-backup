@@ -14,7 +14,7 @@
       </div>
       <div v-if="productsInCart && productsInCart.length" class="checkout pt10 serif cl-accent">
         <div v-for="(segment, index) in totals" :key="index" class="row" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
-          <div v-if="segment.title!='Cash on delivery'" class="col-xs pt15 pb20 pl30 pr55 cl-accent align-left">
+          <div v-if="segment.title!='Cash on delivery'" class="col-xs-6 pt15 pb20 pl30 pr55 cl-accent align-left">
             <div v-if="segment.code === 'shipping'">
               Shipping Fee
             </div>
@@ -22,13 +22,13 @@
               {{ segment.title }}
             </div>
           </div>
-          <div v-if="segment.value != null && segment.title!='Cash on delivery'" class="col-xs pt15 pb20 pl30 pr55 align-right cl-accent h4">
+          <div v-if="segment.value != null && segment.title!='Cash on delivery'" class="col-xs-6 pt15 pb20 pl30 pr55 align-right cl-accent h4">
             {{ segment.value | price(storeView) }}
           </div>
         </div>
 
         <div class="row pt10 pb20 pl20 pr45 weight-400 h3" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'">
-          <div class="col-xs align-left">
+          <div class="col-xs-6 align-left">
             <div v-if="segment.code === 'shipping'">
               Shipping Fee
             </div>
@@ -36,7 +36,7 @@
               {{ segment.title }}
             </div>
           </div>
-          <div class="col-xs align-right">
+          <div class="col-xs-6 align-right">
             {{ segment.value | price(storeView) }}
           </div>
         </div>
@@ -119,7 +119,7 @@ export default {
 
 <style lang="scss" scoped>
   .pr45 {
-    padding-right: 35px;
+    padding-right: 45px;
   }
 
   .summary-title {
