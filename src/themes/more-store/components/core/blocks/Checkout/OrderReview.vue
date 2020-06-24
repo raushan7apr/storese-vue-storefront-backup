@@ -12,7 +12,7 @@
       <div class="col-xs-11 col-sm-9 col-md-11 mt20">
         <div class="row mb15">
           <div class="col-md-12" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
-            <h3 class="m0 mb5">
+            <h3 class="m0 mb5 helvetica">
               {{ $t('Review order') }}
             </h3>
           </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="row mb15 mt20">
           <div class="col-xs-12">
-            <p class="h4">
+            <p class="h4 helvetica">
               {{ $t('Please check if all data are correct') }}
             </p>
             <div class="row">
@@ -37,7 +37,7 @@
                 <cart-summary />
               </div>
               <base-checkbox
-                class="col-xs-11 col-sm-12 col-md-8 p15 mb35 ml10"
+                class="col-xs-11 col-sm-12 col-md-8 p15 mb35 ml10 helvetica"
                 id="acceptTermsCheckbox"
                 @blur="$v.orderReview.terms.$touch()"
                 v-model="orderReview.terms"
@@ -68,7 +68,7 @@
               <button-full
                 @click.native="placeOrder"
                 data-testid="orderReviewSubmit"
-                class="place-order-btn no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+                class="submit-details place-order-btn no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
                 :disabled="$v.orderReview.$invalid"
               >
                 {{ $t('Place the order') }}
@@ -83,7 +83,7 @@
       <p slot="header">
         {{ $t('Terms and conditions') }}
       </p>
-      <div slot="content">
+      <div slot="content helvetica">
         <p>
           This website ("website") is operated by Luma Inc., which includes Luma stores, and Luma Private Sales. This privacy policy only covers information collected at this website, and does not cover any information collected offline by Luma. All Luma websites are covered by this privacy policy.
         </p>
@@ -165,6 +165,9 @@ export default {
     background: #fff;
   }
 
+.helvetica {
+  font-family: Helvetica;
+}
 .checkout-step-header-inactive {
    box-shadow: 2px 2px 5px 1px #e1e1e1;
   -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -175,23 +178,36 @@ export default {
   margin-right: 0px;
   border-radius: 3px 3px 0 0;
 }
-  .order-review {
+.submit-details {
+  background: #fff;
+  border-color: #f04d24cf;
+  border-width: 3px;
+  color: #f04d24cf;
+  border-radius: 8px;
+  border-style: solid;
+}
+.submit-details:hover {
+  background: #f04d24cf;
+  border-color: #f36e4d;
+  color: #fff;
+}
+.order-review {
+box-shadow: 2px 2px 5px 1px #e1e1e1;
+-moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+-webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+background-color: #fff;
+margin-top:10px;
+border-radius: 0 0 3px 3px;
+}
+.checkout-step-header {
   box-shadow: 2px 2px 5px 1px #e1e1e1;
   -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
   -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
-  background-color: #fff;
-  margin-top:10px;
-  border-radius: 0 0 3px 3px;
-  }
-  .checkout-step-header {
-    box-shadow: 2px 2px 5px 1px #e1e1e1;
-    -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
-    -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
-    background-color: #f04d24cf;
-    color: #fff;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-bottom:30px;
-    border-radius: 3px 3px 0 0;
-  }
+  background-color: #f04d24cf;
+  color: #fff;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom:30px;
+  border-radius: 3px 3px 0 0;
+}
 </style>

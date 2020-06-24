@@ -1,23 +1,17 @@
 <template>
   <div class="base-input-number">
     <!-- <label class="base-input-number__label cl-primary flex" :for="getInputId">{{ name }}</label> -->
-    <button @click="decrement" class="btn minus1">
-      -
-    </button>
-    <input
-      :id="getInputId"
-      type="number"
-      :min="min"
-      :max="max"
-      :disabled="disabled"
-      class="m0 no-outline base-input-number__input brdr-cl-primary bg-cl-transparent"
-      :focus="autofocus"
-      v-model="inputValue"
-      @blur="$emit('blur', $event.target.value)"
-    >
-    <button @click="increment" class="btn add1">
-      +
-    </button>
+   <div class="add-to-cart">
+        <div class="decrease" @click="decrement" >
+          -
+        </div>
+        <div class="qty">
+          {{ inputValue }}
+        </div>
+        <div class="increase" @click="increment">
+          +
+        </div>
+      </div>
     <ValidationMessages v-if="validations" :validations="validations" />
   </div>
 </template>
@@ -102,8 +96,9 @@ export default {
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
 .base-input-number{
-   display:flex;
-   width:70px;
+  display:flex;
+  border-color: #f04d24cf;
+  border-width: 4px;
 }
 
 /* it will support chrome and firefox */
@@ -119,15 +114,51 @@ export default {
   //  font-weight:900;
 }
 
-.base-input-number input{
-   border-left:none;
-   border-right:none;
+.add-to-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 108px;
+  height: 36px;
+  border: 4px solid #f36e4d;
+  border-radius: 15px;
+  margin-top: 8px;
+  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
 }
-.btn {
-  color:#f04d24cf;
-  border-color: #f04d24cf;
-  border-radius: 5px;
-  background-color: #fff;
+.add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 108px;
+  height: 36px;
+  border: 4px solid #f36e4d;
+  background: #f04d24cf;
+  border-radius: 15px;
+  margin-top: 8px;
+  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
+}
+.add-to-cart > .decrease {
+  font-size: 24px;
+  font-weight: 900;
+  padding-right: 12px;
+  padding-top: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.add-to-cart > .qty {
+  font-size: 16px;
+  font-weight: 900;
+  padding: 0px 8px 0px 8px;
+  color: #aaaaaa;
+}
+
+.add-to-cart > .increase {
+  font-size: 24px;
+  font-weight: 900;
+  padding-left: 12px;
+  margin-bottom: 2px;
+  cursor: pointer;
 }
 .base-input-number {
   &__input {

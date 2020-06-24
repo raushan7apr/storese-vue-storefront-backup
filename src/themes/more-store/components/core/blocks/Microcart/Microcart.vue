@@ -7,27 +7,33 @@
     <transition name="fade">
       <div v-if="isEditMode" class="overlay" @click="closeEditMode" />
     </transition>
-    <div class="row bg-cl-primary px40 actions">
-      <div class="col-xs py30 first-sm">
-        <router-link :to="localizedRoute('/')" class="no-underline cl-secondary link">
-          <span @click="closeMicrocartExtend">
+    <div class="row bg-cl-primary px20 actions">
+      <div class="first-sm">
+        <div class="no-underline cl-secondary link">
+
+          <button
+            type="button"
+            class="p0 brdr-none bg-cl-transparent close"
+            @click="closeMicrocartExtend"
+            data-testid="closeMicrocart"
+          >
+            <i class="material-icons back-icon cl-accent">
+              keyboard_arrow_left
+            </i>
+          </button>
+          <span class="py30 cart-item-title" @click="closeMicrocartExtend">
             <strong class="text">{{ $t('Your Cart') }}</strong>
             <span class="count">{{ totalQuantity }}</span>
             <span>Items</span>
           </span>
-        </router-link>
+        </div>
       </div>
       <div class="col-xs end-xs">
-        <button
-          type="button"
-          class="p0 brdr-none bg-cl-transparent close"
-          @click="closeMicrocartExtend"
-          data-testid="closeMicrocart"
-        >
-          <i class="material-icons py20 cl-accent">
-            close
-          </i>
-        </button>
+        <clear-cart-button
+        class="py30"
+        v-if="productsInCart.length"
+        @click.native="clearCart"
+      />
       </div>
     </div>
     <!-- <div
@@ -72,7 +78,7 @@
     <ul v-if="productsInCart.length" class="bg-cl-primary m0 pl0 pr40 pb40 products">
       <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
     </ul>
-    <div v-if="productsInCart.length" class="summary px40 cl-accent serif">
+    <div v-if="productsInCart.length" class="summary px40 cl-accent helvetica">
       <h3 class="m0 pb10 weight-400 summary-heading helvetica">
         {{ $t('Shopping summary') }}
       </h3>
@@ -144,8 +150,8 @@
       </div> -->
       <div class="col-xs-6 first-xs col-sm-6 end-sm">
         <button-full class="checkout-button"
-          :link="{ name: 'checkout' }"
           @click.native="closeMicrocartExtend"
+          :link="{ name: 'checkout' }"
         >
           {{ $t('Go to checkout') }}
         </button-full>
@@ -291,7 +297,15 @@ export default {
       }
     }
   }
-
+  @media (min-width: 767px) {
+    .cart-item-title {
+      position: fixed;
+    }
+    .back-icon {
+      padding-top: 28px;
+      padding-bottom: 20px;
+    }
+  }
   .mt0 {
     @media (max-width: 767px) {
       margin-top: 0;
@@ -306,7 +320,7 @@ export default {
   }
 
   .products {
-    padding-right: 40px;
+    // padding-right: 40px;
     @media (max-width: 767px) {
       // padding: 30px 15px;
     }
@@ -363,11 +377,11 @@ export default {
     background-color: #fff;
     border-color: #f04d24cf;
     color: #f04d24cf;
-    padding: 15px 32px;
+    padding: 15px 18px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 10px;
+    font-size: 14px;
     margin: 4px 2px;
     border-radius: 5px
   }
@@ -376,11 +390,11 @@ export default {
     background-color: #f04d24cf;
     border-color: #f04d24cf;
     color: #fff;
-    padding: 15px 32px;
+    padding: 15px 18px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 10px;
+    font-size: 14px;
     margin: 4px 2px;
     border-radius: 5px;
     border: 2px solid #fff;

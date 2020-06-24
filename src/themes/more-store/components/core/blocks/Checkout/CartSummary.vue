@@ -5,15 +5,15 @@
         <div class="col-xs-11 col-sm-9 col-md-11 mt20">
           <div class="row mb15">
             <div class="col-xs-12 col-md-5">
-              <h3 class="m0 mb5 summary-title">
+              <h3 class="m0 mb5 summary-title helvetica">
                 {{ $t('Order Summary') }}
               </h3>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="productsInCart && productsInCart.length" class="checkout pt10 serif cl-accent">
-        <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
+      <div v-if="productsInCart && productsInCart.length" class="checkout pt10 serif cl-accent helvetica">
+        <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total' && segment.code !== 'tax' && segment.code !== 'payment'">
           <div class="col-xs cl-accent">
             <div v-if="segment.code === 'shipping'">
               Shipping Fee
@@ -24,6 +24,9 @@
           </div>
           <div v-if="segment.value != null" class="col-xs align-right cl-accent h4">
             {{ segment.value | price(storeView) }}
+          </div>
+          <div v-if="segment.code == 'payment'" class="col-xs align-right cl-accent h4">
+            {{ $t('Payment Method')}}
           </div>
         </div>
 
@@ -40,6 +43,16 @@
             {{ segment.value | price(storeView) }}
           </div>
         </div>
+        <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total' && segment.code !== 'tax' && segment.code === 'payment'">
+          <div class="col-xs cl-accent">
+            <div>
+              {{ $t('Payment Method')}}
+            </div>
+          </div>
+          <div v-if="segment.code == 'payment'" class="col-xs align-right cl-accent h4">
+            {{ segment.title }}
+          </div>
+        </div>
       <!-- <div class="col-xs-1 col-sm-2 col-md-1">
         <div
           class="number-circle lh35 cl-white brdr-circle align-center weight-700"
@@ -48,15 +61,15 @@
           2
         </div>
       </div> -->
-        <div class="row summary-header-container" @click="show=!show">
+        <div class="row summary-header-container helvetica" @click="show=!show">
           <div class="col-xs-11 col-sm-9 col-md-11 mt20">
             <div class="row mb15">
-              <div class="col-xs-12 col-md-6">
-                <h3 class="m0 mb5 summary-title">
-                  {{ $t('View Items in Cart') }}
+              <div class="col-xs-9 col-md-6">
+                <h3 class="m0 mb5 summary-title helvetica">
+                  {{ $t('Cart Items') }}
                 </h3>
               </div>
-              <div class="col-xs-12 col-md-6 mt10">
+              <div class="col-xs-3 col-md-6 mt10">
                 <i class="material-icons summary-title" v-if="show">arrow_circle_down</i>
                 <i class="material-icons summary-title" v-else>arrow_circle_up</i>
               </div>
@@ -118,6 +131,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .helvetica {
+    font-family: Helvetica;
+  }
   .summary-title {
     color: #fff;
     @media (max-width: 767px) {
@@ -130,8 +147,10 @@ export default {
       margin-left: 0;
     }
   }
-  .cart-summary{
-    margin-top: 118px
+  @media (min-width: 767px){
+   .cart-summary{
+      margin-top: 110px
+    }
   }
 .summary-header-container {
   box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -140,7 +159,6 @@ export default {
   background-color: #f04d24cf;
   margin-left: 0px;
   margin-right: 0px;
-  margin-bottom:30px;
   border-radius: 3px 3px 0 0;
 }
 .order-summary {
@@ -151,7 +169,26 @@ export default {
   background-color: #fff;
   margin-top:20px;
   border-radius: 0 0 3px 3px;
-  margin-right: 30px;
+  margin-right: 5px;
   margin-left: 10px;
+}
+@media (max-width: 767px){
+  .order-summary {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+.summary-header-container {
+  box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
+  background-color: #fff;
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 3px 3px 0 0;
+  }
+.summary-title{
+    color:#000;
+  }
 }
 </style>

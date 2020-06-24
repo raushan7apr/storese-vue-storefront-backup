@@ -1,15 +1,15 @@
 <template>
-  <div class="mb40 price serif">
+  <div class="mb40 price helvetica">
     <div
       class="h3 cl-secondary"
       v-if="initialPrice.special && price.default && price.original"
     >
       <span
-        class="h2 weight-700"
-      >{{ price.special | price(storeView) }}</span>&nbsp;
-      <span
         class="price-original h3"
-      >{{ price.original | price(storeView) }}</span>
+      >Mrp. {{ price.original | price(storeView) }}</span>&nbsp;
+      <span
+        class="h2 weight-700"
+      >{{ price.special | price(storeView) }}</span>
     </div>
     <div
       class="h2 weight-700"
@@ -97,6 +97,9 @@ $color-primary: color(primary);
   text-decoration: line-through;
 }
 
+.helvetica {
+  font-family: Helvetica;
+}
 .price {
   @media (max-width: 767px) {
     color: $color-primary;

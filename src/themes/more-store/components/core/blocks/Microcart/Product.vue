@@ -131,7 +131,7 @@
       </div>
       <div class="w-100 flex middle-xs actions" v-if="!editMode">
         <edit-button class="mx5" @click="openEditMode" v-if="productsAreReconfigurable && !editMode" />
-        <!-- <remove-button class="mx5" @click="removeItem" /> -->
+        <remove-button class="mx5" @click="removeItem" />
       </div>
     </div>
   </li>
@@ -359,7 +359,7 @@ export default {
   }
 
   .qty {
-    padding-right: 25px;
+    // padding-right: 25px;
 
     @media (max-width: 767px) {
       font-size: 12px;
@@ -373,6 +373,7 @@ export default {
   .prices {
     color: #f04d24cf;
     flex-direction: column;
+    margin-top: 10px;
     @media (max-width: 767px) {
       padding: 0;
       font-size: 12px;
@@ -401,10 +402,10 @@ export default {
     flex-wrap: wrap;
   }
   .product-qty {
-    margin-top: -20px;
+    margin-top: -35px;
     float: right;
     @media (max-width: 767px) {
-    margin-top: -20px;
+    margin-top: -35px;
     }
   }
   .edit-mode {

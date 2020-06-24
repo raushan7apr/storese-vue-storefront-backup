@@ -265,7 +265,7 @@ $color-icon-hover: color(secondary, $colors-background);
   }
 }
 .mobile-search-icon {
-  margin-left: -10px;
+  margin-left: -20px;
 }
 .bg-f04d24cf {
   color: #f04d24cf;
@@ -301,7 +301,7 @@ $color-icon-hover: color(secondary, $colors-background);
     -moz-border-radius: 9px;
     border-radius: 9px;
     position: absolute;
-    right: 1px;
+    right: 8px;
     top: 26px;
   }
 }

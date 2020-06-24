@@ -11,16 +11,16 @@
       </div> -->
       <div class="col-xs-11 col-sm-9 col-md-11 mt20">
         <div class="row mb15">
-          <div class="col-xs-12 col-md-7" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
-            <h3 class="m0 mb5">
+          <div class="col-xs-9 col-md-7" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
+            <h3 class="m0 mb5 helvetica">
               {{ $t('Payment') }}
             </h3>
           </div>
-          <div class="col-xs-12 col-md-5 pr30">
+          <div class="col-xs-3 col-md-5 pr30">
             <div class="lh30 flex end-lg" v-if="isFilled && !isActive">
               <a href="#" class="cl-tertiary flex" @click.prevent="edit">
-                <span class="pr5">
-                  {{ $t('Edit payment') }}
+                <span class="pr5 helvetica">
+                  {{ $t('Edit') }}
                 </span>
                 <i class="material-icons cl-tertiary">edit</i>
               </a>
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="row pl20" v-if="isActive">
+    <div class="row pl20 helvetica" v-if="isActive">
       <div class="hidden-xs col-sm-2 col-md-1" />
       <div class="col-xs-11 col-sm-9 col-md-10">
         <div class="row" v-if="isActive">
@@ -213,7 +213,7 @@
             autocomplete="tel"
           />
 
-          <base-checkbox
+          <!-- <base-checkbox
             class="col-xs-12 mb15"
             id="generateInvoiceCheckbox"
             v-model="generateInvoice"
@@ -261,7 +261,7 @@
                 {{ $t('We will send you the invoice to given e-mail address') }}
               </label>
             </div>
-          </template>
+          </template> -->
 
           <div class="col-xs-12">
             <h4>
@@ -269,14 +269,15 @@
             </h4>
           </div>
           <div v-for="(method, index) in paymentMethods" :key="index" class="col-md-6">
+            <input
+              type="radio"
+              :value="method.code"
+              class="radioBoxStyle"
+              name="payment-method"
+              v-model="payment.paymentMethod"
+              @change="$v.payment.paymentMethod.$touch(); changePaymentMethod();"
+            />
             <label class="radioStyled"> {{ method.title ? method.title : method.name }}
-              <input
-                type="radio"
-                :value="method.code"
-                name="payment-method"
-                v-model="payment.paymentMethod"
-                @change="$v.payment.paymentMethod.$touch(); changePaymentMethod();"
-              >
               <span class="checkmark" />
             </label>
           </div>
@@ -288,12 +289,12 @@
       <div class="hidden-xs col-sm-2 col-md-1" />
       <div class="col-xs-12 col-sm-9 col-md-11">
         <div class="row">
-          <div class="col-xs-12 col-md-8 px20 my30">
+          <div class="col-xs-12 col-md-8 px20 mb30">
             <button-full
               @click.native="sendDataToCheckout"
               data-testid="paymentSubmit"
               :disabled="$v.payment.$invalid"
-              class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+              class="submit-details no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
             >
               {{ $t('Go review the order') }}
             </button-full>
@@ -324,8 +325,8 @@
               <h4>{{ $t('Payment method') }}</h4>
             </div>
             <div class="col-md-6 mb15">
+              <input type="radio" value="" class="radioBoxStyle" checked disabled name="chosen-payment-method">
               <label class="radioStyled"> {{ getPaymentMethod().title }}
-                <input type="radio" value="" checked disabled name="chosen-payment-method">
                 <span class="checkmark" />
               </label>
             </div>
@@ -479,6 +480,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.helvetica {
+  font-family: Helvetica;
+}
 .checkout-step-header-inactive {
    box-shadow: 2px 2px 5px 1px #e1e1e1;
   -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -499,6 +503,22 @@ export default {
   margin-right: 0px;
   margin-bottom:30px;
   border-radius: 3px 3px 0 0;
+}
+.submit-details {
+  background: #fff;
+  border-color: #f04d24cf;
+  border-width: 3px;
+  color: #f04d24cf;
+  border-radius: 8px;
+  border-style: solid;
+}
+.submit-details:hover {
+  background: #f04d24cf;
+  border-color: #f36e4d;
+  color: #fff;
+}
+.radioBoxStyle {
+  height: 12px;
 }
 .payment {
   box-shadow: 2px 2px 5px 1px #e1e1e1;

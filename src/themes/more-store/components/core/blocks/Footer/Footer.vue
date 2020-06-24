@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row m0 center-xs between-md">
           <div
-            class="row m0 col-xs-12 between-md between-xs no-mobile"
+            class="row m0 col-xs-12 between-md between-xs"
           >
             <div class="start-md">
               <div class="mt15">
