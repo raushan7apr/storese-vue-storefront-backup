@@ -21,7 +21,7 @@
               />
             </div>
             <div
-              class="mb20 uppercase cl-secondary"
+              class="mb20 h6 uppercase cl-secondary"
               :content="getCurrentProduct.sku"
             >
               {{ $t('SKU: {sku}', { sku: getCurrentProduct.sku }) }}
@@ -48,14 +48,14 @@
               />
             </div>
             <div
-              class="mb20 uppercase cl-secondary product-view"
+              class="mb20 h6 uppercase cl-secondary product-view"
               :content="getCurrentProduct.sku"
             >
               {{ $t('SKU: {sku}', { sku: getCurrentProduct.sku }) }}
             </div>
             <div>
               <product-price
-                class="mb40 product-price" style="color: #009688;"
+                class="mb40 product-price" style="color: #f04d24cf;"
                 v-if="getCurrentProduct.type_id !== 'grouped'"
                 :product="getCurrentProduct"
                 :custom-options="getCurrentCustomOptions"
@@ -128,22 +128,34 @@
               v-else-if="getCurrentProduct.custom_options && getCurrentProduct.custom_options.length > 0"
               :product="getCurrentProduct"
             />
-            <product-quantity
-              class="row m0 mb35"
-              v-if="getCurrentProduct.type_id !== 'grouped' && getCurrentProduct.type_id !== 'bundle'"
-              v-model="getCurrentProduct.qty"
-              :max-quantity="maxQuantity"
-              :loading="isStockInfoLoading"
-              :is-simple-or-configurable="isSimpleOrConfigurable"
-              :show-quantity="manageQuantity"
-              :check-max-quantity="manageQuantity"
-              @error="handleQuantityError"
-            />
-            <div class="row m0">
+            <div>
+              <div class="col-xs-6">
+                <product-price
+                  class="mb40 product-price-mobile mt15" style="color: #f04d24cf;"
+                  v-if="getCurrentProduct.type_id !== 'grouped'"
+                  :product="getCurrentProduct"
+                  :custom-options="getCurrentCustomOptions"
+                />
+              </div>
+              <div class="col-xs-6 product-quantity-container">
+                <product-quantity
+                  class="row m0 mb35"
+                  v-if="getCurrentProduct.type_id !== 'grouped' && getCurrentProduct.type_id !== 'bundle'"
+                  v-model="getCurrentProduct.qty"
+                  :max-quantity="maxQuantity"
+                  :loading="isStockInfoLoading"
+                  :is-simple-or-configurable="isSimpleOrConfigurable"
+                  :show-quantity="manageQuantity"
+                  :check-max-quantity="manageQuantity"
+                  @error="handleQuantityError"
+                />
+              </div>
+            </div>
+            <div class="m0">
               <add-to-cart
                 :product="getCurrentProduct"
                 :disabled="isAddToCartDisabled"
-                class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium col-xs-12 col-sm-4 col-md-6"
+                class="add-to-cart-button no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium col-xs-12 col-sm-4 col-md-6"
               />
             </div>
             <!-- <div class="row py40 add-to-buttons">
@@ -154,15 +166,36 @@
                 <AddToCompare :product="getCurrentProduct" />
               </div>
             </div> -->
+            <h2 class="h3 mt20 mb10 helvetica lh20 details-title">
+              {{ $t('Product details') }}
+            </h2>
+            <div class="h4 details-wrapper details-wrapper--open">
+              <div class="row between-md m0">
+                <div class="col-xs-12 col-sm-6">
+                  <div class="lh30 h5" v-html="getCurrentProduct.description" />
+                </div>
+                <div class="col-xs-12 col-sm-5">
+                  <ul class="attributes p0 pt5 m0">
+                    <product-attribute
+                      :key="attr.attribute_code"
+                      v-for="attr in getCustomAttributes"
+                      :product="getCurrentProduct"
+                      :attribute="attr"
+                      empty-placeholder="N/A"
+                    />
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </div>
     </section>
-    <section class="container px15 pt50 pb35 cl-accent details">
-      <h2 class="h3 m0 mb10 serif lh20 details-title">
+    <section class="container px15 pt50 pb35 cl-accent details-mobile">
+      <h2 class="h3 m0 mb10 helvetica lh20 details-title-mobile">
         {{ $t('Product details') }}
       </h2>
-      <div class="h4 details-wrapper" :class="{'details-wrapper--open': detailsOpen}">
+      <div class="h4 details-wrapper-mobile" :class="{'details-wrapper-mobile--open': detailsOpen}">
         <div class="row between-md m0">
           <div class="col-xs-12 col-sm-6">
             <div class="lh30 h5" v-html="getCurrentProduct.description" />
@@ -469,11 +502,14 @@ $more-background: color(rgb(242, 242, 242));
 .product-page-header {
   padding: 20px 35px;
 }
+.helvetica {
+  font-family: Helvetica;
+}
 .product-page {
-  margin-top: 12px;
+  // margin-top: 12px;
 }
 .product-price {
-  color: #009688;
+  color: #f04d24cf;
 }
 
 .shadow-box {
@@ -490,8 +526,81 @@ $more-background: color(rgb(242, 242, 242));
     font-size: 36px;
   }
 }
+.product-quantity-container {
+    float: left;
+    margin-bottom: -6px;
+  }
+@media (min-width: 767px) {
+  .details-mobile {
+    display: none;
+  }
+}
+.add-to-cart-button {
+  background: #fff;
+  border-color: #f04d24cf;
+  border-width: 3px;
+  color: #f04d24cf;
+  border-radius: 8px;
+  border-style: solid;
+}
+.add-to-cart-button:hover {
+  background: #f04d24cf;
+  border-color: #f36e4d;
+  color: #fff;
+
+}
+.details-wrapper {
+  @media (max-width: 767px) {
+    position: relative;
+    max-height: 140px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    font-size: 14px;
+  }
+
+  &--open {
+    max-height: none;
+  }
+}
 
 @media (max-width: 767px) {
+  .details-wrapper-mobile {
+    position: relative;
+    max-height: 140px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    &--open {
+      max-height: none;
+    }
+}
+  .details-wrapper {
+    display: none;
+  }
+  .details-wrapper--open {
+    display: none;
+  }
+  .product-view {
+    display: none;
+  }
+  .details {
+    display: none;
+  }
+  .details-title {
+    display: none;
+  }
+  .product-page {
+    margin-top: 0px;
+  }
+  .product-quantity-container {
+    float: right;
+  }
+  .product-price-mobile {
+    float: left;
+  }
+  .product-price {
+    display: none;
+  }
   .product-page-header {
     padding: 0px 0px 1px;
   }
@@ -518,7 +627,7 @@ $more-background: color(rgb(242, 242, 242));
 
 .breadcrumbs {
   @media (max-width: 767px) {
-    margin: 15px 0;
+    margin: 0px 0px 10px;
     padding: 15px 0 0 15px;
   }
 }
@@ -534,7 +643,13 @@ $more-background: color(rgb(242, 242, 242));
   }
 }
 @media (min-width: 767px) {
+  .product-price-mobile {
+    display: none;
+  }
 .product-mobile-view {
+    display: none;
+  }
+  .details-title-mobile {
     display: none;
   }
 }
@@ -596,22 +711,9 @@ $more-background: color(rgb(242, 242, 242));
   padding: 0 8px;
 
   @media (max-width: 767px) {
+    display: none;
     font-size: 18px;
     margin: 0;
-  }
-}
-
-.details-wrapper {
-  @media (max-width: 767px) {
-    position: relative;
-    max-height: 140px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    font-size: 14px;
-  }
-
-  &--open {
-    max-height: none;
   }
 }
 

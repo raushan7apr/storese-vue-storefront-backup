@@ -112,7 +112,8 @@ export default {
     &:hover,
     &:focus {
       outline: none;
-      border-color: $color-puerto-rico;
+      border-color: #f04d24cf;
+      // border-color: $color-puerto-rico;
     }
 
     &:disabled,
@@ -136,7 +137,8 @@ export default {
   select:focus ~ label, select:not(.empty) ~ label {
     top: -10px;
     font-size: 14px;
-    color: $color-puerto-rico;
+    color: #f04d24cf;
+    // color: $color-puerto-rico;
   }
 }
 </style>

@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-xs-12 col-md-9 pb15">
           <div class="mb15">
-            <div class="h4 weight-400 cl-accent serif">
+            <div class="h4 weight-400 cl-accent helvetica">
               {{ product.name | htmlDecode }}
             </div>
             <div class="error" v-if="product.errors && Object.keys(product.errors).length > 0">
@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-md-3 serif">
+        <div class="col-xs-12 col-md-3 helvetica">
           <div v-if="isOnline && product.totals">
             <span class="h4 cl-error" v-if="product.totals.discount_amount">{{ product.totals.row_total - product.totals.discount_amount + product.totals.tax_amount | price(storeView) }} </span>
             <span class="price-original h5" v-if="product.totals.discount_amount">{{ product.totals.row_total_incl_tax | price(storeView) }}</span>
@@ -86,10 +86,13 @@ export default {
 </script>
 
 <style scoped>
-.price-original {
-  text-decoration: line-through;
-}
-.blend {
-  flex: 0 0 121px;
-}
+  .helvetica {
+    font-family: Helvetica;
+  }
+  .price-original {
+    text-decoration: line-through;
+  }
+  .blend {
+    flex: 0 0 121px;
+  }
 </style>
