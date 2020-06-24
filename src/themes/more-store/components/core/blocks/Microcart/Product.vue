@@ -20,7 +20,7 @@
         <div class="flex w-100 flex-wrap between-xs">
           <div>
             <router-link
-              class="serif h4 name"
+              class="helvetica h5 name"
               :to="productLink"
               data-testid="productLink"
               @click.native="$store.commit('ui/setMicrocart', false)"
@@ -51,29 +51,29 @@
 
             <div class="flex mr10 align-left start-xs between-sm prices">
               <div class="prices" v-if="!displayItemDiscounts || !isOnline">
-                <span class="h4 serif cl-error price-special" v-if="product.special_price">
+                <span class="h4 helvetica cl-error price-special" v-if="product.special_price">
                   {{ product.price_incl_tax * product.qty | price(storeView) }}
                 </span>
-                <span class="h6 serif price-original" v-if="product.special_price">
+                <span class="h6 helvetica price-original" v-if="product.special_price">
                   {{ product.original_price_incl_tax * product.qty | price(storeView) }}
                 </span>
-                <span class="h4 serif price-regular" v-else data-testid="productPrice">
+                <span class="h4 helvetica price-regular" v-else data-testid="productPrice">
                   {{ (product.original_price_incl_tax ? product.original_price_incl_tax : product.price_incl_tax) * product.qty | price(storeView) }}
                 </span>
               </div>
               <div class="prices" v-else-if="isOnline && product.totals">
-                <span class="h4 serif cl-error price-special" v-if="product.totals.discount_amount">
+                <span class="h5 helvetica cl-error price-special" v-if="product.totals.discount_amount">
                   {{ product.totals.row_total - product.totals.discount_amount + product.totals.tax_amount | price(storeView) }}
                 </span>
-                <span class="h6 serif price-original" v-if="product.totals.discount_amount">
+                <span class="h6 helvetica price-original" v-if="product.totals.discount_amount">
                   {{ product.totals.row_total_incl_tax | price(storeView) }}
                 </span>
-                <span class="h4 serif price-regular" v-if="!product.totals.discount_amount">
+                <span class="h4 helvetica price-regular" v-if="!product.totals.discount_amount">
                   {{ product.totals.row_total_incl_tax | price(storeView) }}
                 </span>
               </div>
               <div class="prices" v-else>
-                <span class="h4 serif price-regular">
+                <span class="h5 helvetica price-regular">
                   {{ (product.regular_price || product.price_incl_tax) * product.qty | price(storeView) }}
                 </span>
               </div>
@@ -324,6 +324,9 @@ export default {
 <style lang="scss" scoped>
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
+  .helvetica {
+    font-family: Helvetica;
+  }
   .blend {
     flex: 0 0 150px;
   }
@@ -368,6 +371,7 @@ export default {
   }
 
   .prices {
+    color: #f04d24cf;
     flex-direction: column;
     @media (max-width: 767px) {
       padding: 0;
@@ -397,9 +401,10 @@ export default {
     flex-wrap: wrap;
   }
   .product-qty {
-    margin-top: 10px;
+    margin-top: -20px;
+    float: right;
     @media (max-width: 767px) {
-    margin-top: -25px;
+    margin-top: -20px;
     }
   }
   .edit-mode {

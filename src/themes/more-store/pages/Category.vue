@@ -5,9 +5,8 @@
         <breadcrumbs />
       </div>
     </header>
-    <head-image />
     <div class="container-fluid pb60 bgd1d1d1 product-list-container">
-      <div class="row m0 pt15">
+      <div class="row m0">
         <div class="col-md-2 start-xs category-filters">
           <sidebar :filters="getAvailableFilters" @changeFilter="changeFilter" />
         </div>
@@ -45,7 +44,7 @@
             </div>
 
             <div class="container pr30 col-xs-8">
-              <div class="row m0">
+              <div class="row m0 product-filter-container">
                 <button
                   class="col-xs-5 mt25 mr15 mobile-filters-button bg-cl-th-accent brdr-none cl-white h5 sans-serif fs-medium-small"
                   @click="openFilters"
@@ -87,7 +86,6 @@ import ProductListing from '../components/core/ProductListing.vue'
 import Breadcrumbs from '../components/core/Breadcrumbs.vue'
 import SortBy from '../components/core/SortBy.vue'
 import { isServer } from '@vue-storefront/core/helpers'
-import HeadImage from 'theme/components/core/blocks/MainSlider/HeadImage'
 import { Logger } from '@vue-storefront/core/lib/logger'
 import { getSearchOptionsFromRouteParams } from '@vue-storefront/core/modules/catalog-next/helpers/categoryHelpers'
 import config from 'config'
@@ -124,7 +122,6 @@ export default {
     ButtonFull,
     ProductListing,
     Breadcrumbs,
-    HeadImage,
     Sidebar,
     SortBy,
     Columns
@@ -232,16 +229,19 @@ export default {
   }
   .item-sort-by-container {
     background-color: #fff;
-    margin:36px 8px 0;
+    margin:36px 0px 0px;
     box-shadow: 2px 2px 5px 1px #e1e1e1;
     // -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
     // -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
   }
   @media (max-width: 770px) {
    .item-sort-by-container {
-     background-color: transparent;
-     margin:0px -8px;
+    //  background-color: transparent;
+     margin:20px -8px 3px;
      border-radius: 3px;
+   }
+   .product-filter-container {
+     margin-bottom: 20px;
    }
   }
   .btn {
@@ -276,7 +276,7 @@ export default {
   }
 
   .product-list-container {
-    margin-top: -30px;
+    margin-top: -10px;
   }
   .sorting {
     label {
@@ -286,6 +286,12 @@ export default {
   .header-class {
     padding-top: 20px;
     padding-bottom: 0px;
+  }
+
+  @media (min-width: 770px){
+    .product-list-container {
+      margin-top: -30px;
+    }
   }
   @media (max-width: 64em) {
     .products-list {

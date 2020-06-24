@@ -103,6 +103,19 @@ export default {
           return this.selectedCategoryIds.includes(categoryId)
         }))
       }
+      if (this.$ga) {
+        let gaData = {
+          search_query: this.search,
+          num_results: productList.length
+        }
+        this.$ga.event('Search_Event', 'input', JSON.stringify(gaData))
+      }
+      if (this.$ga && productList.length == 0) {
+        let gaData = {
+          product_name: this.search
+        }
+        this.$ga.event('Out_of_Stock', 'search', JSON.stringify(gaData));
+      }
       return productList
     },
     categories () {

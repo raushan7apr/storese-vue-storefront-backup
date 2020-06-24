@@ -20,9 +20,9 @@
         </div>
       </AddToCompare>
     </div> -->
-    <router-link
-      class="block no-underline product-link"
-      :to="productLink"
+    <div
+      class="block no-underline product-link cursor-pointer"
+      @click="productRedirect(productLink, product)"
       data-testid="productLink"
     >
 
@@ -58,7 +58,7 @@
               >{{ product.price_incl_tax | price(storeView) }}</span>
         </div>
       </div>
-    </router-link>
+    </div>
     <div class="price-mobile ml5 mt5">
       <span
             class="price-original price-mobile mr5 lh30 cl-secondary"
@@ -176,10 +176,27 @@ export default {
         qty = cartItem.qty;
       }
       if (qty === 1) {
+        if (this.$ga) {
+          this.$ga.event('Remove_From_Cart', 'click', JSON.stringify(this.gaData(product)));
+        }
         this.$store.dispatch('cart/removeItem', { product: cartItem })
       } else if (qty > 1) {
+        let gaData = this.gaData(product)
+        gaData.new_quantity = qty - 1;
+        gaData.old_quantity = qty;
+        if (this.$ga) {
+          this.$ga.event('Change_Quantity', 'click', JSON.stringify(gaData));
+        }
         qty = qty - 1;
         this.$store.dispatch('cart/updateQuantity', { product: cartItem, qty: qty });
+      }
+    },
+    gaData(product) {
+      return {
+        product_name: product.name,
+        product_sku: product.sku,
+        product_price: product.original_price_incl_tax,
+        offer_price: product.special_price,
       }
     },
     onProductPriceUpdate (product) {
@@ -206,6 +223,18 @@ export default {
         if (skus.length > 0) {
           rootStore.dispatch('stock/list', { skus: skus }) // store it in the cache
         }
+      }
+    },
+    productRedirect (productLink, product) {
+      if (this.$ga) {
+        this.$ga.event('Product_Page', 'click', JSON.stringify(this.gaData(product)));
+      }
+      this.$router.push(productLink);
+    },
+    gaData(product) {
+      return {
+        product_name: product.name,
+        source: "Home Page"
       }
     }
   },
@@ -241,7 +270,7 @@ $color-white: color(white);
   width: 108px;
   height: 36px;
   border: 4px solid #f04d24cf;
-  border-radius: 30px;
+  border-radius: 15px;
   margin-top: 8px;
 }
 .add-button {
@@ -252,7 +281,7 @@ $color-white: color(white);
   height: 36px;
   border: 4px solid #f04d24cf;
   background: #f04d24cf;
-  border-radius: 30px;
+  border-radius: 15px;
   margin-top: 8px;
 }
 .add-to-cart > .decrease {
@@ -314,6 +343,10 @@ $color-white: color(white);
       opacity: 1;
     }
   }
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .product-name {

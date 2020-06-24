@@ -85,10 +85,10 @@
               <logo width="auto" height="60px" />
             </div>
           </div>
-          <div class="col-xs-1 end-xs">
+          <div class="col-xs-1 end-xs mobile-search-icon">
             <search-icon class="p15 bg-f04d24cf icon pointer" />
           </div>
-          <div class="col-xs-1 end-xs">
+          <div class="col-xs-1 end-xs ml10">
             <microcart-icon class="pt15 bg-f04d24cf icon pointer" />
             <span
               class="minicart-count"
@@ -103,16 +103,16 @@
           <div class="col-md-8 col-xs-4 categories-bar">
             <ul v-if="displayList" id="first-list">
               <li v-for="(category, index) in firstCategories" :key="index">
-                <router-link :to="categoryLink(category)">
+                <a class="cursor_pointer" @click="categoryRedirect(category)">
                   {{ category.name }}
-                </router-link>
+                </a>
               </li>
             </ul>
             <ul v-else id="second-list">
               <li v-for="(category, index) in secondCategories" :key="index">
-                <router-link :to="categoryLink(category)">
+                <a class="cursor_pointer" @click="categoryRedirect(category)">
                   {{ category.name }}
-                </router-link>
+                </a>
               </li>
             </ul>
           </div>
@@ -234,6 +234,18 @@ export default {
     },
     categoryLink (category) {
       return formatCategoryLink(category)
+    },
+    categoryRedirect(category) {
+      if (this.$ga) {
+        this.$ga.event('Category_Viewed', 'click', JSON.stringify(this.gaData(category)));
+      }
+      this.$router.push(this.categoryLink(category));
+    },
+    gaData(category) {
+      return {
+        category_name: category.name,
+        source: "DropDown"
+      }
     }
   }
 }
@@ -243,6 +255,10 @@ export default {
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
+
+.cursor_pointer {
+  cursor: pointer;
+}
 
 .dot-icon {
   margin: 20% auto;
@@ -264,7 +280,9 @@ $color-icon-hover: color(secondary, $colors-background);
     display: block;
   }
 }
-
+.mobile-search-icon {
+  margin-left: -10px;
+}
 .bg-f04d24cf {
   color: #f04d24cf;
   font-weight: 600;
@@ -276,7 +294,7 @@ $color-icon-hover: color(secondary, $colors-background);
     color: #000;
     padding: 0 5px;
     vertical-align: top;
-    margin-left: -30px;
+    margin-left: -40px;
     padding-left: 9px;
     padding-right: 9px;
     -webkit-border-radius: 9px;
@@ -298,6 +316,9 @@ $color-icon-hover: color(secondary, $colors-background);
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;
+    position: absolute;
+    right: 1px;
+    top: 26px;
   }
 }
 .categories-bar {

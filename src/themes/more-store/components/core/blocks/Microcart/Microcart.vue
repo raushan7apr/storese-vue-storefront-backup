@@ -10,7 +10,7 @@
     <div class="row bg-cl-primary px40 actions">
       <div class="col-xs py30 first-sm">
         <router-link :to="localizedRoute('/')" class="no-underline cl-secondary link">
-          <span @click="closeMicrocartExtend">
+          <span @click="closeMicrocartExtend(totals)">
             <strong class="text">{{ $t('Your Cart') }}</strong>
             <span class="count">{{ totalQuantity }}</span>
             <span>Items</span>
@@ -21,7 +21,7 @@
         <button
           type="button"
           class="p0 brdr-none bg-cl-transparent close"
-          @click="closeMicrocartExtend"
+          @click="closeMicrocartExtend(totals)"
           data-testid="closeMicrocart"
         >
           <i class="material-icons py20 cl-accent">
@@ -62,7 +62,7 @@
     <h4 v-if="!productsInCart.length" class="cl-accent ml30">
       {{ $t('Your shopping cart is empty.') }}
     </h4>
-    <div v-if="!productsInCart.length" class="ml30" @click="closeMicrocartExtend">
+    <div v-if="!productsInCart.length" class="ml30" @click="closeMicrocartExtend(totals)">
       {{ $t("Don't hesitate and") }}
       <router-link :to="localizedRoute('/')">
         {{ $t('browse our catalog') }}
@@ -73,15 +73,15 @@
       <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
     </ul>
     <div v-if="productsInCart.length" class="summary px40 cl-accent serif">
-      <h3 class="m0 pt40 mb30 weight-400 summary-heading">
+      <h3 class="m0 pb10 weight-400 summary-heading helvetica">
         {{ $t('Shopping summary') }}
       </h3>
-      <div v-for="(segment, index) in totals" :key="index" class="row py20" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
+      <div v-for="(segment, index) in totals" :key="index" class="helvetica row py10" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
         <div class="col-xs">
           <div v-if="segment.code === 'shipping'">
             Shipping Fee
           </div>
-          <div v-if="segment.code !== 'shipping'">
+          <div v-else>
             {{ segment.title }}
           </div>
           <button v-if="appliedCoupon && segment.code === 'discount'" type="button" class="p0 brdr-none bg-cl-transparent close delete-button ml10" @click="clearCoupon">
@@ -119,7 +119,7 @@
         <div class="col-xs h4 total-price-label">
           {{ segment.title }}
         </div>
-        <div class="col-xs align-right h2 total-price-value">
+        <div class="col-xs align-right h4 total-price-value">
           {{ segment.value | price(storeView) }}
         </div>
       </div>
@@ -133,7 +133,7 @@
         <button
           type="button"
           class="cart-button"
-          @click="closeMicrocartExtend"
+          @click="closeMicrocartExtend(totals)"
           data-testid="closeMicrocart"
         >
           {{ $t('Keep Shopping') }}
@@ -145,7 +145,7 @@
       <div class="col-xs-6 first-xs col-sm-6 end-sm">
         <button-full class="checkout-button"
           :link="{ name: 'checkout' }"
-          @click.native="closeMicrocartExtend"
+          @click.native="closeMicrocartExtend(totals)"
         >
           {{ $t('Go to checkout') }}
         </button-full>
@@ -248,7 +248,13 @@ export default {
         })
       }
     },
-    closeMicrocartExtend () {
+    closeMicrocartExtend (totals) {
+      if (this.$ga && totals[1].value) {
+        gaData = {
+          cart_amount: totals[1].value
+        }
+        this.$ga.event('Continue_Checkout', 'click', JSON.stringify(gaData));
+      }
       this.toggleMicrocart()
       this.$store.commit('ui/setSidebar', false)
       this.addCouponPressed = false
@@ -277,7 +283,9 @@ export default {
 
 <style lang="scss" scoped>
   @import "~theme/css/animations/transitions";
-
+  .helvetica {
+    font-family: Helvetica;
+  }
   .close {
     i {
       opacity: 0.6;
