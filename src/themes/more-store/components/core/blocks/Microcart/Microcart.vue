@@ -14,7 +14,7 @@
           <button
             type="button"
             class="p0 brdr-none bg-cl-transparent close"
-            @click="closeMicrocartExtend"
+            @click="closeMicrocartExtend(totals)"
             data-testid="closeMicrocart"
           >
             <i class="material-icons back-icon cl-accent">
