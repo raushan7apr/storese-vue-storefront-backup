@@ -20,7 +20,7 @@ export const Payment = {
       states: States,
       payment: this.$store.getters['checkout/getPaymentDetails'],
       generateInvoice: false,
-      sendToShippingAddress: false,
+      sendToShippingAddress: true,
       sendToBillingAddress: false
     }
   },

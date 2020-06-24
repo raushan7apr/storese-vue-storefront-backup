@@ -89,14 +89,14 @@
             ]"
           />
 
-          <base-checkbox
+          <!--<base-checkbox
             v-if="!currentUser"
             class="col-xs-12 mb15"
             id="createAccountCheckbox"
             v-model="createAccount"
           >
             {{ $t('I want to create an account') }}
-          </base-checkbox>
+          </base-checkbox>-->
 
           <template v-if="createAccount && !currentUser">
             <base-input
@@ -158,18 +158,18 @@
     <div class="row" v-show="isActive">
       <div class="hidden-xs col-sm-2 col-md-1" />
       <div class="col-xs-11 col-sm-9 col-md-10">
-        <div class="row my30">
-          <div class="col-xs-12 col-xl-7 px20 button-container">
+        <div class="row mb30">
+          <div class="col-xs-12 col-xl-7 button-container">
             <button-full
               data-testid="personalDetailsSubmit"
               @click.native="sendDataToCheckout"
               :disabled="createAccount ? $v.$invalid : $v.personalDetails.$invalid"
-              class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+              class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium router-link-active no-underline pointer align-center border-box"
             >
               {{ $t((isVirtualCart ? 'Continue to payment' : 'Continue to shipping')) }}
             </button-full>
           </div>
-          <div
+          <!--<div
             class="col-xs-12 col-xl-5 center-xs end-xl"
             v-if="!currentUser"
           >
@@ -182,7 +182,7 @@
                 {{ $t('login to your account') }}
               </span>
             </p>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
