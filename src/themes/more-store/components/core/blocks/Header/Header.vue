@@ -85,10 +85,10 @@
               <logo width="auto" height="60px" />
             </div>
           </div>
-          <div class="col-xs-1 end-xs">
+          <div class="col-xs-1 end-xs mobile-search-icon">
             <search-icon class="p15 bg-f04d24cf icon pointer" />
           </div>
-          <div class="col-xs-1 end-xs">
+          <div class="col-xs-1 end-xs ml10">
             <microcart-icon class="pt15 bg-f04d24cf icon pointer" />
             <span
               class="minicart-count"
@@ -264,7 +264,9 @@ $color-icon-hover: color(secondary, $colors-background);
     display: block;
   }
 }
-
+.mobile-search-icon {
+  margin-left: -10px;
+}
 .bg-f04d24cf {
   color: #f04d24cf;
   font-weight: 600;
@@ -276,7 +278,7 @@ $color-icon-hover: color(secondary, $colors-background);
     color: #000;
     padding: 0 5px;
     vertical-align: top;
-    margin-left: -30px;
+    margin-left: -40px;
     padding-left: 9px;
     padding-right: 9px;
     -webkit-border-radius: 9px;
@@ -298,6 +300,9 @@ $color-icon-hover: color(secondary, $colors-background);
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;
+    position: absolute;
+    right: 1px;
+    top: 26px;
   }
 }
 .categories-bar {
