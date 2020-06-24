@@ -11,16 +11,16 @@
       </div> -->
       <div class="col-xs-11 col-sm-9 col-md-11 mt20">
         <div class="row mb15">
-          <div class="col-xs-12 col-md-7" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
-            <h3 class="m0 mb5">
+          <div class="col-xs-9 col-md-7" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
+            <h3 class="m0 mb5 helvetica">
               {{ $t('Personal Details') }}
             </h3>
           </div>
-          <div class="col-xs-12 col-md-5 pr30">
+          <div class="col-xs-3 col-md-5 pr30">
             <div class="lh30 flex end-lg" v-if="isFilled && !isActive">
               <a href="#" class="cl-tertiary flex" @click.prevent="edit">
                 <span class="pr5">
-                  {{ $t('Edit personal details') }}
+                  {{ $t('Edit') }}
                 </span>
                 <i class="material-icons cl-tertiary">edit</i>
               </a>
@@ -89,7 +89,7 @@
             ]"
           />
 
-          <!--<base-checkbox
+          <!-- <base-checkbox
             v-if="!currentUser"
             class="col-xs-12 mb15"
             id="createAccountCheckbox"
@@ -159,17 +159,17 @@
       <div class="hidden-xs col-sm-2 col-md-1" />
       <div class="col-xs-11 col-sm-9 col-md-10">
         <div class="row mb30">
-          <div class="col-xs-12 col-xl-7 button-container">
+          <div class="col-xs-12 col-xl-7 px20 button-container">
             <button-full
               data-testid="personalDetailsSubmit"
               @click.native="sendDataToCheckout"
               :disabled="createAccount ? $v.$invalid : $v.personalDetails.$invalid"
-              class="no-outline button-full block brdr-none w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium router-link-active no-underline pointer align-center border-box"
+              class="submit-details no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium mt20 router-link-active no-underline pointer align-center border-box"
             >
               {{ $t((isVirtualCart ? 'Continue to payment' : 'Continue to shipping')) }}
             </button-full>
           </div>
-          <!--<div
+          <!-- <div
             class="col-xs-12 col-xl-5 center-xs end-xl"
             v-if="!currentUser"
           >
@@ -182,7 +182,7 @@
                 {{ $t('login to your account') }}
               </span>
             </p>
-          </div>-->
+          </div> -->
         </div>
       </div>
     </div>
@@ -264,6 +264,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.helvetica {
+  font-family: Helvetica;
+}
 .checkout-step-header-inactive {
    box-shadow: 2px 2px 5px 1px #e1e1e1;
   -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -283,6 +286,19 @@ export default {
   margin-left: 0px;
   margin-right: 0px;
   border-radius: 3px 3px 0 0;
+}
+.submit-details {
+  background: #fff;
+  border-color: #f04d24cf;
+  border-width: 3px;
+  color: #f04d24cf;
+  border-radius: 8px;
+  border-style: solid;
+}
+.submit-details:hover {
+  background: #f04d24cf;
+  border-color: #f36e4d;
+  color: #fff;
 }
 .personal-details {
   box-shadow: 2px 2px 5px 1px #e1e1e1;

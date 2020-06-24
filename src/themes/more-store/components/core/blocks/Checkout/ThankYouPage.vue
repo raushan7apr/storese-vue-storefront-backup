@@ -149,6 +149,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Product from './Product'
 import Composite from '@vue-storefront/core/mixins/composite'
 import Breadcrumbs from 'theme/components/core/Breadcrumbs'
@@ -164,6 +165,7 @@ import { MailerModule } from '@vue-storefront/core/modules/mailer'
 import { CartSummary } from '@vue-storefront/core/modules/checkout/components/CartSummary'
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping'
+import Checkout from '@vue-storefront/core/pages/Checkout'
 
 export default {
   name: 'ThankYouPage',
@@ -177,6 +179,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      isThankYouPage: 'checkout/isThankYouPage'
+    }),
     lastOrderConfirmation () {
       return this.$store.state.order.last_order_confirmation ? this.$store.state.order.last_order_confirmation.confirmation : {}
     },
@@ -241,8 +246,10 @@ export default {
     }
   },
   destroyed () {
+    if (this.isThankYouPage) {
+      this.$store.dispatch('cart/clear', { sync: false }, { root: true })
+    }
     this.$store.dispatch('checkout/setThankYouPage', false)
-    this.$store.dispatch('cart/clear', { sync: false }, { root: true })
   },
   components: {
     BaseTextarea,

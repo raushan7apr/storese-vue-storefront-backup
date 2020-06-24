@@ -46,7 +46,7 @@
             <div class="container pr30 col-xs-8">
               <div class="row m0 product-filter-container">
                 <button
-                  class="col-xs-5 mt25 mr15 mobile-filters-button bg-cl-th-accent brdr-none cl-white h5 sans-serif fs-medium-small"
+                  class="col-xs-5 mt25 mr15 mobile-filters-button"
                   @click="openFilters"
                 >
                   {{ $t('Filters') }}
@@ -310,7 +310,7 @@ export default {
     }
     .category-title {
       margin: 41px 0 27px 0;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1px;
     }
 
@@ -326,6 +326,9 @@ export default {
     .mobile-filters-button {
       display: block;
       height: 35px;
+      background: #fff;
+      color: #828282;
+      border: 1px solid #bdbdbd;
     }
 
     .sorting {

@@ -1,21 +1,21 @@
 <template>
-  <div id="checkout">
+  <div id="checkout helvetica">
     <div class="container-fluid">
       <div class="row" v-show="!isThankYouPage">
         <div class="col-sm-7 col-xs-12 pb70">
           <div class="checkout-title py5 px20">
-            <h1>
+            <h1 class="helvetica">
               {{ $t('Checkout') }}
             </h1>
           </div>
           <personal-details
-            class="line relative ml30 mr10"
+            class="line relative ml5 mr5"
             :is-active="activeSection.personalDetails"
             :focused-field="focusedField"
           />
-          <shipping class="line relative ml30 mr10" :is-active="activeSection.shipping" v-if="!isVirtualCart" />
-          <payment class="line relative ml30 mr10" :is-active="activeSection.payment" />
-          <order-review class="line relative ml30 mr10" :is-active="activeSection.orderReview" />
+          <shipping class="line relative ml5 mr5" :is-active="activeSection.shipping" v-if="!isVirtualCart" />
+          <payment class="line relative ml5 mr5" :is-active="activeSection.payment" />
+          <order-review class="line relative ml5 mr5" :is-active="activeSection.orderReview" />
           <div id="custom-steps" />
         </div>
         <div class="hidden-xs col-sm-5">
@@ -107,6 +107,9 @@ export default {
   $color-white: color(white);
   $color-black: color(black);
 
+  .helvetica {
+    font-family: Helvetica;
+  }
   #checkout {
     background: #f7f7f7;
     .number-circle {
@@ -186,7 +189,7 @@ export default {
 
   .checkout-title {
     @media (max-width: 767px) {
-      background-color: $bg-secondary;
+      // background-color: $bg-secondary;
       margin-bottom: 25px;
 
       h1 {

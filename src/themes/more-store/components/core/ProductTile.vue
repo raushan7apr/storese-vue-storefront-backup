@@ -47,7 +47,7 @@
           <span
                 class="price-original price mr5 lh30 cl-secondary"
                 v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
-              >{{ product.original_price_incl_tax | price(storeView) }}</span>
+              >MRP: {{ product.original_price_incl_tax | price(storeView) }}</span>
               <span
                 class="price-special price lh30 cl-accent weight-700"
                 v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
@@ -72,7 +72,7 @@
           <span
             class="lh30 cl-secondary price-mobile"
             v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
-          >MRP : {{ product.price_incl_tax | price(storeView) }}</span>
+          >{{ product.price_incl_tax | price(storeView) }}</span>
     </div>
     <div class="qty-container">
 
@@ -259,7 +259,7 @@ $color-white: color(white);
 .qty-container {
   display: flex;
   justify-content: center;
-  border-top: 1px solid #e1e1e1;
+  // border-top: 1px solid #e1e1e1;
   margin-top: 8px;
 }
 
@@ -269,9 +269,10 @@ $color-white: color(white);
   align-items: center;
   width: 108px;
   height: 36px;
-  border: 4px solid #f04d24cf;
+  border: 4px solid #f36e4d;
   border-radius: 15px;
   margin-top: 8px;
+  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
 }
 .add-button {
   display: flex;
@@ -279,10 +280,11 @@ $color-white: color(white);
   align-items: center;
   width: 108px;
   height: 36px;
-  border: 4px solid #f04d24cf;
+  border: 4px solid #f36e4d;
   background: #f04d24cf;
   border-radius: 15px;
   margin-top: 8px;
+  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
 }
 .add-to-cart > .decrease {
   font-size: 24px;

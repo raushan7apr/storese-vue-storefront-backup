@@ -101,7 +101,8 @@ export default {
     &:hover,
     &:focus {
       outline: none;
-      border-color: $color-puerto-rico;
+      border-color: #f04d24cf;
+      // border-color: $color-puerto-rico;
     }
     resize: none;
     background: inherit;
@@ -121,7 +122,8 @@ export default {
   textarea:not(.empty) ~ label {
     top: -10px;
     font-size: 14px;
-    color: $color-puerto-rico;
+    color: #f04d24cf;
+    // color: $color-puerto-rico;
   }
 
   .icon {
