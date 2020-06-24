@@ -4,23 +4,44 @@
       "title": "Luma Yoga",
       "subtitle": "New collection",
       "button_text": "Shop now",
-      "image": "/assets/slide_01.jpg",
+      "image": "https://wellnessforever.mag.storese.in/pub/media/slideshow/cache/1420x502/slideshow/Cooking_Hero.jpg",
       "link": "/women.html"
     },
     {
       "title": "Luma Fitness",
       "subtitle": "Collection",
       "button_text": "Shop now",
-      "image": "/assets/slide_02.jpg",
+      "image": "https://wellnessforever.mag.storese.in/pub/media/slideshow/cache/1420x502/slideshow/Cleaning_Hero.jpg",
       "link": "/men.html"
     },
     {
       "title": "Luma Fitness",
       "subtitle": "What's new",
       "button_text": "Shop now",
-      "image": "/assets/slide_03.jpg",
+      "image": "https://wellnessforever.mag.storese.in/pub/media/slideshow/cache/1420x502/slideshow/Personal_care_Hero.jpg",
+      "link": "/training.html"
+    },
+    {
+      "title": "Luma Fitness",
+      "subtitle": "What's new",
+      "button_text": "Shop now",
+      "image": "https://wellnessforever.mag.storese.in/pub/media/slideshow/cache/1420x502/slideshow/Snack_and_noodles_Hero.jpg",
+      "link": "/training.html"
+    },
+    {
+      "title": "Luma Fitness",
+      "subtitle": "What's new",
+      "button_text": "Shop now",
+      "image": "https://wellnessforever.mag.storese.in/pub/media/slideshow/cache/1420x502/slideshow/Iftaar_-_ramzaan_Hero.jpg",
+      "link": "/training.html"
+    },
+    {
+      "title": "Luma Fitness",
+      "subtitle": "What's new",
+      "button_text": "Shop now",
+      "image": "https://wellnessforever.mag.storese.in/pub/media/slideshow/cache/1420x502/slideshow/Beverages_Hero.jpg",
       "link": "/training.html"
     }
   ],
-  "total": "3"
+  "total": "6"
 }

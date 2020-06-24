@@ -10,7 +10,7 @@
             @input="makeSearch"
             @blur="$v.search.$touch()"
             class="search-panel-input"
-            :placeholder="$t('Search')"
+            :placeholder="$t('Search product Here...')"
             type="search"
             autofocus="true"
             @click="open = true"
@@ -24,7 +24,7 @@
         <category-panel :categories="categories" v-model="selectedCategoryIds" />
       </div>
       <div class="product-listing row">
-        <product-tile
+        <product-list
           v-for="product in visibleProducts"
           :key="product.id"
           :product="product"
@@ -58,7 +58,7 @@
 
 <script>
 import SearchPanel from '@vue-storefront/core/compatibility/components/blocks/SearchPanel/SearchPanel'
-import ProductTile from 'theme/components/core/ProductTile'
+import ProductList from 'theme/components/core/ProductList'
 import VueOfflineMixin from 'vue-offline/mixin'
 import CategoryPanel from 'theme/components/core/blocks/Category/CategoryPanel'
 import { minLength } from 'vuelidate/lib/validators'
@@ -66,7 +66,7 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 
 export default {
   components: {
-    ProductTile,
+    ProductList,
     CategoryPanel
   },
   mixins: [SearchPanel, VueOfflineMixin],
@@ -204,7 +204,7 @@ export default {
 
   .product {
     box-sizing: border-box;
-    width: 33.33%;
+    /*width: 33.33%;*/
     padding-left: map-get($grid-gutter-widths, lg) / 2;
     padding-right: map-get($grid-gutter-widths, lg) / 2;
 
@@ -270,5 +270,5 @@ export default {
       margin-bottom: 15px;
     }
   }
-}
+ }
 </style>

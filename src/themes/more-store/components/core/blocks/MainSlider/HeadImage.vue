@@ -51,8 +51,8 @@ export default {
 }
 
 .head-image {
-  height: 640px;
-  margin-top: 10px;
+  /*height: 640px;*/
+  margin-top: 20px;
 }
 .container {
   background-size: cover;

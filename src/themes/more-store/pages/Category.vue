@@ -284,8 +284,8 @@ export default {
     }
   }
   .header-class {
-    padding-top: 35px;
-    padding-bottom: 35px;
+    padding-top: 20px;
+    padding-bottom: 0px;
   }
 
   @media (min-width: 770px){
