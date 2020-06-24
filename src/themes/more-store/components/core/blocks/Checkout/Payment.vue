@@ -33,14 +33,14 @@
       <div class="hidden-xs col-sm-2 col-md-1" />
       <div class="col-xs-11 col-sm-9 col-md-10">
         <div class="row" v-if="isActive">
-          <!--<base-checkbox
+          <base-checkbox
             class="col-xs-12 mb15"
             id="sendToShippingAddressCheckbox"
             v-model="sendToShippingAddress"
             v-if="!isVirtualCart"
           >
             {{ $t('Copy address data from shipping') }}
-          </base-checkbox>-->
+          </base-checkbox>
 
           <base-checkbox
             v-if="hasBillingData()"
