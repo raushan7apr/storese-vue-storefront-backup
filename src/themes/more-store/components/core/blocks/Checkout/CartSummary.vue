@@ -13,26 +13,26 @@
         </div>
       </div>
       <div v-if="productsInCart && productsInCart.length" class="checkout pt10 serif cl-accent">
-        <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
-          <div class="col-xs cl-accent">
+        <div v-for="(segment, index) in totals" :key="index" class="row" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
+          <div v-if="segment.title!='Cash on delivery'" class="col-xs pt15 pb20 pl30 pr55 cl-accent align-left">
             <div v-if="segment.code === 'shipping'">
               Shipping Fee
             </div>
-            <div v-if="segment.code !== 'shipping'">
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'">
               {{ segment.title }}
             </div>
           </div>
-          <div v-if="segment.value != null" class="col-xs align-right cl-accent h4">
+          <div v-if="segment.value != null && segment.title!='Cash on delivery'" class="col-xs pt15 pb20 pl30 pr55 align-right cl-accent h4">
             {{ segment.value | price(storeView) }}
           </div>
         </div>
 
-        <div class="row pt20 pb20 pl30 pr55 weight-400 h3" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'">
-          <div class="col-xs">
+        <div class="row pt10 pb20 pl20 pr45 weight-400 h3" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'">
+          <div class="col-xs align-left">
             <div v-if="segment.code === 'shipping'">
               Shipping Fee
             </div>
-            <div v-if="segment.code !== 'shipping'">
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'">
               {{ segment.title }}
             </div>
           </div>
@@ -57,8 +57,8 @@
                 </h3>
               </div>
               <div class="col-xs-12 col-md-6 mt10">
-                <i class="material-icons summary-title" v-if="show">arrow_circle_down</i>
-                <i class="material-icons summary-title" v-else>arrow_circle_up</i>
+                <i class="material-icons summary-title cursor-pointer" v-if="show">arrow_circle_down</i>
+                <i class="material-icons summary-title cursor-pointer" v-else>arrow_circle_up</i>
               </div>
             </div>
           </div>
@@ -118,6 +118,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .pr45 {
+    padding-right: 35px;
+  }
+
   .summary-title {
     color: #fff;
     @media (max-width: 767px) {
@@ -153,5 +157,8 @@ export default {
   border-radius: 0 0 3px 3px;
   margin-right: 30px;
   margin-left: 10px;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

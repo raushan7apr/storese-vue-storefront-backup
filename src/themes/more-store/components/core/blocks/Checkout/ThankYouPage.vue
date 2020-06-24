@@ -18,18 +18,15 @@
           </div>
           <p class="order-number" v-if="OnlineOnly && lastOrderConfirmation.orderNumber" v-html="this.$t('The OrderNumber is {id}', { id: lastOrderConfirmation.orderNumber })" />
           <p class="order-receipt">
-            <i>A copy of the receipt has been sent to: {{ personalDetails.emailAddress }}</i>
+            <i>A copy of the receipt has been sent to: {{ checkoutPersonalEmailAddress }}</i>
           </p>
         </div>
       </div>
       <div class="row center-md">
         <div class="col-md-12 start-md">
-          <p class="sub-title">Delivery For</p>
-          <p>{{ personalDetails.firstName }}  {{ personalDetails.lastName }}</p>
+          <p class="sub-title">Delivery Details</p>
+          <p>{{ shipping.firstName }}  {{ shipping.lastName }}</p>
           <p> Phone no: {{ shipping.phoneNumber }} </p>
-        </div>
-        <div class="col-md-12 start-md">
-          <p class="sub-title">Delivery Address</p>
           <p>
             {{ shipping.apartmentNumber }}, {{ shipping.streetAddress }},
             {{ shipping.city }}, {{ shipping.region_id }}, {{ shipping.zipCode }},
