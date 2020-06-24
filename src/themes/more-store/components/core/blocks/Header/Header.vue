@@ -17,7 +17,7 @@
           <div class="col-xs-2 visible-xs">
             <search-icon class="p15 icon pointer" />
           </div>
-          <div class="col-md-4 col-xs-4 pt25">
+          <div class="col-md-4 col-xs-4">
             <div>
               <logo width="auto" height="132px" />
             </div>
@@ -359,7 +359,7 @@ i {
 }
 
 header {
-  height: 158px;
+  height: 130px;
   //top: -55px;
   z-index: 3;
   transition: top 0.2s ease-in-out;
@@ -421,4 +421,25 @@ header {
     font-size: 12px;
   }
 }
+
+.search-and-category {
+  height: 64px;
+    box-shadow: 0px 0px 10px #d7d7d7!important;
+    margin: 0px 0.6%;
+    margin-top:0px;
+}
+.categories-bar a {
+    font: 500 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    color: #343e5c;
+  }
+  .categories-bar a:hover {
+    color:#f04e23;
+  }
+ .categories-bar a.underline:after, a:not(.no-underline):hover:after {
+   background:#f04e23;
+   top:-24px;
+   bottom:unset;
+   height:4px;
+   transition: all .6s ease-in-out;
+   }
 </style>

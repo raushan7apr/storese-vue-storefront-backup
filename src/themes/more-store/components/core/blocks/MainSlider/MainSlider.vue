@@ -73,20 +73,23 @@ $color-white: color(white);
     border: 2px solid $color-white;
     margin-top: -2px;
   }
-}
+  }
 </style>
 <style scoped>
 h1 {
   font-size: 72px;
 }
 .main-slider {
-  height: 640px;
+  height: 520px;
 }
 .container {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
+.main-slider .container {
+    max-height:520px;
+  }
 .row {
   height: 640px;
 }
