@@ -230,7 +230,7 @@ $color-white: color(white);
 .qty-container {
   display: flex;
   justify-content: center;
-  border-top: 1px solid #e1e1e1;
+  /* border-top: 1px solid #e1e1e1;*/
   margin-top: 8px;
 }
 
