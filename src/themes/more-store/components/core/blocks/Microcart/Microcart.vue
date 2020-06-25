@@ -21,7 +21,7 @@
               keyboard_arrow_left
             </i>
           </button>
-          <span class="py30 cart-item-title" @click="closeMicrocartExtend">
+          <span class="py30 cart-item-title">
             <strong class="text">{{ $t('Your Cart') }}</strong>
             <span class="count">{{ totalQuantity }}</span>
             <span>Items</span>
@@ -305,7 +305,7 @@ export default {
   }
   @media (min-width: 767px) {
     .cart-item-title {
-      position: fixed;
+      position: absolute;
     }
     .back-icon {
       padding-top: 28px;
