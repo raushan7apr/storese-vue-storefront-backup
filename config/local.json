@@ -936,7 +936,7 @@
     "filterUnavailableVariants": false,
     "listOutOfStockProducts": true,
     "preventConfigurableChildrenDirectAccess": true,
-    "alwaysSyncPlatformPricesOver": true,
+    "alwaysSyncPlatformPricesOver": false,
     "alwaysSyncPricesClientSide": false,
     "clearPricesBeforePlatformSync": true,
     "waitForPlatformSync": false,
