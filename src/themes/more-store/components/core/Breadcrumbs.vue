@@ -1,9 +1,9 @@
 <template>
-  <div class="breadcrumbs h5 cl-gray">
+  <div class="breadcrumbs h6 cl-gray">
     <span v-for="link in paths" :key="link.route_link">
       <router-link :to="link.route_link">
         {{ link.name | htmlDecode }}
-      </router-link> /
+      </router-link> &nbsp; > &nbsp;
     </span>
     <span class="cl-mine-shaft">
       {{ current | htmlDecode }}

@@ -10,21 +10,6 @@
         <div class="col-md-2 start-xs category-filters">
           <sidebar :filters="getAvailableFilters" @changeFilter="changeFilter" />
         </div>
-        <div class="col-md-3 start-xs mobile-filters" v-show="mobileFilters">
-          <div class="close-container absolute w-100">
-            <i class="material-icons p15 close cl-accent" @click="closeFilters">close</i>
-          </div>
-          <sidebar class="mobile-filters-body" :filters="getAvailableFilters" @changeFilter="changeFilter" />
-          <div class="relative pb20 pt15">
-            <div class="brdr-top-1 brdr-cl-primary absolute divider w-100" />
-          </div>
-          <button-full
-            class="mb20 btn__filter"
-            @click.native="closeFilters"
-          >
-            {{ $t('Filter') }}
-          </button-full>
-        </div>
         <div class="col-xs-12 col-md-10 border-box products-list">
           <div class="row middle-sm item-sort-by-container">
             <div class="col-sm-9 pl20 col-xs-4 category-title">
@@ -46,12 +31,12 @@
             <div class="container pr30 col-xs-8">
               <div class="row m0 product-filter-container">
                 <button
-                  class="col-xs-5 mt25 mr15 mobile-filters-button"
-                  @click="openFilters"
+                  class="col-xs-5 mr15 mobile-filters-button"
+                  @click="toggleFilters"
                 >
                   {{ $t('Filter') }}
                 </button>
-                <div class="mobile-sorting col-xs-6 mt25">
+                <div class="mobile-sorting col-xs-6">
                   <sort-by
                     @change="changeFilter"
                     :value="getCurrentSearchQuery.sort"
@@ -59,6 +44,9 @@
                 </div>
               </div>
             </div>
+        </div>
+        <div v-show="mobileFilters">
+          <sidebar class="mobile-filters-body" :filters="getAvailableFilters" @changeFilter="changeFilter" />
         </div>
           <!--<p class="col-xs-12 end-md m0 pb20 cl-secondary">
             {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
@@ -172,12 +160,12 @@ export default {
     }
   },
   methods: {
-    openFilters () {
-      this.mobileFilters = true
+    toggleFilters () {
+      this.mobileFilters = !this.mobileFilters
     },
-    closeFilters () {
-      this.mobileFilters = false
-    },
+    // closeFilters () {
+    //   this.mobileFilters = false
+    // },
     async changeFilter (filterVariant) {
       this.$store.dispatch('category-next/switchSearchFilters', [filterVariant])
     },
@@ -229,7 +217,7 @@ export default {
   }
   .item-sort-by-container {
     background-color: #fff;
-    margin:36px 0px 0px;
+    margin:36px 0px -8px;
     box-shadow: 2px 2px 5px 1px #e1e1e1;
     // -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
     // -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -309,7 +297,7 @@ export default {
       padding-left: 0px;
     }
     .category-title {
-      margin: 41px 0 27px 0;
+      margin: 28px 0 27px 0;
       font-size: 14px;
       line-height: 1px;
     }
@@ -329,6 +317,8 @@ export default {
       background: #fff;
       color: #828282;
       border: 1px solid #bdbdbd;
+      margin-top: 10px;
+      margin-bottom: -10px;
     }
 
     .sorting {
@@ -336,7 +326,9 @@ export default {
     }
 
     .mobile-sorting {
-      display: block;
+      display: block;    
+      margin-top: 10px;
+      margin-bottom: -10px;
     }
 
     .category-filters {
@@ -360,7 +352,7 @@ export default {
     }
 
     .mobile-filters-body {
-      margin-top: 50px;
+      // margin-top: 50px;
     }
   }
 
