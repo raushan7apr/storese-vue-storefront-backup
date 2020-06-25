@@ -5,7 +5,7 @@
         <slide v-for="(slide, index) in slides" :key="index">
           <div class="container w-100" v-lazy:background-image="slide.image">
             <div class="row middle-xs center-xs">
-              <div class="col-md-12 px10p">
+              <!--<div class="col-md-12 px10p">
                 <p
                   class="subtitle mb0 serif uppercase h3 align-center"
                   data-testid="mainSliderSubtitle"
@@ -15,7 +15,7 @@
                 <h1 class="title mt0 mb30 align-center" data-testid="mainSliderTitle">
                   {{ slide.title }}
                 </h1>
-              </div>
+              </div>-->
             </div>
           </div>
         </slide>

@@ -16,6 +16,7 @@
             @click="open = true"
           >
           <i class="material-icons search-icon">search</i>
+          
         </div>
       </div>
     </div>
@@ -93,6 +94,10 @@ export default {
       if (!this.$el.contains(e.target)) {
         this.open = false;
       }
+    },
+
+    closeSearch() {
+      console.log('clicked');
     }
   },
   computed: {
