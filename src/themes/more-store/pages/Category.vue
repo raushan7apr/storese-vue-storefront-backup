@@ -49,7 +49,7 @@
                   class="col-xs-5 mt25 mr15 mobile-filters-button"
                   @click="openFilters"
                 >
-                  {{ $t('Filters') }}
+                  {{ $t('Filter') }}
                 </button>
                 <div class="mobile-sorting col-xs-6 mt25">
                   <sort-by

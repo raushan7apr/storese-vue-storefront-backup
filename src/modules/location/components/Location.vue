@@ -29,8 +29,8 @@
         <span class="error-message">{{ errorMessage }}</span>
       </div>
       <div class="loc-footer-wrap">
-        <span>Now delivering in Bangalore &amp; Delhi-NCR</span>
-        <span>Launching soon in Hyderabad, Lucknow, Jaipur &amp; many more cities.</span>
+        <span>Now delivering in Delhi, Mumbai, Kolkata, Bengaluru, Indore, and Mysuru</span>
+        <!-- <span>Launching soon in Hyderabad, Lucknow, Jaipur &amp; many more cities.</span> -->
       </div>
       <div class="footerbutton" style="display: none;">
         <button class="nobutton btn">
@@ -402,8 +402,8 @@ export default {
     z-index: 9999;
     background-color: #fff;
     padding: 1rem;
-    max-width: 350px;
-    height: 213px;
+    width: 300px;
+    height: 175px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -451,7 +451,7 @@ export default {
   input#search-rest {
     border: none;
     height: 39px;
-    width: 80%;
+    width: 75%;
     padding: 0 1rem 0 2rem;
     color: #000;
     max-width: 80%;
@@ -484,15 +484,16 @@ export default {
     font-weight: 300;
   }
   .loc-footer-wrap {
-    padding-top: 1.7rem;
+    padding-top: 1.0rem;
+    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   .loc-footer-wrap span:nth-child(1) {
-    font-size: 1.1rem;
-    font-weight: 900;
+    font-size: 1.0rem;
+    font-weight: 400;
     color: #878585;
     line-height: 1.5;
   }
