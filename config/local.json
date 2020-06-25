@@ -173,13 +173,11 @@
     "maxNetworkTaskAttempts": 1,
     "maxCartBypassAttempts": 1
   },
-  "defaultStoreCode": "",
+  "defaultStoreCode": "more_basavangudi",
   "storeViews": {
     "multistore": true,
     "commonCache": false,
     "mapStoreUrlsFor": [
-      "de",
-      "it",
       "more_basavangudi",
       "test_more_view",
       "tmc_storeview",
