@@ -192,7 +192,14 @@
       "more_jayanagar8th_storeview",
       "more_mosqueroad_storeview",
       "more_vijayabanklayout_storeview",
-      "more_hulimavu_storeview"
+      "more_hulimavu_storeview",
+      "More HSR Layout Store View",
+      "More Kasturinagar Storeview",
+      "More Vaishnavi Storeview",
+      "More TC Palya Storeview",
+      "More Hormavu Storeview",
+      "More Brookefield Storeview",
+      "More Sarjapur Storeview"
     ],
     "de": {
       "storeCode": "de",
@@ -559,6 +566,174 @@
     },
     "seo": {
       "defaultTitle": "More Hulimavu"
+    }
+  },
+  "more_hsrlayout_storeview": {
+    "storeCode": "more_hsrlayout_storeview",
+    "storeId": 74,
+    "name": "More HSRLayout",
+    "url": "/more_hsrlayout_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_hsrlayout_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More HSRLayout",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More HSRLayout"
+    }
+  },
+  "more_kasturinagar_storeview": {
+    "storeCode": "more_kasturinagar_storeview",
+    "storeId": 78,
+    "name": "More Kasturinagar",
+    "url": "/more_kasturinagar_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_kasturinagar_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Kasturinagar",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Kasturinagar"
+    }
+  },
+  "more_vaishnavi_storeview": {
+    "storeCode": "more_vaishnavi_storeview",
+    "storeId": 79,
+    "name": "More Vaishnavi",
+    "url": "/more_vaishnavi_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_vaishnavi_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Vaishnavi",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Vaishnavi"
+    }
+  },
+  "more_tcpalya_storeview": {
+    "storeCode": "more_tcpalya_storeview",
+    "storeId": 80,
+    "name": "More TC Palya",
+    "url": "/more_tcpalya_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_tcpalya_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More TC Palya",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More TC Palya"
+    }
+  },
+  "more_hormavu_storeview": {
+    "storeCode": "more_hormavu_storeview",
+    "storeId": 82,
+    "name": "More Hormavu",
+    "url": "/more_hormavu_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_hormavu_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Hormavu",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Harmavu"
+    }
+  },
+  "more_brookefield_storeview": {
+    "storeCode": "more_brookefield_storeview",
+    "storeId": 83,
+    "name": "More Brookefield",
+    "url": "/more_brookefield_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_brookefield_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Brookfield",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Brookfield"
+    }
+  },
+  "more_sarjapur_storeview": {
+    "storeCode": "more_sarjapur_storeview",
+    "storeId": 86,
+    "name": "More Sarjapur",
+    "url": "/more_sarjapur_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_sarjapur_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Sarjapur",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Sarjapur"
     }
   }
   },
