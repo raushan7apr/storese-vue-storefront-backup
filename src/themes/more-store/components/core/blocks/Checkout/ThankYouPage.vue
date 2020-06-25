@@ -75,7 +75,7 @@
       <p>
         <button-outline
           color="dark"
-          @click.native="$router.push('/')"
+          @click.native="$router.push(localizedRoute('/'))"
         >
           {{ $t('Continue shopping') }}
         </button-outline>
