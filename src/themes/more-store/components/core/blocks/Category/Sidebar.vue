@@ -7,7 +7,7 @@
         @click="resetAllFilters"
         v-show="hasActiveFilters"
       >
-        <i class="material-icons cl-accent mr5">
+        <i class="material-icons mr5 cancel-icon">
           cancel
         </i>
         {{ $t('Clear filters') }}
@@ -18,10 +18,7 @@
       v-for="(filter, filterIndex) in availableFilters"
       :key="filterIndex"
     >
-      <h5>
-        {{ $t(filterIndex + '_filter') }}
-      </h5>
-
+<!-- 
       <div v-if="filterIndex==='color'">
         <color-selector
           context="category"
@@ -44,8 +41,11 @@
           :selected-filters="getCurrentFilters"
           @change="$emit('changeFilter', $event)"
         />
-      </div>
-      <div v-else-if="filterIndex==='price'">
+      </div> -->
+      <div v-if="filterIndex==='price'">
+        <h5>
+          {{ $t(filterIndex + '_filter') }}
+        </h5>
         <price-selector
           context="category"
           class="price-select mb10 block"
@@ -61,7 +61,7 @@
           @change="$emit('changeFilter', $event)"
         />
       </div>
-      <div v-else class="sidebar__inline-selecors">
+      <!-- <div v-else class="sidebar__inline-selecors">
         <generic-selector
           context="category"
           class="mr10 mb10 block"
@@ -72,7 +72,7 @@
           :selected-filters="getCurrentFilters"
           @change="$emit('changeFilter', $event)"
         />
-      </div>
+      </div> -->
     </div>
     <!-- add the custom controls to other available filters set in config.products.defaultFilters; must be numeric field in ES
     <div v-if="filters.erin_recommends && filters.erin_recommends.length">
@@ -134,21 +134,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media (min-width: 768px){
+  .sidebar__header {
+    margin-top: 35px;
+  }
+}
+@media (max-width:768px){
+  .sidebar__elements {
 
+  }
+}
 .sidebar__header {
-  color: #000;
-  background-color: #fff;
+  color: #fff;
+  background-color: #f04d24cf;
+}
+cancel-icon {
+  color: #f04d24cf;
 }
 .sidebar__header__text{
-  margin: 20px 20px;
+  color: #fff;
+  margin: 12px 20px;
   text-transform: uppercase;
   font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 .sidebar__elements{
+  padding-bottom: 1px;
   margin: 20px 20px;
   text-transform: uppercase;
   font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
+// .price-select {
+//   border-color: #f04d24cf;
+//   background-color: #f04d24cf;
+// }
 .sidebar {
   background-color: #fff;
   box-shadow: 2px 2px 5px 1px #e1e1e1;
