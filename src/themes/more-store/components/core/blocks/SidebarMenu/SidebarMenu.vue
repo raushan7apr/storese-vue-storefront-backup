@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="sidebar-menu__container row" ref="container">
-      <div class="col-xs-12 h4 serif">
+      <div class="col-xs-12 h4 helvetica">
         <ul class="p0 m0 relative sidebar-menu__list" :style="mainListStyles">
           <li
             @click="closeMenu"
@@ -57,7 +57,6 @@
                 {{ category.name }}
               </router-link>
             </div>
-
             <sub-category
               :category-links="category.children_data"
               :id="category.id"
@@ -65,7 +64,7 @@
               :parent-path="category.url_path"
             />
           </li>
-          <li
+          <!-- <li
             v-if="isCurrentMenuShowed"
             @click="closeMenu"
             class="bg-cl-secondary"
@@ -129,7 +128,7 @@
             >
               {{ $t('My account') }}
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -242,7 +241,9 @@ $bg-secondary: color(secondary, $colors-background);
 $color-gainsboro: color(gainsboro);
 $color-matterhorn: color(matterhorn);
 $color-mine-shaft: color(mine-shaft);
-
+.helvetica {
+  font-family: Helvetica;
+}
 .sidebar-menu {
   height: 100vh;
   width: 350px;
