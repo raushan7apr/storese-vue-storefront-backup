@@ -16,7 +16,7 @@
             @click="open = true"
           >
           <i class="material-icons search-icon">search</i>
-          <div class="" @click="closeSearch"><i class="material-icons close-icon">close</i></div>
+          
         </div>
       </div>
     </div>

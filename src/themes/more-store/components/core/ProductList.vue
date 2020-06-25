@@ -350,7 +350,8 @@ $color-white: color(white);
 }
 @media (min-width: 767px) {
   .price-mobile {
-    display: none;
+    // display: none;
+    line-height:23px;
   }
   .product-details-container {
    /* min-height: 120px;*/
