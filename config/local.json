@@ -182,7 +182,9 @@
       "it",
       "more_basavangudi",
       "test_more_view",
-      "tmc_storeview"
+      "tmc_storeview",
+      "more_ananthnagar_storeview",
+      "b2b_more_test_storeview"
     ],
     "de": {
       "storeCode": "de",
@@ -247,7 +249,7 @@
       "appendStoreCode": true,
       "elasticsearch": {
         "host": "/api/catalog",
-        "index": "vue_storefront_catalog_basavanagudi"
+        "index": "vue_storefront_catalog_more_basavangudi"
       },
       "tax": {
         "defaultCountry": "IN"
@@ -309,6 +311,54 @@
       },
       "seo": {
         "defaultTitle": "The Man Company"
+      }
+    },
+    "b2b_more_test_storeview": {
+      "storeCode": "b2b_more_test_storeview",
+      "storeId": 18,
+      "name": "More Test Store",
+      "url": "/b2b_more_test_storeview",
+      "appendStoreCode": true,
+      "elasticsearch": {
+        "host": "/api/catalog",
+        "index": "vue_storefront_catalog_b2b_more_test_storeview"
+      },
+      "tax": {
+        "defaultCountry": "IN"
+      },
+      "i18n": {
+        "fullCountryName": "More Test Store",
+        "fullLanguageName": "English",
+        "defaultCountry": "IN",
+        "defaultLanguage": "EN",
+        "defaultLocale": "en-US"
+      },
+      "seo": {
+        "defaultTitle": "More Test Store"
+      }
+    },
+    "more_ananthnagar_storeview": {
+      "storeCode": "more_ananthnagar_storeview",
+      "storeId": 69,
+      "name": "More Ananthnagar",
+      "url": "/more_ananthnagar_storeview",
+      "appendStoreCode": true,
+      "elasticsearch": {
+        "host": "/api/catalog",
+        "index": "vue_storefront_catalog_more_ananthnagar_storeview"
+      },
+      "tax": {
+        "defaultCountry": "IN"
+      },
+      "i18n": {
+        "fullCountryName": "More Ananthnagar",
+        "fullLanguageName": "English",
+        "defaultCountry": "IN",
+        "defaultLanguage": "EN",
+        "defaultLocale": "en-US"
+      },
+      "seo": {
+        "defaultTitle": "More Ananthnagar"
       }
     }
   },
