@@ -184,7 +184,15 @@
       "test_more_view",
       "tmc_storeview",
       "more_ananthnagar_storeview",
-      "b2b_more_test_storeview"
+      "b2b_more_test_storeview",
+      "more_marathahalli",
+      "morehosurroad_view",
+      "more_sahakarnagar_view",
+      "more_jp_nagar",
+      "more_jayanagar8th_storeview",
+      "more_mosqueroad_storeview",
+      "more_vijayabanklayout_storeview",
+      "more_hulimavu_storeview"
     ],
     "de": {
       "storeCode": "de",
@@ -338,29 +346,221 @@
       }
     },
     "more_ananthnagar_storeview": {
-      "storeCode": "more_ananthnagar_storeview",
-      "storeId": 69,
-      "name": "More Ananthnagar",
-      "url": "/more_ananthnagar_storeview",
-      "appendStoreCode": true,
-      "elasticsearch": {
-        "host": "/api/catalog",
-        "index": "vue_storefront_catalog_more_ananthnagar_storeview"
-      },
-      "tax": {
-        "defaultCountry": "IN"
-      },
-      "i18n": {
-        "fullCountryName": "More Ananthnagar",
-        "fullLanguageName": "English",
-        "defaultCountry": "IN",
-        "defaultLanguage": "EN",
-        "defaultLocale": "en-US"
-      },
-      "seo": {
-        "defaultTitle": "More Ananthnagar"
-      }
+    "storeCode": "more_ananthnagar_storeview",
+    "storeId": 69,
+    "name": "More Ananthnagar",
+    "url": "/more_ananthnagar_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_ananthnagar_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Ananthnagar",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Ananthnagar"
     }
+  },
+  "more_marathahalli": {
+    "storeCode": "more_marathahalli",
+    "storeId": 47,
+    "name": "More Marathahalli",
+    "url": "/more_marathahalli",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_marathahalli"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Marathahalli",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Marathahalli"
+    }
+  },
+  "morehosurroad_view": {
+    "storeCode": "morehosurroad_view",
+    "storeId": 60,
+    "name": "More Hosur Road",
+    "url": "/morehosurroad_view",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_morehosurroad_view"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Hosur Road",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Hosur Road"
+    }
+  },
+  "more_sahakarnagar_view": {
+    "storeCode": "more_sahakarnagar_view",
+    "storeId": 62,
+    "name": "More Sahakar Nagar",
+    "url": "/more_sahakarnagar_view",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_sahakarnagar_view"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Sahakar Nagar",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Sahakar Nagar"
+    }
+  },
+  "more_jp_nagar": {
+    "storeCode": "more_jp_nagar",
+    "storeId": 63,
+    "name": "More JP Nagar",
+    "url": "/more_jp_nagar",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_jp_nagar"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More JP Nagar",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More JP Nagar"
+    }
+  },
+  "more_jayanagar8th_storeview": {
+    "storeCode": "more_jayanagar8th_storeview",
+    "storeId": 70,
+    "name": "More jayanagar 8th Block",
+    "url": "/more_jayanagar8th_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_jayanagar8th_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More jayanagar 8th Block",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More jayanagar 8th Block"
+    }
+  },
+  "more_mosqueroad_storeview": {
+    "storeCode": "more_mosqueroad_storeview",
+    "storeId": 71,
+    "name": "More Mosque Road",
+    "url": "/more_mosqueroad_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_mosqueroad_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Mosque Road",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Mosque Road"
+    }
+  },
+  "more_vijayabanklayout_storeview": {
+    "storeCode": "more_vijayabanklayout_storeview",
+    "storeId": 72,
+    "name": "More Vijayabank Layout",
+    "url": "/more_vijayabanklayout_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_vijayabanklayout_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Vijayabank Layout",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Vijayabank Layout"
+    }
+  },
+  "more_hulimavu_storeview": {
+    "storeCode": "more_hulimavu_storeview",
+    "storeId": 73,
+    "name": "More Hulimavu",
+    "url": "/more_hulimavu_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_hulimavu_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Hulimavu",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Hulimavu"
+    }
+  }
   },
   "entities": {
     "optimize": true,
