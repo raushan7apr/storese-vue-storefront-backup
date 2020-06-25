@@ -173,7 +173,7 @@
     "maxNetworkTaskAttempts": 1,
     "maxCartBypassAttempts": 1
   },
-  "defaultStoreCode": "more_basavangudi",
+  "defaultStoreCode": "",
   "storeViews": {
     "multistore": true,
     "commonCache": false,
@@ -199,61 +199,6 @@
       "more_brookefield_storeview",
       "more_sarjapur_storeview"
     ],
-    "de": {
-      "storeCode": "de",
-      "storeId": 3,
-      "name": "German Store",
-      "url": "/de",
-      "appendStoreCode": true,
-      "elasticsearch": {
-        "host": "/api/catalog",
-        "index": "vue_storefront_catalog_de"
-      },
-      "tax": {
-        "sourcePriceIncludesTax": false,
-        "defaultCountry": "DE",
-        "defaultRegion": "",
-        "calculateServerSide": true
-      },
-      "i18n": {
-        "fullCountryName": "Germany",
-        "fullLanguageName": "German",
-        "defaultLanguage": "DE",
-        "defaultCountry": "DE",
-        "defaultLocale": "de-DE",
-        "currencyCode": "EUR",
-        "currencySign": "EUR",
-        "dateFormat": "HH:mm D-M-YYYY"
-      },
-      "seo": {
-        "defaultTitle": "Vue Storefront"
-      }
-    },
-    "it": {
-      "extend": "de",
-      "storeCode": "it",
-      "storeId": 4,
-      "name": "Italian Store",
-      "url": "/it",
-      "appendStoreCode": true,
-      "elasticsearch": {
-        "host": "/api/catalog",
-        "index": "vue_storefront_catalog_it"
-      },
-      "tax": {
-        "defaultCountry": "IT"
-      },
-      "i18n": {
-        "fullCountryName": "Italy",
-        "fullLanguageName": "Italian",
-        "defaultCountry": "IT",
-        "defaultLanguage": "IT",
-        "defaultLocale": "it-IT"
-      },
-      "seo": {
-        "defaultTitle": "Vue Storefront"
-      }
-    },
     "more_basavangudi": {
       "storeCode": "more_basavangudi",
       "storeId": 61,
