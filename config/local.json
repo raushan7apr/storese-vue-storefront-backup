@@ -684,7 +684,7 @@
     "configurableChildrenStockPrefetchDynamic": true,
     "configurableChildrenStockPrefetchStaticPrefetchCount": 8,
     "filterUnavailableVariants": false,
-    "listOutOfStockProducts": true,
+    "listOutOfStockProducts": false,
     "preventConfigurableChildrenDirectAccess": true,
     "alwaysSyncPlatformPricesOver": true,
     "alwaysSyncPricesClientSide": false,
