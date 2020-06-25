@@ -158,6 +158,10 @@
               {
                 condition: !$v.shipping.zipCode.minLength,
                 text: $t('Name must have at least 3 letters.')
+              },
+              {
+                condition: !zipCodeOptions,
+                text: $t('Invalid zip-code.')
               }
             ]"
           />
@@ -237,7 +241,7 @@
             <button-full
               class="submit-details no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium mt20 router-link-active no-underline pointer align-center border-box"
               data-testid="shippingSubmit"
-              :disabled="$v.shipping.$invalid || shippingMethods.length <= 0"
+              :disabled="$v.shipping.$invalid || shippingMethods.length <= 0 || !zipCodeOptions"
               @click.native="sendDataToCheckout"
             >
               {{ $t('Continue to payment') }}
@@ -315,15 +319,24 @@ export default {
       })
     },
     stateOptions () {
-      return this.states.map((item) => {
+      return JSON.parse(sessionStorage.getItem('regions')).map((item) => {
         return {
-          value: item.region_id.toString(),
+          value: item.id.toString(),
           label: item.name
         }
       })
     },
     storeView () {
       return currentStoreView()
+    },
+    zipCodeOptions () {
+      for (let i = 0; i < sessionStorage.getItem('zipcodes').split(',').length; i++) {
+        if (sessionStorage.getItem('zipcodes').split(',')[i] === this.shipping.zipCode) {
+          return true
+        }
+      }
+      return false
+      // return this.shipping_info.zipcodes.includes(this.shipping.zipCode) && this.shipping.zipCode.length === 6
     }
   },
   validations: {
