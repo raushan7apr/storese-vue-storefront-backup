@@ -107,6 +107,7 @@ declare namespace DataResolver {
     deleteItem: (cartServerToken: string, cartItem: CartItem) => Promise<Task>,
     getPaymentMethods: () => Promise<Task>,
     getShippingMethods: (address: any /*: ShippingMethodsData */) => Promise<Task>,
+    getShippingInfo: (address: any /*: ShippingMethodsData */) => Promise<Task>,
     getItems: () => Promise<Task>,
     applyCoupon: (couponCode: string) => Promise<Task>,
     removeCoupon: () => Promise<Task>
