@@ -36,7 +36,7 @@ export default {
   computed: {
     visibleCategories () {
       return this.categories.filter(category => {
-        if (category.image) {
+        if (category.image && category.image.indexOf('http') === -1) {
           category.image = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.image;
         }
         return category.product_count > 0 || category.children_count > 0
