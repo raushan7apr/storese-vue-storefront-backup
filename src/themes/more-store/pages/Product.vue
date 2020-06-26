@@ -14,11 +14,11 @@
               data-testid="productName"
             >
               {{ getCurrentProduct.name | htmlDecode }}
-              <web-share
+              <!--<web-share
                 :title="getCurrentProduct.name | htmlDecode"
                 text="Check this product!"
                 class="web-share"
-              />
+              />-->
             </div>
             <div
               class="mb20 h6 uppercase cl-secondary"
