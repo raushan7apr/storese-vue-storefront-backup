@@ -53,7 +53,7 @@ export default {
 <style scoped>
   .cart-icon {
     font-size: 34px;
-    color: #a8aeba;
+    color: #f04d24cf;
   }
   @media (max-width: 45em) {
   .cart-icon {

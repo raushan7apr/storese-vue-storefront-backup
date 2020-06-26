@@ -7,7 +7,8 @@
       >
         <sub-btn type="back" class="bg-cl-transparent brdr-none" />
       </div>
-      <div class="col-xs bg-cl-primary">
+      <div class="col-xs bg-cl-primary d-flex">
+      
         <button
           type="button"
           :aria-label="$t('Close')"
@@ -26,7 +27,7 @@
             class="brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary"
           >
             <router-link
-              class="block px25 py20 cl-accent no-underline"
+              class="block px25 8 cl-accent no-underline"
               :to="localizedRoute('/')"
               exact
             >
@@ -51,7 +52,7 @@
               />
               <router-link
                 v-else
-                class="px25 py20 cl-accent no-underline col-xs"
+                class="px25 py8 cl-accent no-underline col-xs"
                 :to="categoryLink(category)"
               >
                 {{ category.name }}
@@ -71,7 +72,7 @@
             class="bg-cl-secondary"
           >
             <router-link
-              class="block px25 py20 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
+              class="block px25 py8 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
               :to="localizedRoute('/sale')"
               exact
             >
@@ -84,7 +85,7 @@
             class="bg-cl-secondary"
           >
             <router-link
-              class="block px25 py20 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
+              class="block px25 py8 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
               :to="localizedRoute('/magazine')"
               exact
             >
@@ -97,7 +98,7 @@
             class="bg-cl-secondary"
           >
             <router-link
-              class="block px25 py20 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
+              class="block px25 py8 brdr-bottom-1 brdr-cl-secondary cl-accent no-underline fs-medium-small"
               :to="localizedRoute('/compare')"
               exact
             >
@@ -125,7 +126,7 @@
               v-if="!currentUser && isCurrentMenuShowed"
               href="#"
               @click.prevent="closeMenu"
-              class="block w-100 px25 py20 cl-accent no-underline fs-medium-small"
+              class="block w-100 px25 py8 cl-accent no-underline fs-medium-small"
             >
               {{ $t('My account') }}
             </a>
@@ -244,12 +245,15 @@ $color-matterhorn: color(matterhorn);
 $color-mine-shaft: color(mine-shaft);
 
 .sidebar-menu {
-  height: 100vh;
-  width: 350px;
+  height: 100%;
+  width: 90%;
   overflow: hidden;
+  .d-flex {
+    display:flex;
+  }
 
   @media (max-width: 767px) {
-    width: 100vh;
+    width: 90%;
   }
 
   &__container {
@@ -278,7 +282,8 @@ $color-mine-shaft: color(mine-shaft);
       }
     }
     a {
-      color: $color-mine-shaft;
+      color: #f04e23;
+      font-size: 14px;
     }
   }
 
@@ -288,8 +293,8 @@ $color-mine-shaft: color(mine-shaft);
   }
 
   button {
-    color: $color-mine-shaft;a {
-      color: $color-mine-shaft;
+    color: #f04e23;a {
+      color: #f04e23;
     }
   }
 

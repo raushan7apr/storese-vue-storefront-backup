@@ -105,7 +105,7 @@ export default {
 
 .left-sidebar{
   height: 100vh;
-  width: 350px;
+  // width: 350px;
   top: 0;
   left: 0;
   overflow: hidden;
@@ -114,7 +114,7 @@ export default {
   z-index: 4;
 
     @media (max-width: 767px) {
-      width: 100vh;
+      // width: 100vh;
     }
   }
 
