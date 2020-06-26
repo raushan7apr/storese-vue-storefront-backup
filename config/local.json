@@ -1176,7 +1176,7 @@
     "paths": {
       "product": "/catalog/product"
     },
-    "productPlaceholder": "/assets/placeholder.jpg"
+    "productPlaceholder": "/assets/place_holder_2.png"
   },
   "install": {
     "is_local_backend": true,

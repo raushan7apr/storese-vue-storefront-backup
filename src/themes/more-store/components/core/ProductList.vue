@@ -284,7 +284,7 @@ $color-white: color(white);
   box-shadow: 2px 2px 5px 1px #e1e1e1;
   -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
   -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
-  background-color: #fff;
+  // background-color: #fff;
   @media (max-width: 767px) {
     padding-bottom: 10px;
   }
