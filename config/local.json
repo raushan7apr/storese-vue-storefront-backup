@@ -231,7 +231,7 @@
       "appendStoreCode": true,
       "elasticsearch": {
         "host": "/api/catalog",
-        "index": "vue_storefront_catalog_indore"
+        "index": "vue_storefront_catalog_test_more_view"
       },
       "tax": {
         "defaultCountry": "IN"
