@@ -36,8 +36,8 @@ export default {
         product: product,
         qty: product.qty
       })
-      let maxQuantity = res.isManageStock ? res.qty : null
-      if (maxQuantity) {
+      let maxQuantity = res.isManageStock ? res.qty : 0
+      if (currentQuantity < maxQuantity) {
         try {
           const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
           if (this.$ga && currentQuantity === 0) {
