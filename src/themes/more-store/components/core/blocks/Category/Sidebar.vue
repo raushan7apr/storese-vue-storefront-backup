@@ -43,7 +43,7 @@
         />
       </div> -->
       <div v-if="filterIndex==='price'">
-        <h5>
+        <h5 class="helvetica">
           {{ $t(filterIndex + '_filter') }}
         </h5>
         <price-selector
@@ -134,6 +134,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.helvetica {
+  font-family: 'Helvetica';
+}
 @media (min-width: 768px){
   .sidebar__header {
     margin-top: 35px;
@@ -152,6 +155,7 @@ export default {
 .sidebar__header {
   color: #fff;
   background-color: #f04d24cf;
+  font-weight: 100;
 }
 cancel-icon {
   color: #f04d24cf;
