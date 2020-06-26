@@ -43,7 +43,7 @@
         />
       </div> -->
       <div v-if="filterIndex==='price'">
-        <h5>
+        <h5 class="helvetica">
           {{ $t(filterIndex + '_filter') }}
         </h5>
         <price-selector
@@ -134,34 +134,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.helvetica {
+  font-family: 'Helvetica';
+}
 @media (min-width: 768px){
   .sidebar__header {
     margin-top: 35px;
   }
+  .sidebar__header__text{
+    margin: 20px 20px
+  }
 }
 @media (max-width:768px){
-  .sidebar__elements {
-
+  .sidebar__header__text{
+    margin: 12px 20px;
+    text-transform: uppercase;
+    font-family: 'Helvetica';
   }
 }
 .sidebar__header {
   color: #fff;
   background-color: #f04d24cf;
+  font-weight: 100;
 }
 cancel-icon {
   color: #f04d24cf;
 }
 .sidebar__header__text{
   color: #fff;
-  margin: 12px 20px;
   text-transform: uppercase;
-  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: 'Helvetica';
 }
 .sidebar__elements{
   padding-bottom: 1px;
   margin: 20px 20px;
   text-transform: uppercase;
-  font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: 'Helvetica';
 }
 // .price-select {
 //   border-color: #f04d24cf;

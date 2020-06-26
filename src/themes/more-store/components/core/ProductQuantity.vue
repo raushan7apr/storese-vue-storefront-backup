@@ -20,7 +20,7 @@
         }
       ]"
     />
-    <spinner v-if="loading" />
+    <!--<spinner v-if="loading" />-->
   </div>
 </template>
 
@@ -105,6 +105,7 @@ export default {
 <style lang="scss" scoped>
 .product-quantity {
   position: relative;
+  margin-right: 18px;
   /deep/ .spinner {
     position: absolute;
     top: 0;
