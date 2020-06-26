@@ -7,7 +7,7 @@
         :key="index"
       >
         <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
-          <img v-if="category.image" v-bind:src="category.image" class="mb10 offer-product-image">
+          <img v-if="category.thumbnail" v-bind:src="category.thumbnail" class="mb10 offer-product-image">
           <img v-else src="/assets/placeholder.svg" class="mb10 offer-product-image" style="opacity: 0.4">
           <div class="category-name m0 h1">
             {{ category.name }}
@@ -40,7 +40,7 @@
         </div>
         <!-- <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
           <img v-if="category.image" v-bind:src="category.image" class="m10 offer-product-image">
-          <img v-else src="/assets/placeholder.svg" class="m10 offer-product-image" style="opacity: 0.4">
+          <img v-else src="/assets/place_holder_2.png" class="m10 offer-product-image" style="opacity: 0.4">
           <div class="category-name m0 h1">
             {{ category.name }}
           </div>
@@ -71,6 +71,9 @@ export default {
         if (category.image && category.image.indexOf('http') === -1) {
           category.image = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.image;
         }
+        if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
+          category.thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.thumbnail;
+        }
         return category.product_count > 0 && category.children_count === 0 && category.include_in_menu === 0
       })
     },
@@ -86,12 +89,9 @@ export default {
         for (var sub = 0; sub < category.children_count; sub++) {
           if (category.children_data[sub].thumbnail) {
             category.children_data[sub].thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.children_data[sub].thumbnail;
-            console.log(category.children_data[sub].thumbnail);
           }
-          console.log(category.children_data[sub].thumbnail);
         }
-        console.log(category);
-        return category.product_count > 0 && category.children_count > 0  && category.include_in_menu === 0
+        return category.product_count > 0 && category.children_count > 0 && ( category.include_in_menu === 0  || category.include_in_menu === false )
       })
     }
   },

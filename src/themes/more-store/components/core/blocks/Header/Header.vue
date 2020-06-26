@@ -26,11 +26,11 @@
             <wishlist-icon class="p15 icon pointer" />
           </div>-->
           <div class="col-md-2 col-xs-2 end-xs">
-            <div class="row">
+            <div class="row cart-icon">
               <!--<search-icon style="display: none;" class="p15 icon hidden-xs pointer" />-->
               <!--<wishlist-icon class="p15 icon hidden-xs pointer" />
               <compare-icon class="p15 icon hidden-xs pointer" />-->
-              <div class="col-md-4">
+              <div class="col-md-8">
                 <microcart-icon class="p15 icon pointer" />
               </div>
               <div class="col-md-1">
@@ -193,7 +193,7 @@ export default {
     },
     visibleCategories () {
       return this.categories.filter(category => {
-        if (category.include_in_menu === 1) {
+        if (category.include_in_menu === 1 || category.include_in_menu === true) {
           return category.product_count > 0 || category.children_count > 0
         }
       })
@@ -277,7 +277,6 @@ $color-icon-hover: color(secondary, $colors-background);
     justify-content: center;
     cursor: pointer;
 }
-
 .large-screen {
   @media (max-width: 767px) {
     display: none;
@@ -343,7 +342,9 @@ $color-icon-hover: color(secondary, $colors-background);
     }
   }
 }
-
+.cart-icon {
+  margin-top: 30px;
+}
 .search-input-group {
   display: flex;
   font: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;

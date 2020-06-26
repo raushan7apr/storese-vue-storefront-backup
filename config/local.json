@@ -1023,7 +1023,8 @@
     "shippinginfo_endpoint": "/api/cart/shipping-information?token={{token}}&cartId={{cartId}}",
     "collecttotals_endpoint": "/api/cart/collect-totals?token={{token}}&cartId={{cartId}}",
     "deletecoupon_endpoint": "/api/cart/delete-coupon?token={{token}}&cartId={{cartId}}",
-    "applycoupon_endpoint": "/api/cart/apply-coupon?token={{token}}&cartId={{cartId}}&coupon={{coupon}}"
+    "applycoupon_endpoint": "/api/cart/apply-coupon?token={{token}}&cartId={{cartId}}&coupon={{coupon}}",
+    "getshippinginfo_endpoint": "/api/ext/shipping/shipping-info"
   },
   "attributes": {
     "disablePersistentAttributesCache": false
@@ -1187,7 +1188,7 @@
     "paths": {
       "product": "/catalog/product"
     },
-    "productPlaceholder": "/assets/placeholder.jpg"
+    "productPlaceholder": "/assets/place_holder_2.png"
   },
   "install": {
     "is_local_backend": true,
@@ -1205,17 +1206,7 @@
     "finalPriceIncludesTax": false
   },
   "shipping": {
-    "methods": [
-      {
-        "method_title": "DPD Courier",
-        "method_code": "freeshipping",
-        "carrier_code": "freeshipping",
-        "amount": 4,
-        "price_incl_tax": 5,
-        "default": true,
-        "offline": true
-      }
-    ]
+    "methods": []
   },
   "syncTasks": {
     "disablePersistentTaskQueue": true

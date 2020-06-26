@@ -14,11 +14,11 @@
               data-testid="productName"
             >
               {{ getCurrentProduct.name | htmlDecode }}
-              <web-share
+              <!--<web-share
                 :title="getCurrentProduct.name | htmlDecode"
                 text="Check this product!"
                 class="web-share"
-              />
+              />-->
             </div>
             <div
               class="mb20 h6 uppercase cl-secondary"
@@ -41,11 +41,11 @@
               data-testid="productName"
             >
               {{ getCurrentProduct.name | htmlDecode }}
-              <web-share
+              <!--<web-share
                 :title="getCurrentProduct.name | htmlDecode"
                 text="Check this product!"
                 class="web-share"
-              />
+              />-->
             </div>
             <div
               class="mb20 h6 uppercase cl-secondary product-view"
@@ -55,7 +55,7 @@
             </div>
             <div>
               <product-price
-                class="mb40 product-price" style="color: #f04d24cf;"
+                class="product-price" style="color: #f04d24cf;"
                 v-if="getCurrentProduct.type_id !== 'grouped'"
                 :product="getCurrentProduct"
                 :custom-options="getCurrentCustomOptions"
@@ -129,7 +129,7 @@
               :product="getCurrentProduct"
             />
             <div>
-              <div class="col-xs-6">
+              <div class="col-xs-12">
                 <product-price
                   class="mb40 product-price-mobile mt15" style="color: #f04d24cf;"
                   v-if="getCurrentProduct.type_id !== 'grouped'"
@@ -137,8 +137,8 @@
                   :custom-options="getCurrentCustomOptions"
                 />
               </div>
-              <div class="col-xs-6 product-quantity-container">
-                <product-quantity
+              <div class="col-xs-12 product-quantity-container">
+                <!-- <product-quantity
                   class="row m0 mb35"
                   v-if="getCurrentProduct.type_id !== 'grouped' && getCurrentProduct.type_id !== 'bundle'"
                   v-model="getCurrentProduct.qty"
@@ -149,15 +149,47 @@
                   :check-max-quantity="manageQuantity"
                   @error="handleQuantityError"
                 />
+                 -->
+                <div class="m0 add-to-cart add-button add-to-cart-button no-outline button-full block w-100 px10 py20 ripple weight-400 h4 cl-white helvetica fs-medium col-xs-12 col-sm-4 col-md-6" :disabled="isAddToCartDisabled" v-if="cartQuantity(getCurrentProduct, productsInCart) === 0">
+                  <div class="column-100 cursor-pointer">
+                    <add-to-cart-plus
+                      :product="getCurrentProduct"
+                    >
+                    </add-to-cart-plus>
+                  </div>
+                </div>
+                <div class="add-to-cart add-to-cart-button no-outline button-full block w-100 px10 py20 ripple weight-400 h4 cl-white helvetica fs-medium col-xs-12 col-sm-4 col-md-6" v-else>
+                  <!-- <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease">
+                    -
+                  </div>
+                  <div class="qty">
+                    {{ cartQuantity(getCurrentProduct, productsInCart) }}
+                  </div>
+                  <div class="increase">
+                    <add-to-cart-plus
+                      :product="getCurrentProduct"
+                    >
+                    </add-to-cart-plus>
+                  </div> -->
+                  <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease column cursor-pointer">-</div>
+                  <div class="column">
+                    {{ cartQuantity(getCurrentProduct, productsInCart) }}
+                  </div>
+                  <div class="increase column cursor-pointer">
+                    <add-to-cart-plus
+                      :product="getCurrentProduct"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="m0">
+            <!-- <div class="m0">
               <add-to-cart
                 :product="getCurrentProduct"
                 :disabled="isAddToCartDisabled"
                 class="add-to-cart-button no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium col-xs-12 col-sm-4 col-md-6"
               />
-            </div>
+            </div> -->
             <!-- <div class="row py40 add-to-buttons">
               <div class="col-xs-6 col-sm-3 col-md-6">
                 <AddToWishlist :product="getCurrentProduct" />
@@ -171,7 +203,7 @@
             </h2>
             <div class="h4 details-wrapper details-wrapper--open">
               <div class="row between-md m0">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-12 product-details">
                   <div class="lh30 h5" v-html="getCurrentProduct.description" />
                 </div>
                 <div class="col-xs-12 col-sm-5">
@@ -192,12 +224,12 @@
       </div>
     </section>
     <section class="container px15 pt50 pb35 cl-accent details-mobile">
-      <h2 class="h3 m0 mb10 helvetica lh20 details-title-mobile">
+      <h2 class="h3 m0 mb10 helvetica lh20 details-title-mobile col-xs-12">
         {{ $t('Product details') }}
       </h2>
       <div class="h4 details-wrapper-mobile" :class="{'details-wrapper-mobile--open': detailsOpen}">
         <div class="row between-md m0">
-          <div class="col-xs-12 col-sm-6">
+          <div class="col-xs-12 col-sm-12">
             <div class="lh30 h5" v-html="getCurrentProduct.description" />
           </div>
           <div class="col-xs-12 col-sm-5">
@@ -250,6 +282,7 @@ import SizeSelector from 'theme/components/core/SizeSelector.vue'
 import Breadcrumbs from 'theme/components/core/Breadcrumbs.vue'
 import ProductAttribute from 'theme/components/core/ProductAttribute.vue'
 import ProductQuantity from 'theme/components/core/ProductQuantity.vue'
+import AddToCartPlus from 'theme/components/core/AddToCartPlus.vue'
 import ProductLinks from 'theme/components/core/ProductLinks.vue'
 import ProductCustomOptions from 'theme/components/core/ProductCustomOptions.vue'
 import ProductBundleOptions from 'theme/components/core/ProductBundleOptions.vue'
@@ -281,6 +314,7 @@ import { filterChangedProduct } from '@vue-storefront/core/modules/catalog/event
 export default {
   components: {
     AddToCart,
+    AddToCartPlus,
     AddToCompare,
     AddToWishlist,
     Breadcrumbs,
@@ -319,6 +353,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      productsInCart: 'cart/getCartItems',
       getCurrentCategory: 'category-next/getCurrentCategory',
       getCurrentProduct: 'product/getCurrentProduct',
       getProductGallery: 'product/getProductGallery',
@@ -411,6 +446,34 @@ export default {
     }
   },
   methods: {
+    cartQuantity (product, cart) {
+      let cartItem = this.cartItem(product, cart);
+      if (cartItem) {
+        return cartItem.qty;
+      } else {
+        return 0;
+      }
+    },
+    cartItem (product, cart) {
+      let cartItem = cart.find(item => item.name === product.name);
+      return cartItem;
+    },
+    updateProductQty (product, productsInCart) {
+      this.updateQuantity(product, productsInCart);
+    },
+    updateQuantity (product, productsInCart) {
+      let cartItem = this.cartItem(product, productsInCart);
+      let qty = 0;
+      if (cartItem.qty) {
+        qty = cartItem.qty;
+      }
+      if (qty === 1) {
+        this.$store.dispatch('cart/removeItem', { product: cartItem })
+      } else if (qty > 1) {
+        qty = qty - 1;
+        this.$store.dispatch('cart/updateQuantity', { product: cartItem, qty: qty });
+      }
+    },
     showDetails (event) {
       this.detailsOpen = true
       event.target.classList.add('hidden')
@@ -527,28 +590,31 @@ $more-background: color(rgb(242, 242, 242));
   }
 }
 .product-quantity-container {
-    float: left;
     margin-bottom: -6px;
+    padding-left: 0px;
   }
 @media (min-width: 767px) {
   .details-mobile {
     display: none;
   }
+  .product-details {
+    padding-left: 0px;
+  }
 }
-.add-to-cart-button {
-  background: #fff;
-  border-color: #f04d24cf;
-  border-width: 3px;
-  color: #f04d24cf;
-  border-radius: 8px;
-  border-style: solid;
-}
-.add-to-cart-button:hover {
-  background: #f04d24cf;
-  border-color: #f36e4d;
-  color: #fff;
+// .add-to-cart-button {
+//   background: #fff;
+//   border-color: #f04d24cf;
+//   border-width: 3px;
+//   color: #f04d24cf;
+//   border-radius: 8px;
+//   border-style: solid;
+// }
+// .add-to-cart-button:hover {
+//   background: #f04d24cf;
+//   border-color: #f36e4d;
+//   color: #fff;
 
-}
+// }
 .details-wrapper {
   @media (max-width: 767px) {
     position: relative;
@@ -593,7 +659,6 @@ $more-background: color(rgb(242, 242, 242));
     margin-top: 0px;
   }
   .product-quantity-container {
-    float: right;
   }
   .product-price-mobile {
     float: left;
@@ -624,7 +689,18 @@ $more-background: color(rgb(242, 242, 242));
     }
   }
 }
-
+.column {
+  float: left;
+  width: 33.33%;
+  color: #aaaaaa;
+  text-align: center;
+}
+.column-100 {
+  float: left;
+  width: 100%;
+  color: #aaaaaa;
+  text-align: center;
+}
 .breadcrumbs {
   @media (max-width: 767px) {
     margin: 0px 0px 10px;
@@ -632,6 +708,68 @@ $more-background: color(rgb(242, 242, 242));
   }
 }
 
+.qty-container {
+  display: flex;
+  justify-content: center;
+  /* border-top: 1px solid #e1e1e1;*/
+  margin-top: 8px;
+}
+
+.add-to-cart {
+  // margin: auto;
+  // width: 50%;
+  // padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 55px;
+  border: 4px solid #f04d24cf;
+  border-radius: 15px;
+  margin-top: 8px;
+}
+.add-button {
+  // margin: auto;
+  // width: 50%;
+  // padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 55px;
+  border: 4px solid #f04d24cf;
+  background: #f04d24cf;
+  border-radius: 15px;
+  margin-top: 8px;
+}
+.add-to-cart > .decrease {
+  font-size: 24px;
+  font-weight: 900;
+  padding-right: 12px;
+  padding-top: 4px;
+  margin-bottom: 4px;
+  color: #000;
+  cursor: pointer;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.add-to-cart > .qty {
+  font-size: 16px;
+  font-weight: 900;
+  padding: 0px 8px 0px 8px;
+  color: #aaaaaa;
+}
+
+.add-to-cart > .increase {
+  font-size: 24px;
+  font-weight: 900;
+  padding-left: 12px;
+  margin-bottom: 2px;
+  color: #000;
+  cursor: pointer;
+}
 .error {
   color: red;
   font-weight: bold;
@@ -643,6 +781,9 @@ $more-background: color(rgb(242, 242, 242));
   }
 }
 @media (min-width: 767px) {
+  .add-to-cart {
+    // float: right;
+  }
   .product-price-mobile {
     display: none;
   }
@@ -708,7 +849,7 @@ $more-background: color(rgb(242, 242, 242));
 }
 
 .details-title {
-  padding: 0 8px;
+  // padding: 0 8px;
 
   @media (max-width: 767px) {
     display: none;

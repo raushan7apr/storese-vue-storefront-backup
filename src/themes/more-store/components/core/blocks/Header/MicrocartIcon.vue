@@ -66,7 +66,7 @@ export default {
     display: block;
     padding-top: 8px;
     font-size: 22px;
-    color: #a8aeba;
+    color: #f04d24cf;
     font-weight: 600;
   }
 </style>

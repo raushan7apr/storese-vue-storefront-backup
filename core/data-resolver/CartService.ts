@@ -140,6 +140,17 @@ const removeCoupon = async (): Promise<Task> =>
     silent: false
   });
 
+const getShippingInfo = async (address: any): Promise<Task> =>
+  TaskQueue.execute({
+    url: processLocalizedURLAddress(getApiEndpointUrl(config.cart, 'getshippinginfo_endpoint')),
+    payload: {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      mode: 'cors'
+    },
+    silent: true
+  });
+
 export const CartService: DataResolver.CartService = {
   setShippingInfo,
   getTotals,
@@ -148,6 +159,7 @@ export const CartService: DataResolver.CartService = {
   deleteItem,
   getPaymentMethods,
   getShippingMethods,
+  getShippingInfo,
   getItems,
   applyCoupon,
   removeCoupon

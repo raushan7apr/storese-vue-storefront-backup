@@ -18,7 +18,7 @@
     <div class="col-xs flex flex-wrap">
       <div class="flex flex-nowrap details">
         <div class="flex w-100 flex-wrap between-xs">
-          <div>
+          <div class="full-width">
             <router-link
               class="helvetica h5 name"
               :to="productLink"
@@ -338,6 +338,10 @@ export default {
     @media (max-width: 767px) {
       width: 100px;
     }
+  }
+
+  .full-width {
+    width: 100%;
   }
 
   .details {

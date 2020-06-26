@@ -1,10 +1,10 @@
 <template>
-  <div class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0" @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
+  <span class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0" @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
     Add
-  </div>
-  <div v-else @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
+  </span>
+  <span v-else @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
     +
-  </div>
+  </span>
 </template>
 
 <script>
@@ -49,9 +49,9 @@ export default {
             gaData.old_quantity = currentQuantity;
             this.$ga.event('Change_Quantity', 'click', JSON.stringify(gaData));
           }
-          diffLog.clientNotifications.forEach(notificationData => {
-            this.notifyUser(notificationData)
-          })
+          // diffLog.clientNotifications.forEach(notificationData => {
+          //   this.notifyUser(notificationData)
+          // })
         } catch (message) {
           this.notifyUser(notifications.createNotification({ type: 'error', message }))
         }
@@ -109,13 +109,12 @@ export default {
 <style lang="scss" scoped>
 
   .add-to-cart-button {
-    width: 100%;
     color: #fff;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    // margin: 4px 2px;
+    margin: 4px 2px;
     border-radius: 5px;
     padding-bottom: 5px;
   }

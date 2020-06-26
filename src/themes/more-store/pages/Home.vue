@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <head-image />
-    <section class="container-fluid bg-d1d1d1 pb60 px15">
+    <section class="container-fluid bg-d1d1d1 px15">
       <div class="row center-xs">
         <header class="col-md-12 start-xs">
           <div class="header-text">
