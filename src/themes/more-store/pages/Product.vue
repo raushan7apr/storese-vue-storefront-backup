@@ -55,7 +55,7 @@
             </div>
             <div>
               <product-price
-                class="mb40 product-price" style="color: #f04d24cf;"
+                class="product-price" style="color: #f04d24cf;"
                 v-if="getCurrentProduct.type_id !== 'grouped'"
                 :product="getCurrentProduct"
                 :custom-options="getCurrentCustomOptions"
@@ -151,7 +151,7 @@
                 />
                  -->
                 <div class="m0 add-to-cart add-button add-to-cart-button no-outline button-full block w-100 px10 py20 ripple weight-400 h4 cl-white helvetica fs-medium col-xs-12 col-sm-4 col-md-6" :disabled="isAddToCartDisabled" v-if="cartQuantity(getCurrentProduct, productsInCart) === 0">
-                  <div class="increase">
+                  <div class="column-100 cursor-pointer">
                     <add-to-cart-plus
                       :product="getCurrentProduct"
                     >
@@ -159,7 +159,7 @@
                   </div>
                 </div>
                 <div class="add-to-cart add-to-cart-button no-outline button-full block w-100 px10 py20 ripple weight-400 h4 cl-white helvetica fs-medium col-xs-12 col-sm-4 col-md-6" v-else>
-                  <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease">
+                  <!-- <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease">
                     -
                   </div>
                   <div class="qty">
@@ -170,6 +170,15 @@
                       :product="getCurrentProduct"
                     >
                     </add-to-cart-plus>
+                  </div> -->
+                  <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease column cursor-pointer">-</div>
+                  <div class="column">
+                    {{ cartQuantity(getCurrentProduct, productsInCart) }}
+                  </div>
+                  <div class="increase column cursor-pointer">
+                    <add-to-cart-plus
+                      :product="getCurrentProduct"
+                    />
                   </div>
                 </div>
               </div>
@@ -194,7 +203,7 @@
             </h2>
             <div class="h4 details-wrapper details-wrapper--open">
               <div class="row between-md m0">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 col-sm-12 product-details">
                   <div class="lh30 h5" v-html="getCurrentProduct.description" />
                 </div>
                 <div class="col-xs-12 col-sm-5">
@@ -215,12 +224,12 @@
       </div>
     </section>
     <section class="container px15 pt50 pb35 cl-accent details-mobile">
-      <h2 class="h3 m0 mb10 helvetica lh20 details-title-mobile">
+      <h2 class="h3 m0 mb10 helvetica lh20 details-title-mobile col-xs-12">
         {{ $t('Product details') }}
       </h2>
       <div class="h4 details-wrapper-mobile" :class="{'details-wrapper-mobile--open': detailsOpen}">
         <div class="row between-md m0">
-          <div class="col-xs-12 col-sm-6">
+          <div class="col-xs-12 col-sm-12">
             <div class="lh30 h5" v-html="getCurrentProduct.description" />
           </div>
           <div class="col-xs-12 col-sm-5">
@@ -582,10 +591,14 @@ $more-background: color(rgb(242, 242, 242));
 }
 .product-quantity-container {
     margin-bottom: -6px;
+    padding-left: 0px;
   }
 @media (min-width: 767px) {
   .details-mobile {
     display: none;
+  }
+  .product-details {
+    padding-left: 0px;
   }
 }
 // .add-to-cart-button {
@@ -676,7 +689,18 @@ $more-background: color(rgb(242, 242, 242));
     }
   }
 }
-
+.column {
+  float: left;
+  width: 33.33%;
+  color: #aaaaaa;
+  text-align: center;
+}
+.column-100 {
+  float: left;
+  width: 100%;
+  color: #aaaaaa;
+  text-align: center;
+}
 .breadcrumbs {
   @media (max-width: 767px) {
     margin: 0px 0px 10px;
@@ -728,6 +752,9 @@ $more-background: color(rgb(242, 242, 242));
   cursor: pointer;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
 .add-to-cart > .qty {
   font-size: 16px;
   font-weight: 900;
@@ -822,7 +849,7 @@ $more-background: color(rgb(242, 242, 242));
 }
 
 .details-title {
-  padding: 0 8px;
+  // padding: 0 8px;
 
   @media (max-width: 767px) {
     display: none;

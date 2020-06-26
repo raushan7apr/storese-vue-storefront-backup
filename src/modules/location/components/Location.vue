@@ -26,7 +26,7 @@
         </button>
       </div>
       <div class="pt-10">
-        <span class="error-message">{{ errorMessage }}</span>
+        <span class="error-message h5">{{ errorMessage }}</span>
       </div>
       <div class="loc-footer-wrap">
         <span>Now delivering in Delhi, Mumbai, Kolkata, Bengaluru, Indore, and Mysuru</span>
@@ -402,7 +402,7 @@ export default {
     z-index: 9999;
     background-color: #fff;
     padding: 1rem;
-    width: 300px;
+    width: 330px;
     height: 175px;
     justify-content: center;
     align-items: center;

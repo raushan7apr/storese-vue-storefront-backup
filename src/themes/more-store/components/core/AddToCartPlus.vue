@@ -1,10 +1,10 @@
 <template>
-  <span class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0" @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
+  <div class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0" @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
     Add
-  </span>
-  <span v-else @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
+  </div>
+  <div v-else @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
     +
-  </span>
+  </div>
 </template>
 
 <script>
@@ -109,12 +109,13 @@ export default {
 <style lang="scss" scoped>
 
   .add-to-cart-button {
+    width: 100%;
     color: #fff;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    margin: 4px 2px;
+    // margin: 4px 2px;
     border-radius: 5px;
     padding-bottom: 5px;
   }

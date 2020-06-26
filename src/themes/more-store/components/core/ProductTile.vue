@@ -77,7 +77,7 @@
     <div class="qty-container">
 
       <div class="add-to-cart add-button" v-if="cartQuantity(product, productsInCart) === 0">
-        <div class="increase">
+        <div class="column-100 cursor-pointer">
           <add-to-cart-plus
             :product="product"
           >
@@ -85,13 +85,13 @@
         </div>
       </div>
       <div class="add-to-cart" v-else>
-        <div @click="updateProductQty(product, productsInCart)" class="decrease">
+        <div @click="updateProductQty(product, productsInCart)" class="column cursor-pointer">
           -
         </div>
-        <div class="qty">
+        <div class="column">
           {{ cartQuantity(product, productsInCart) }}
         </div>
-        <div class="increase">
+        <div class="column cursor-pointer">
           <add-to-cart-plus
             :product="product"
           >
@@ -388,7 +388,7 @@ $color-white: color(white);
     display: none;
   }
   .product-details-container {
-    min-height: 120px;
+    min-height: 90px;
   }
 }
 @media (max-width: 767px) {
@@ -433,7 +433,19 @@ $color-white: color(white);
     margin-right: 10px;
     z-index: 999;
   }
-  }
+}
+.column {
+  float: left;
+  width: 33.33%;
+  color: #aaaaaa;
+  text-align: center;
+}
+.column-100 {
+  float: left;
+  width: 100%;
+  color: #aaaaaa;
+  text-align: center;
+}
 .product-cover {
   overflow: hidden;
 

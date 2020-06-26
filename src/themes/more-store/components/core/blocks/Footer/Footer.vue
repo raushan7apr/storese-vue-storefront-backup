@@ -2,11 +2,11 @@
   <footer :class="{ 'brdr-top-1 brdr-cl-secondary': isCheckoutPage }">
     <!-- <newsletter class=" flex brdr-bottom-1 brdr-cl-secondary" v-if="!isCheckoutPage" /> -->
     <div
-      class="footer-links flex pt30 pb60 px40 bg-cl-secondary"
+      class="footer-links flex pt30 pb60 bg-cl-secondary"
       v-if="!isCheckoutPage"
     >
       <div class="container-fluid">
-        <div class="row m0 center-xs between-md">
+        <div class="row m0 between-md">
           <div
             class="row m0 col-xs-12 between-md between-xs"
           >
