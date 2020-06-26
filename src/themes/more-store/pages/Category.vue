@@ -5,6 +5,7 @@
         <breadcrumbs />
       </div>
     </header>
+    <img v-if="getCategoryBanner" v-bind:src="getCategoryBanner" class="m10 category-image-banner">
     <div class="container-fluid pb60 bgd1d1d1 product-list-container">
       <div class="row m0">
         <div class="col-md-2 start-xs category-filters">
@@ -134,6 +135,11 @@ export default {
     isLazyHydrateEnabled () {
       return config.ssr.lazyHydrateFor.includes('category-next.products')
     },
+    getCategoryBanner () {
+      if (this.getCurrentCategory.image){
+      return('https://preprod-admin.storese.in/pub/media/catalog/category/' + this.getCurrentCategory.image)
+      }
+    },
     isCategoryEmpty () {
       return this.getCategoryProductsTotal === 0
     }
@@ -222,7 +228,14 @@ export default {
     // -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
     // -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
   }
+  .category-image-banner {
+    width: 100%;
+    height: auto;
+  }
   @media (max-width: 770px) {
+  .category-image-banner {
+    margin: 0px;
+  }
    .item-sort-by-container {
     //  background-color: transparent;
      margin:20px -8px 3px;
