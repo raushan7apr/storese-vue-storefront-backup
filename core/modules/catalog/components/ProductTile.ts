@@ -14,7 +14,7 @@ export const ProductTile = {
   data () {
     return {
       clicks: 0,
-      placeholder: '/assets/placeholder.jpg'
+      placeholder: '/assets/place_holder_2.png'
     }
   },
   computed: {
