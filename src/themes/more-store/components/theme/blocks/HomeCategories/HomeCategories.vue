@@ -85,10 +85,11 @@ export default {
         if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
           category.thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.thumbnail;
         }
-
-        for (var sub = 0; sub < category.children_count; sub++) {
-          if (category.children_data[sub].thumbnail) {
-            category.children_data[sub].thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.children_data[sub].thumbnail;
+        if(category.children_count>0){
+          for (var obj in category.children_data) {
+            if (obj.thumbnail) {
+              obj.thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + obj.thumbnail;
+            }
           }
         }
         return category.product_count > 0 && category.children_count > 0 && ( category.include_in_menu === 0  || category.include_in_menu === false )
