@@ -10,7 +10,7 @@
             @input="makeSearch"
             @blur="$v.search.$touch()"
             class="search-panel-input"
-            :placeholder="$t('Search product Here...')"
+            :placeholder="$t('Search')"
             type="search"
             autofocus="true"
             @click="open = true"
@@ -29,7 +29,7 @@
           v-for="product in visibleProducts"
           :key="product.id"
           :product="product"
-          @click.native="closeSearchpanel;open = false"
+          @click.native="closeSearchpanel;"
         />
         <transition name="fade">
           <div
@@ -93,6 +93,7 @@ export default {
     close (e) {
       if (!this.$el.contains(e.target)) {
         this.open = false;
+        this.search = ''
       }
     },
 
