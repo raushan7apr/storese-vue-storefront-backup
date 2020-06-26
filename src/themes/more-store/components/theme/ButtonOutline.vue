@@ -5,7 +5,6 @@
     class="button-outline no-outline py15 bg-cl-transparent h4 no-underline sans-serif fs-medium"
     :class="{
       light : color === 'light', 'brdr-white' : color === 'light', 'cl-white' : color === 'light',
-      dark : color === 'dark', 'brdr-darkgray' : color === 'dark', 'cl-secondary' : color === 'dark',
       px0 : link ? true : false,
       px40 : link ? false : true
     }"
