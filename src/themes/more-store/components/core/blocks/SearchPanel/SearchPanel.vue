@@ -16,7 +16,6 @@
             @click="open = true"
           >
           <i class="material-icons search-icon">search</i>
-          
         </div>
       </div>
     </div>
@@ -95,10 +94,6 @@ export default {
         this.open = false;
         this.search = ''
       }
-    },
-
-    closeSearch() {
-      console.log('clicked');
     }
   },
   computed: {
@@ -238,7 +233,7 @@ export default {
 
   .search-input-group {
     display: flex;
-    border-bottom: 1px solid #bdbdbd;
+    // border-bottom: 1px solid #bdbdbd;
   }
 
   .search-icon {
@@ -251,9 +246,9 @@ export default {
 
   .search-panel-input {
     width: 100%;
-    height: 60px;
+    max-height: 50px;
     padding-bottom: 0;
-    padding-top: 0;
+    padding-top: 8px;
     border: none;
     outline: 0;
     font-size: 18px;

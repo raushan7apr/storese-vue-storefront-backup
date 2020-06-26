@@ -702,15 +702,27 @@
         "level",
         "name",
         "image",
+        "thumbnail",
         "parent_id",
         "path",
         "position",
         "product_count",
+        "include_in_menu",
         "sku",
         "url_key",
         "url_path",
         "*.children_data.id",
-        "*.id"
+        "*.children_data.name",
+        "*.children_data.path",
+        "*.children_data.image",
+        "*.id",
+        "*.name",
+        "*.path",
+        "*.image",
+        "*.children_data.url_path",
+        "*.url_path",
+        "*.children_data.thumbnail",
+        "*.thumbnail"
       ],
       "excludeFields": [
         "sgn"

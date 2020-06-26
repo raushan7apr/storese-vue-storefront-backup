@@ -147,4 +147,21 @@ h1 {
     height: 200px;
   }
 }
+
+@media(max-width:767px) {
+  .main-slider {
+    max-height:150px!important;
+  }
+  .main-slider .container {
+    max-height:150px;
+  }
+}
+@media(max-width:422px) {
+  .main-slider {
+    height:130px;
+  }
+  .main-slider .container {
+    height:130px;
+  }
+}
 </style>

@@ -117,7 +117,7 @@
             </ul>
           </div>
           <div class="col-md-1">
-            <img @click="navBarCategoryToggle" class="dot-icon" width="36" src="https://www.svgrepo.com/show/124304/three-dots.svg">
+            <img @click="navBarCategoryToggle" class="dot-icon" width="27" src="https://www.svgrepo.com/show/124304/three-dots.svg">
           </div>
           <div class="col-md-3 col-xs-2">
             <div class="search-input-group">
@@ -193,7 +193,9 @@ export default {
     },
     visibleCategories () {
       return this.categories.filter(category => {
-        return category.product_count > 0 || category.children_count > 0
+        if (category.include_in_menu === 1 || category.include_in_menu === true) {
+          return category.product_count > 0 || category.children_count > 0
+        }
       })
     }
   },
@@ -259,13 +261,21 @@ $color-icon-hover: color(secondary, $colors-background);
 .cursor_pointer {
   cursor: pointer;
 }
-
+.search-and-category .col-md-1 {
+      border-right: 1px solid #f2f2f2;
+    max-width: 70px;
+    display: inline-block;
+    max-height: 50px;
+    margin-right: 20px;
+}
 .dot-icon {
-  margin: 20% auto;
-  display: block;
-  justify-content: center;
-  text-align: center;
-  cursor: pointer;
+      margin: 0 auto;
+    padding-top: 24%;
+    vertical-align: middle;
+    margin-bottom: 0px;
+    -ms-flex-pack: center;
+    justify-content: center;
+    cursor: pointer;
 }
 .large-screen {
   @media (max-width: 767px) {
@@ -328,7 +338,7 @@ $color-icon-hover: color(secondary, $colors-background);
     margin-block-start: 0.5rem;
     margin-block-end: 0.5rem;
     li {
-      padding: 15px 60px 16px 0px;
+      padding: 8px 60px 16px 0px;
     }
   }
 }
@@ -351,7 +361,7 @@ $color-icon-hover: color(secondary, $colors-background);
 
 .search-panel-input {
   width: 100%;
-  height: 60px;
+  max-height: 48px;
   padding-bottom: 0;
   padding-top: 0;
   border: none;
@@ -422,7 +432,7 @@ header {
 }
 
 .categories-bar {
-  border-right: 1px solid rgb(242, 242, 242);
+  // border-right: 1px solid rgb(242, 242, 242);
 }
 @media (max-width: 767px) {
   .row.middle-xs {
@@ -445,7 +455,7 @@ header {
 }
 
 .search-and-category {
-  height: 64px;
+  max-height: 50px;
     box-shadow: 0px 0px 10px #d7d7d7!important;
     margin: 0px 0;
     margin-top:0px;
@@ -459,7 +469,7 @@ header {
   }
  .categories-bar a.underline:after, a:not(.no-underline):hover:after {
    background:#f04e23;
-   top:-24px;
+   top:-18.4px;
    bottom:unset;
    height:4px;
    transition: all .6s ease-in-out;

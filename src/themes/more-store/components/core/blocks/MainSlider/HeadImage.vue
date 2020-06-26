@@ -116,4 +116,14 @@ export default {
     height: 200px;
   }
 }
+@media(max-width:767px) {
+   section.head-image {
+    height: 150px;
+  }
+}
+@media(max-width:422px) {
+  section.head-image {
+  height:130px;
+  }
+}
 </style>

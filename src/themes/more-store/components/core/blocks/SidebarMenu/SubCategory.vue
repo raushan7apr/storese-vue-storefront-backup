@@ -10,7 +10,7 @@
         class="brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary flex"
       >
         <router-link
-          class="px25 py20 cl-accent no-underline col-xs"
+          class="px25 py8 cl-accent no-underline col-xs"
           :to="categoryLink({ url_path: parentPath, slug: parentSlug })"
           data-testid="categoryLink"
         >
@@ -34,7 +34,7 @@
           />
           <router-link
             v-else
-            class="px25 py20 cl-accent no-underline col-xs"
+            class="px25 py8 cl-accent no-underline col-xs"
             :to="categoryLink(link)"
           >
             {{ link.name }}
@@ -61,7 +61,7 @@
         @click="notify(link.name)"
       >
         <router-link
-          class="px25 py20 cl-accent no-underline col-xs"
+          class="px25 py5 cl-accent no-underline col-xs"
           :to="localizedRoute(link.url)"
         >
           {{ link.name }}
@@ -70,7 +70,7 @@
       <li class="brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary flex">
         <a
           href="#"
-          class="px25 py20 cl-accent no-underline col-xs"
+          class="px25 py5 cl-accent no-underline col-xs"
           @click.prevent="logout"
         >
           {{ $t('Logout') }}
@@ -175,6 +175,9 @@ export default {
     transform: translateX(-100%);
   }
 
+.cl-accent {
+  color:#f04e23;
+}
   .subcategory-item {
     display: flex;
     width: 100%;
