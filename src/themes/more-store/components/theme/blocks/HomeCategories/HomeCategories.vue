@@ -8,7 +8,7 @@
       >
         <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
           <img v-if="category.image" v-bind:src="category.image" class="m10 offer-product-image">
-          <img v-else src="/assets/placeholder.svg" class="m10 offer-product-image" style="opacity: 0.4">
+          <img v-else src="/assets/place_holder_2.png" class="m10 offer-product-image" style="opacity: 0.4">
           <div class="category-name m0 h1">
             {{ category.name }}
           </div>
