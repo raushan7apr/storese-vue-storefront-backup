@@ -264,7 +264,7 @@ export default {
         }
         this.$ga.event('Continue_Checkout', 'click', JSON.stringify(gaData));
       }
-      this.toggleMicrocart()
+      this.$store.dispatch('ui/closeMicrocart')
       this.$store.commit('ui/setSidebar', false)
       this.addCouponPressed = false
     },
