@@ -17,7 +17,7 @@
             @click="closeMicrocartExtend(totals)"
             data-testid="closeMicrocart"
           >
-            <i class="material-icons back-icon cl-accent">
+            <i class="material-icons back-icon cl-accent mt2">
               keyboard_arrow_left
             </i>
           </button>
@@ -79,10 +79,10 @@
       <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
     </ul>
     <div v-if="productsInCart.length" class="summary px40 cl-accent helvetica">
-      <h3 class="m0 pb10 weight-400 summary-heading helvetica">
+      <!--<h3 class="m0 pb10 weight-400 summary-heading helvetica">
         {{ $t('Shopping summary') }}
-      </h3>
-      <div v-for="(segment, index) in totals" :key="index" class="helvetica row py10" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
+      </h3>-->
+      <!--<div v-for="(segment, index) in totals" :key="index" class="helvetica row py10" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
         <div class="col-xs">
           <div v-if="segment.code === 'shipping'">
             Shipping Fee
@@ -99,7 +99,7 @@
         <div v-if="segment.value != null" class="col-xs align-right">
           {{ segment.value | price(storeView) }}
         </div>
-      </div>
+      </div>-->
       <!-- <div class="row py20">
         <div v-if="OnlineOnly && !addCouponPressed" class="col-xs-12">
           <button
@@ -121,9 +121,12 @@
         </div>
       </div> -->
 
-      <div class="row pt30 pb20 weight-700 middle-xs" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">
-        <div class="col-xs h4 total-price-label">
+      <div class="row cart-total pt10 pb20 weight-700 middle-xs" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">
+        <!--<div class="col-xs h4 total-price-label">
           {{ segment.title }}
+        </div>-->
+        <div class="col-xs h4 total-price-label">
+          Cart Total
         </div>
         <div class="col-xs align-right h4 total-price-value">
           {{ segment.value | price(storeView) }}
@@ -132,10 +135,10 @@
     </div>
 
     <div
-      class="row py20 px40 middle-xs actions-footer"
+      class="row py20 px20 middle-xs actions-footer"
       v-if="productsInCart.length && !isCheckoutMode"
     >
-      <div class="col-xs-6 first-xs col-sm-6 end-sm">
+      <div class="col-xs-6 first-xs col-sm-6 first-sm">
         <button
           type="button"
           class="cart-button"
@@ -148,7 +151,7 @@
       <!-- <div class="col-xs-12 col-sm first-sm">
         <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
       </div> -->
-      <div class="col-xs-6 first-xs col-sm-6 end-sm">
+      <div class="col-xs-6 end-xs col-sm-6 end-sm">
         <button-full class="checkout-button"
           :link="{ name: 'checkout' }"
           @click.native="closeMicrocartExtend(totals)"
@@ -289,6 +292,19 @@ export default {
 
 <style lang="scss" scoped>
   @import "~theme/css/animations/transitions";
+  .mt2 {
+    @media (max-width: 767px) {
+      margin-top: 2px;
+    }
+  }
+
+  .cart-total {
+    @media (max-width: 767px) {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
   .helvetica {
     font-family: Helvetica;
   }
@@ -403,7 +419,7 @@ export default {
     font-size: 14px;
     margin: 4px 2px;
     border-radius: 5px;
-    border: 2px solid #fff;
+    border: 2px solid #f04d24cf;
   }
   .summary {
     @media (max-width: 767px) {
