@@ -6,9 +6,9 @@
     >
       <span
         class="price-original h3"
-      >Mrp. {{ price.original | price(storeView) }}</span>&nbsp;
+      >MRP. {{ price.original | price(storeView) }}</span>&nbsp;
       <span
-        class="h2 weight-700"
+        class="price-discount h2 weight-700"
       >{{ price.special | price(storeView) }}</span>
     </div>
     <div
@@ -95,6 +95,11 @@ export default {
 $color-primary: color(primary);
 .price-original {
   text-decoration: line-through;
+  color: #f04d24cf;
+}
+
+.price-discount {
+  color: #f04d24cf;
 }
 
 .helvetica {
