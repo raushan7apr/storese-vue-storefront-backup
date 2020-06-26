@@ -41,12 +41,12 @@
           </div>
         </div>
         <div class="col-xs-12 col-md-3 helvetica">
-          <div v-if="isOnline && product.totals">
+          <div class="color-f04d24cf" v-if="isOnline && product.totals">
             <span class="h4 cl-error" v-if="product.totals.discount_amount">{{ product.totals.row_total - product.totals.discount_amount + product.totals.tax_amount | price(storeView) }} </span>
             <span class="price-original h5" v-if="product.totals.discount_amount">{{ product.totals.row_total_incl_tax | price(storeView) }}</span>
             <span v-if="!product.totals.discount_amount" class="h4">{{ product.totals.row_total_incl_tax | price(storeView) }}</span>
           </div>
-          <div v-else>
+          <div class="color-f04d24cf" v-else>
             <span class="h4 cl-error" v-if="product.special_price">{{ product.price_incl_tax * product.qty | price(storeView) }} </span>
             <span class="price-original h5" v-if="product.special_price">{{ product.original_price_incl_tax * product.qty | price(storeView) }}</span>
             <span v-if="!product.special_price" class="h4">{{ product.price_incl_tax * product.qty | price(storeView) }}</span>
@@ -94,5 +94,9 @@ export default {
   }
   .blend {
     flex: 0 0 121px;
+  }
+
+  .color-f04d24cf {
+    color: #f04d24cf;
   }
 </style>

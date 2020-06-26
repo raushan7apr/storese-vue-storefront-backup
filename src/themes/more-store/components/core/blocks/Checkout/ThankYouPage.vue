@@ -14,11 +14,11 @@
         <div class="col-md-12">
           <div class="col-md-12 order-confirmation justify-content-center align-self-center">
             <img src="https://cdn.pixabay.com/photo/2017/01/13/01/22/ok-1976099_960_720.png" height="90">
-            <div> Thank you we've received your Order</div>
+            <div> Thank you, we've received your order</div>
           </div>
           <p class="order-number" v-if="OnlineOnly && lastOrderConfirmation.orderNumber" v-html="this.$t('The OrderNumber is {id}', { id: lastOrderConfirmation.orderNumber })" />
           <p class="order-receipt">
-            <i>A copy of the receipt has been sent to: {{ checkoutPersonalEmailAddress }}</i>
+            A copy of the receipt has been sent to: {{ checkoutPersonalEmailAddress }}
           </p>
         </div>
       </div>
@@ -26,7 +26,7 @@
         <div class="col-md-12 start-md">
           <p class="sub-title">Delivery Details</p>
           <p>{{ shipping.firstName }}  {{ shipping.lastName }}</p>
-          <p> Phone no: {{ shipping.phoneNumber }} </p>
+          <p>{{ shipping.phoneNumber }}</p>
           <p>
             {{ shipping.apartmentNumber }}, {{ shipping.streetAddress }},
             {{ shipping.city }}, {{ shipping.region_id }}, {{ shipping.zipCode }},
@@ -63,10 +63,10 @@
             <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
               Shipping Fee
             </div>
-            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-8 col-xs-6 start-md content">
+            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-8 col-xs-6 start-md content weight-700">
               {{ segment.title }}
             </div>
-            <div class="pl20 col-md-3 col-xs-6 end-xs center-md content">
+            <div class="pl20 col-md-3 col-xs-6 end-xs center-md content weight-700">
               {{ segment.value | price(storeView) }}
             </div>
           </div>
@@ -76,6 +76,7 @@
         <button-outline
           color="dark"
           @click.native="$router.push(localizedRoute('/'))"
+          class="continue-shopping-button"
         >
           {{ $t('Continue shopping') }}
         </button-outline>
@@ -261,6 +262,13 @@ export default {
 </script>
 
 <style lang="scss">
+  .continue-shopping-button {
+    border-radius: 5px;
+    background-color: #f04d24cf;
+    border: 1px solid #f04d24cf;
+    color: #fff;
+  }
+
   .sub-title {
     font-weight: 600;
     font-size: 18px;
