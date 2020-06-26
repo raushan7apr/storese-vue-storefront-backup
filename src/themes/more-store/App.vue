@@ -62,9 +62,18 @@ export default {
       sessionStorage.setItem('regions', JSON.stringify(response.result.regions))
       sessionStorage.setItem('zipcodes', response.result.zipcodes)
       // loop through shipping methods and add
+      let method = {
+        method_title: 'Free shipping',
+        method_code: 'freeshipping',
+        carrier_code: 'freeshipping',
+        amount: 0,
+        price_incl_tax: 0,
+        default: true,
+        offline: true
+      }
       for (let i = 0; i < response.result.shipping_methods.length; i++) {
         if (response.result.shipping_methods[i].method_code === 'flatrate') {
-          let method = {
+          method = {
             method_title: response.result.shipping_methods[i].method_title,
             method_code: response.result.shipping_methods[i].method_code,
             carrier_code: response.result.shipping_methods[i].carrier_code,
@@ -73,20 +82,9 @@ export default {
             default: true,
             offline: true
           }
-          this.$store.dispatch('checkout/addShippingMethod', method, { root: true })
-        } else {
-          let method = {
-            method_title: 'Free shipping',
-            method_code: 'freeshipping',
-            carrier_code: 'freeshipping',
-            amount: 0,
-            price_incl_tax: 0,
-            default: true,
-            offline: true
-          }
-          this.$store.dispatch('checkout/addShippingMethod', method, { root: true })
         }
       }
+      this.$store.dispatch('checkout/addShippingMethod', method, { root: true })
     })
   },
   mounted () {
