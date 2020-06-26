@@ -9,7 +9,7 @@
             v-model="search"
             @input="makeSearch"
             @blur="$v.search.$touch()"
-            class="search-panel-input"
+            class="search-panel-input ml0 mr0"
             :placeholder="$t('Search product Here...')"
             type="search"
             autofocus="true"
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div v-if="open">
+    <div class="product-listing-border" v-if="open">
       <div v-if="visibleProducts.length && categories.length > 1" class="categories">
         <category-panel :categories="categories" v-model="selectedCategoryIds" />
       </div>
@@ -157,6 +157,17 @@ export default {
 @import "~theme/css/variables/grid";
 @import "~theme/css/variables/typography";
 
+  @media (min-width: 767px) {
+  .product-listing-border {
+    border: 3px solid #bdbdbd;
+    border-top: none;
+    padding: 5px;
+    border-radius: 0px 0px 5px 5px;
+    outline: none;
+    margin: 0px;
+    background: #fff;
+  }
+}
 .searchpanel {
   height: auto;
   width: 800px;
@@ -203,7 +214,7 @@ export default {
   }
 
   .product-listing {
-    background: #fff;
+    // background: #fff;
     // padding-top: 30px;
   }
 
