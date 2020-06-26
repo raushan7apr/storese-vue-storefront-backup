@@ -78,10 +78,10 @@
 
       <div class="add-to-cart add-button" v-if="cartQuantity(product, productsInCart) === 0">
         <div class="increase">
-          <add-to-cart-plus
+          <add-to-cart-plus-search
             :product="product"
           >
-          </add-to-cart-plus>
+          </add-to-cart-plus-search>
         </div>
       </div>
       <div class="add-to-cart" v-else>
@@ -92,10 +92,10 @@
           {{ cartQuantity(product, productsInCart) }}
         </div>
         <div class="increase">
-          <add-to-cart-plus
+          <add-to-cart-plus-search
             :product="product"
           >
-          </add-to-cart-plus>
+          </add-to-cart-plus-search>
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@ import { ProductTile } from '@vue-storefront/core/modules/catalog/components/Pro
 import config from 'config'
 import ProductImage from './ProductImage'
 import AddToCart from 'theme/components/core/AddToCart.vue'
-import AddToCartPlus from 'theme/components/core/AddToCartPlus.vue'
+import AddToCartPlusSearch from 'theme/components/core/AddToCartPlusSearch.vue'
 import AddToWishlist from 'theme/components/core/blocks/Wishlist/AddToWishlist'
 import AddToCompare from 'theme/components/core/blocks/Compare/AddToCompare'
 import { IsOnWishlist } from '@vue-storefront/core/modules/wishlist/components/IsOnWishlist'
@@ -121,7 +121,7 @@ export default {
   mixins: [ProductTile, IsOnWishlist, IsOnCompare, Product],
   components: {
     AddToCart,
-    AddToCartPlus,
+    AddToCartPlusSearch,
     ProductImage,
     AddToWishlist,
     AddToCompare

@@ -27,7 +27,7 @@ export const Search = {
     }
   },
   beforeDestroy () {
-    localStorage.setItem(`shop/user/searchQuery`, this.search ? this.search : '');
+    localStorage.setItem(`shop/user/searchQuery`, '');
   },
   methods: {
     onEscapePress () {
