@@ -5,7 +5,8 @@
         <breadcrumbs />
       </div>
     </header>
-    <img v-if="getCategoryBanner" v-bind:src="getCategoryBanner" class="m10 category-image-banner">
+    <!-- <img v-if="getCategoryBanner" v-bind:src="getCategoryBanner" class="m10 category-image-banner"> -->
+    <img v-if="getCategoryBanner" src="https://preprod-admin.storese.in/pub/media/catalog/category/Cooking_Ess_Wide_range_Sub.jpg" class="m10 category-image-banner">
     <div class="container-fluid pb60 bgd1d1d1 product-list-container">
       <div class="row m0">
         <div class="col-md-2 start-xs category-filters">
