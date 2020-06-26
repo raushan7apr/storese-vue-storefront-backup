@@ -7,12 +7,44 @@
         :key="index"
       >
         <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
+          <img v-if="category.image" v-bind:src="category.image" class="mb10 offer-product-image">
+          <img v-else src="/assets/placeholder.svg" class="mb10 offer-product-image" style="opacity: 0.4">
+          <div class="category-name m0 h1">
+            {{ category.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+      <div
+        class=""
+        v-for="(category, index) in ChildrenCategory"
+        :key="index"
+      >
+        <img v-if="category.image" v-bind:src="category.image" class="mb10 category-banner">
+       
+         <img v-else src="/assets/placeholder.svg" class="mb10 category-banner" style="opacity: 0.4">
+        
+        <div class="row product_bottom">
+        <div
+          class="col-xs-4 col-sm-4 col-md-4"
+          v-for="(children_category, index) in category.children_data"
+          :key="index"
+        >
+          <div @click="categoryRedirect(children_category)" class="offer offer-product border-box flex">
+            <img v-if="children_category.thumbnail" v-bind:src="children_category.thumbnail" class="mb10 offer-product-image">
+            <img v-else src="/assets/placeholder.svg" class="mb10 offer-product-image" style="opacity: 0.4">
+            <div class="category-name m0 h1">
+              {{ children_category.name }}
+            </div>
+          </div>
+        </div>
+        <!-- <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
           <img v-if="category.image" v-bind:src="category.image" class="m10 offer-product-image">
           <img v-else src="/assets/placeholder.svg" class="m10 offer-product-image" style="opacity: 0.4">
           <div class="category-name m0 h1">
             {{ category.name }}
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -36,10 +68,30 @@ export default {
   computed: {
     visibleCategories () {
       return this.categories.filter(category => {
-        if (category.image) {
+        if (category.image && category.image.indexOf('http') === -1) {
           category.image = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.image;
         }
-        return category.product_count > 0 || category.children_count > 0
+        return category.product_count > 0 && category.children_count === 0 && category.include_in_menu === 0
+      })
+    },
+    ChildrenCategory () {
+      return this.categories.filter(category => {
+        if (category.image && category.image.indexOf('http') === -1) {
+          category.image = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.image;
+        }
+        if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
+          category.thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.thumbnail;
+        }
+
+        for (var sub = 0; sub < category.children_count; sub++) {
+          if (category.children_data[sub].thumbnail) {
+            category.children_data[sub].thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.children_data[sub].thumbnail;
+            console.log(category.children_data[sub].thumbnail);
+          }
+          console.log(category.children_data[sub].thumbnail);
+        }
+        console.log(category);
+        return category.product_count > 0 && category.children_count > 0  && category.include_in_menu === 0
       })
     }
   },
@@ -77,6 +129,12 @@ export default {
     @media (max-width: 767px) {
       height: 16px;
     }
+  }
+  .mb10 {
+    margin-bottom:10px;
+  }
+  .product_bottom {
+      margin-bottom:25px;
   }
 
   .bg-d1d1d1 {
@@ -142,14 +200,25 @@ export default {
     }
   }
   .offer-product-image {
+    object-fit: cover;
     height: 132px;
     width: 132px;
     @media (max-width: 767px) {
     height: 115px;
     width: 115px;
+    object-fit: cover;
+    }
+  }
+  .category-banner {
+    // height: 300px;
+     max-width: 100%;
+    @media (max-width: 767px) {
+    // height: 115px;
+    // width: 115px;
     }
   }
   .offer-product {
+    padding:15px;
     height: 180px;
     background-position: 50% 20%;
 

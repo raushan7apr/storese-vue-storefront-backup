@@ -116,8 +116,8 @@ export default {
 
   .header-text {
     font: 600 20px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
-    color: #232d5f;
-    margin-top: 80px;
+    color: #f04c24;
+    margin-top: 50px;
     font-size: 28px;
     margin-bottom: -12px;
     text-transform: capitalize;
