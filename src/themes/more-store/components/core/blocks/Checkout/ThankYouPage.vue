@@ -43,11 +43,11 @@
         </div>
         
         <div class="col-md-12 start-md">
-          <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
+          <product v-for="product in myProducts" :key="product.server_item_id || product.id" :product="product" />
         </div>
 
-        <div v-if="productsInCart && productsInCart.length" class="col-md-12 start-md">
-          <div v-for="(segment, index) in totals" :key="index" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'" class="row">
+        <div v-if="myProducts && myProducts.length" class="col-md-12 start-md">
+          <div v-for="(segment, index) in myTotals" :key="index" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'" class="row">
             <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
               Shipping Fee
             </div>
@@ -59,7 +59,7 @@
             </div>
           </div>
 
-          <div v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'" class="row">
+          <div v-for="(segment, index) in myTotals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'" class="row">
             <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
               Shipping Fee
             </div>
@@ -176,7 +176,9 @@ export default {
   },
   data () {
     return {
-      feedback: ''
+      feedback: '',
+      myProducts: [],
+      myTotals: []
     }
   },
   computed: {
@@ -246,10 +248,15 @@ export default {
       })
     }
   },
-  destroyed () {
-    if (this.isThankYouPage) {
+  watch: {
+    isThankYouPage: function () {
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+      this.myProducts = this.productsInCart
+      this.myTotals = this.totals
       this.$store.dispatch('cart/clear', { sync: false }, { root: true })
     }
+  },
+  destroyed () {
     this.$store.dispatch('checkout/setThankYouPage', false)
   },
   components: {
