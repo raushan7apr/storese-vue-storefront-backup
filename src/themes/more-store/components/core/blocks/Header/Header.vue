@@ -293,7 +293,7 @@ $color-icon-hover: color(secondary, $colors-background);
   margin-left: -20px;
 }
 .bg-f04d24cf {
-  color: #f04d24cf;
+  color: #4d4d4d;
   font-weight: 600;
 }
 
@@ -314,20 +314,19 @@ $color-icon-hover: color(secondary, $colors-background);
 
 @media (max-width: 45em) {
   .minicart-count {
-    font-size: 12px;
-    background: #f04d24cf;
+        background: #f36f51;
     color: #fff;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: 5px;
-    padding-left: 9px;
-    padding-right: 9px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
     position: absolute;
-    right: 8px;
-    top: 26px;
+    right: 6px;
+    top: 36px;
+    padding: 2px;
+    width: 12px;
+    line-height: 13px;
+    height: 13px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    border-radius: 100%;
   }
 }
 .categories-bar {
@@ -403,7 +402,7 @@ header {
   }
 }
 .icon {
-  opacity: 0.6;
+  opacity:1;
   &:hover,
   &:focus {
     color: #30794a;

@@ -1,7 +1,7 @@
 <template>
   <section class="main-slider w-100 bg-cl-th-accent cl-white">
     <no-ssr>
-      <carousel :per-page="1" pagination-active-color="#ffffff" pagination-color="#e0e0e0">
+      <carousel :per-page="1" pagination-active-color="#ffffff" pagination-color="#4d4d4d" v-bind:autoplay="true" v-bind:loop="true">
         <slide v-for="(slide, index) in slides" :key="index">
           <div class="container w-100" v-lazy:background-image="slide.image">
             <div class="row middle-xs center-xs">
@@ -53,7 +53,7 @@ export default {
   mounted () {
     setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % (this.totalSlides)
-    }, 5000)
+    }, 4000)
   },
   created () {
     this.updateSliderData(sliderData)
