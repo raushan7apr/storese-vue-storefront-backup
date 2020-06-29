@@ -122,19 +122,7 @@ export default {
   height: 36px;
   border: 4px solid #f36e4d;
   border-radius: 15px;
-  margin-top: 8px;
-  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
-}
-.add-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 108px;
-  height: 36px;
-  border: 4px solid #f36e4d;
-  background: #f04d24cf;
-  border-radius: 15px;
-  margin-top: 8px;
+  // margin-top: 8px;
   box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
 }
 .add-to-cart > .decrease {
@@ -143,6 +131,7 @@ export default {
   padding-right: 12px;
   padding-top: 4px;
   margin-bottom: 4px;
+  width: 33.33%;
   cursor: pointer;
 }
 
@@ -158,6 +147,7 @@ export default {
   font-weight: 900;
   padding-left: 12px;
   margin-bottom: 2px;
+  width: 33.33%;
   cursor: pointer;
 }
 .base-input-number {

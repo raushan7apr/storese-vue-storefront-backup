@@ -1,5 +1,5 @@
 <template>
-  <div class="product-quantity">
+  <button class="product-quantity">
     <base-input-number
       :name="name"
       :value="value"
@@ -21,7 +21,7 @@
       ]"
     />
     <!--<spinner v-if="loading" />-->
-  </div>
+  </button>
 </template>
 
 <script>
