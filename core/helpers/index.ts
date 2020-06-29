@@ -120,7 +120,7 @@ export function baseFilterProductsQuery (parentCategory, filters = []) { // TODO
     .applyFilter({ key: 'status', value: { 'in': [0, 1] } }) /* 2 = disabled, 4 = out of stock */
 
   if (config.products.listOutOfStockProducts === false) {
-    searchProductQuery = searchProductQuery.applyFilter({ key: 'stock.is_in_stock', value: { 'eq': true } })
+    searchProductQuery = searchProductQuery.applyFilter({ key: 'stock.is_in_stock', value: { 'eq': true } }).applyFilter({ key: 'stock.saleable_qty', value: { 'gt': 0 } })
   }
   // Add available catalog filters
   for (let attrToFilter of filters) {
