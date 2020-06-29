@@ -87,7 +87,6 @@ import rootStore from '@vue-storefront/core/store';
 import { catalogHooksExecutors } from '@vue-storefront/core/modules/catalog-next/hooks'
 import { localizedRoute, currentStoreView } from '@vue-storefront/core/lib/multistore'
 import { htmlDecode } from '@vue-storefront/core/filters'
-import staticUrl from 'theme/resource/static-url.json'
 
 const THEME_PAGE_SIZE = 50
 
@@ -139,7 +138,7 @@ export default {
     },
     getCategoryBanner () {
       if (this.getCurrentCategory.image){
-      return(staticUrl.path[0].image_url + this.getCurrentCategory.image)
+      return(config.images.categoryBaseUrl + this.getCurrentCategory.image)
       }
     },
     isCategoryEmpty () {

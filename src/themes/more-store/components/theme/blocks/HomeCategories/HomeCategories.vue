@@ -54,7 +54,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/SidebarMenu/SidebarMenu';
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
-import staticUrl from 'theme/resource/static-url.json'
+import config from 'config'
 
 export default {
   name: 'HomeCategories',
@@ -70,10 +70,10 @@ export default {
     visibleCategories () {
       return this.categories.filter(category => {
         if (category.image && category.image.indexOf('http') === -1) {
-          category.image = staticUrl.path[0].image_url + category.image;
+          category.image = config.images.categoryBaseUrl + category.image;
         }
         if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
-          category.thumbnail = staticUrl.path[0].image_url + category.thumbnail;
+          category.thumbnail = config.images.categoryBaseUrl + category.thumbnail;
         }
         return category.product_count > 0 && category.children_count === 0 && category.include_in_menu === 0
       })
@@ -81,14 +81,18 @@ export default {
     ChildrenCategory () {
       return this.categories.filter(category => {
         if (category.image && category.image.indexOf('http') === -1) {
-          category.image = staticUrl.path[0].image_url + category.image;
+          category.image = config.images.categoryBaseUrl + category.image;
         }
         if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
-          category.thumbnail = staticUrl.path[0].image_url + category.thumbnail;
+          category.thumbnail = config.images.categoryBaseUrl + category.thumbnail;
         }
         if(category.children_count>0){
           category.children_data.forEach(function(item){
-              item.thumbnail = staticUrl.path[0].image_url + item.thumbnail;
+             if (item.thumbnail && item.thumbnail.indexOf('http') === -1) {
+              item.thumbnail = config.images.categoryBaseUrl + item.thumbnail;
+            }
+            // item.thumbnail = config.images.categoryBaseUrl + item.thumbnail
+            // item.thumbnail = item.thumbnail ? (config.images.categoryBaseUrl + item.thumbnail) : undefined
           });
         }
         return category.product_count > 0 && category.children_count > 0 && ( category.include_in_menu === 0  || category.include_in_menu === false )
