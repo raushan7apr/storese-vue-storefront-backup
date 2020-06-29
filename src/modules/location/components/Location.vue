@@ -248,6 +248,7 @@ export default {
         if (results && results.length) {
           this.locationSearch = results[0].formatted_address;
           this.locationValue = results[0].formatted_address;
+          this.getStores(lat, lng);
         }
       });
     },
