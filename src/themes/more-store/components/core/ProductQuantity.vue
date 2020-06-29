@@ -104,6 +104,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .product-quantity {
+  border: none;
+  text-transform: uppercase;
+  background-color: #fff;
+
   position: relative;
   margin-right: 18px;
   /deep/ .spinner {
