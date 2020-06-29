@@ -128,8 +128,11 @@
         <div class="col-xs h4 total-price-label">
           Cart Total
         </div>
-        <div class="col-xs align-right h4 total-price-value">
+        <!--<div class="col-xs align-right h4 total-price-value">
           {{ segment.value | price(storeView) }}
+        </div>-->
+        <div class="col-xs align-right h4 total-price-value">
+          {{ totals[0].value | price(storeView) }}
         </div>
       </div>
     </div>
