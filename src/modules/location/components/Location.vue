@@ -295,7 +295,9 @@ export default {
               this.showLocationWrap = false;
               this.preventBodyScroll(false);
             }
-            window.location.href = response.stores[0].storeAppUrl;
+            else{
+              window.location.href = response.stores[0].storeAppUrl;
+            }
             this.selectedAddress = this.locationValue;
           });
         } else {
