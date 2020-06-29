@@ -111,7 +111,7 @@
   "elasticsearch": {
     "httpAuth": "",
     "host": "/api/catalog",
-    "index": "vue_storefront_catalog",
+    "index": "vue_storefront_catalog_test_more_view",
     "min_score": 0.02,
     "csrTimeout": 5000,
     "ssrTimeout": 1000,
