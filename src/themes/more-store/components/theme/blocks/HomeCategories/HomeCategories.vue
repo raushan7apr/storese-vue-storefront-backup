@@ -54,6 +54,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/SidebarMenu/SidebarMenu';
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
+import staticUrl from 'theme/resource/static-url.json'
 
 export default {
   name: 'HomeCategories',
@@ -69,10 +70,10 @@ export default {
     visibleCategories () {
       return this.categories.filter(category => {
         if (category.image && category.image.indexOf('http') === -1) {
-          category.image = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.image;
+          category.image = staticUrl.path[0].image_url + category.image;
         }
         if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
-          category.thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.thumbnail;
+          category.thumbnail = staticUrl.path[0].image_url + category.thumbnail;
         }
         return category.product_count > 0 && category.children_count === 0 && category.include_in_menu === 0
       })
@@ -80,17 +81,15 @@ export default {
     ChildrenCategory () {
       return this.categories.filter(category => {
         if (category.image && category.image.indexOf('http') === -1) {
-          category.image = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.image;
+          category.image = staticUrl.path[0].image_url + category.image;
         }
         if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
-          category.thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.thumbnail;
+          category.thumbnail = staticUrl.path[0].image_url + category.thumbnail;
         }
         if(category.children_count>0){
-          for (var obj in category.children_data) {
-            if (obj.thumbnail) {
-              obj.thumbnail = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + obj.thumbnail;
-            }
-          }
+          category.children_data.forEach(function(item){
+              item.thumbnail = staticUrl.path[0].image_url + item.thumbnail;
+          });
         }
         return category.product_count > 0 && category.children_count > 0 && ( category.include_in_menu === 0  || category.include_in_menu === false )
       })
@@ -186,7 +185,7 @@ export default {
     }
 
     .subtitle {
-      font-family: 'Roboto', sans-serif;
+      font-family: Helvetica;
       @media (max-width: 767px) {
         background-color: rgba(255,255,255,0.4);
         padding: 0.5rem;

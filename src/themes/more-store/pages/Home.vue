@@ -115,7 +115,7 @@ export default {
 <style lang="scss" scoped>
 
   .header-text {
-    font: 600 20px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    font: 600 20px/1.35 Helvetica ;
     color: #f04c24;
     margin-top: 30px;
     font-size: 28px;

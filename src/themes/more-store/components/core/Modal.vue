@@ -9,7 +9,7 @@
       <!--        <div class="modal-center">-->
       <div class="modal-backdrop" @click="close" />
       <div class="modal-container bg-cl-primary" ref="modal-content" :style="style">
-        <header class="modal-header py25 px65 h1 serif weight-700 bg-cl-secondary" v-if="$slots.header">
+        <header class="modal-header py25 px65 h1 helvetica weight-700 bg-cl-secondary" v-if="$slots.header">
           <slot name="header" />
           <i
             slot="close"
@@ -122,7 +122,9 @@ export default {
 <style lang="scss" scoped>
 @import '~theme/css/base/global_vars';
 $z-index-modal: map-get($z-index, modal);
-
+.helvetica {
+  font-family: 'Helvetica';
+}
 .modal {
   position: fixed;
   top: 0;

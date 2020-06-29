@@ -19,11 +19,11 @@
         </div>
       </div>
     </div>
-    <div class="product-listing-border" v-if="open">
+    <div v-if="open">
       <div v-if="visibleProducts.length && categories.length > 1" class="categories">
         <category-panel :categories="categories" v-model="selectedCategoryIds" />
       </div>
-      <div class="product-listing row">
+      <div class="product-listing product-listing-border row">
         <product-list
           v-for="product in visibleProducts"
           :key="product.id"
@@ -210,8 +210,10 @@ export default {
   }
 
   .product-listing {
-    // background: #fff;
+    background: #fff;
     // padding-top: 30px;
+    margin-left: 0px; 
+    margin-right: 0px;
   }
 
   .product {
@@ -252,7 +254,8 @@ export default {
     border: none;
     outline: 0;
     font-size: 18px;
-    font-family: map-get($font-families, secondary);
+    font-family: Helvetica;
+    // font-family: "map-get($font-families, secondary)";
 
     @media #{$media-xs} {
       font-size: 16px;
