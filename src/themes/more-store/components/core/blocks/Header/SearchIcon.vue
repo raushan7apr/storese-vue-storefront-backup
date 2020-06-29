@@ -6,7 +6,8 @@
     @click="toggleSearchpanel"
     data-testid="openSearchPanel"
   >
-    <i class="material-icons">search</i>
+  <img src="/assets/search-icon.png" style="width:30px;"/>
+    <!-- <i class="material-icons">search</i> -->
   </button>
 </template>
 

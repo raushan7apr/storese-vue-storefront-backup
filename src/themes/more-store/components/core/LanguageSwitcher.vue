@@ -34,5 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  a.store-locale {
+    color:#808184;
+  }
 </style>

@@ -8,7 +8,7 @@
       >
         <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
           <img v-if="category.thumbnail" v-bind:src="category.thumbnail" class="mb10 offer-product-image">
-          <img v-else src="/assets/placeholder.svg" class="mb10 offer-product-image" style="opacity: 0.4">
+          <img v-else src="/assets/placeholder.svg" class="mb10 offer-product-image" style="opacity: 0.5">
           <div class="category-name m0 h1">
             {{ category.name }}
           </div>
@@ -16,13 +16,13 @@
       </div>
     </div>
       <div
-        class=""
+        class="banner_img"
         v-for="(category, index) in ChildrenCategory"
         :key="index"
       >
-        <img v-if="category.image" v-bind:src="category.image" class="mb10 category-banner">
+        <img v-if="category.image" v-bind:src="category.image" class="category-banner">
        
-         <img v-else src="/assets/placeholder.svg" class="mb10 category-banner" style="opacity: 0.4">
+         <img v-else src="/assets/placeholder.svg" class="category-banner" style="opacity: 0.5">
         
         <div class="row product_bottom">
         <div
@@ -121,10 +121,10 @@ export default {
 
 <style lang="scss" scoped>
   .category-name {
-    padding-top: 0px;
+        padding-top: 0px;
     font-size: 12px;
-    color: #f04e23;
-    font-weight: bold;
+    color: #4d4d4d;
+    
     margin-right: 5px;
     margin-left: 5px;
     // font-size: 16px;
@@ -132,13 +132,17 @@ export default {
     // font-weight: bold;
     @media (max-width: 767px) {
       height: 16px;
+      font-size:12px;
+      margin-right: -8px;
+    margin-left: -8px;
+    padding-top: 2px;
     }
   }
   .mb10 {
     margin-bottom:10px;
   }
   .product_bottom {
-      margin-bottom:25px;
+      //margin-bottom:25px;
   }
 
   .bg-d1d1d1 {
@@ -165,7 +169,7 @@ export default {
     opacity: 1;
     transition: 0.3s all;
     background-color: #fff;
-    margin: 8px -5px;
+    margin: 3.1px -5px;
     box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.08);
     border-radius: 3px;
     cursor: pointer;
@@ -219,6 +223,7 @@ export default {
     @media (max-width: 767px) {
     // height: 115px;
     // width: 115px;
+        margin: 14px 0px 7px;
     }
   }
   .offer-product {

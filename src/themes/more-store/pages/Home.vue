@@ -5,7 +5,7 @@
       <div class="row center-xs">
         <header class="col-md-12 start-xs">
           <div class="header-text">
-            {{ $t('Shop by Category') }}
+            <b>{{$t('Shop by')}}</b>  {{$t('Category') }}
           </div>
         </header>
         <home-categories />
@@ -115,8 +115,8 @@ export default {
 <style lang="scss" scoped>
 
   .header-text {
-    font: 600 20px/1.35 Helvetica ;
-    color: #f04c24;
+    font: 400 20px/1.35 Helvetica ;
+    color: #4d4d4d;
     margin-top: 30px;
     font-size: 28px;
     margin-bottom: -12px;
@@ -125,6 +125,9 @@ export default {
       margin-top: 20px;
       font-size: 20px;
     }
+  }
+  .header-text b {
+   
   }
 
   .bg-d1d1d1 {
