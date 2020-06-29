@@ -155,6 +155,7 @@ import { ProductOption } from '@vue-storefront/core/modules/catalog/components/P
 import { getThumbnailForProduct, getProductConfiguration } from '@vue-storefront/core/modules/cart/helpers'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import EditMode from './EditMode'
+import { notifications } from '@vue-storefront/core/modules/cart/helpers'
 
 export default {
   data () {
@@ -242,22 +243,59 @@ export default {
       this.updateVariant()
       this.closeEditMode()
     },
-    updateProductQty (qty) {
+    async updateProductQty (qty) {
       if (this.editMode) {
-        this.editModeSetQty(qty)
+        await this.editModeSetQty(qty)
         return
       }
 
-      this.updateQuantity(qty)
+      await this.updateQuantity(qty)
     },
     removeFromCart () {
       this.$store.dispatch('cart/removeItem', { product: this.product })
     },
-    updateQuantity (quantity) {
+    async updateQuantity (quantity) {
       if (quantity === 0) {
-        this.removeFromCart()
+        await this.removeFromCart()
+        if (this.$ga) {
+          this.$ga.event('Remove_From_Cart', 'click', JSON.stringify(this.gaData(this.product)));
+        }
+        return
       }
-      this.$store.dispatch('cart/updateQuantity', { product: this.product, qty: quantity })
+      const productMaxQuantity = await this.getQuantity(this.product)
+      if (productMaxQuantity && quantity <= productMaxQuantity) {
+        try {
+          let currentQty = this.productQty
+          await this.$store.dispatch('cart/updateQuantity', { product: this.product, qty: quantity })
+          if (quantity > currentQty) {
+            this.notifyUser(notifications.createNotification({ type: 'success', message: 'Product has been added to the Cart!!' }))
+          }
+          if(this.$ga) {
+            let gaData = this.gaData(this.product)
+            gaData.new_quantity = quantity;
+            gaData.old_quantity = currentQty;
+            this.$ga.event('Change_Quantity', 'click', JSON.stringify(gaData));
+          }
+        } catch (message) {
+          this.notifyUser(notifications.createNotification({ type: 'error', message }))
+        }
+      } else {
+        if (this.$ga) {
+          let gaData = {
+            product_name: this.product.name
+          }
+          this.$ga.event('Out_of_Stock', 'click', JSON.stringify(gaData));
+        }
+        this.notifyUser(notifications.outOfStock());
+      }
+    },
+    gaData(product) {
+      return {
+        product_name: product.name,
+        product_sku: product.sku,
+        product_price: product.original_price_incl_tax,
+        offer_price: product.special_price,
+      }
     },
     async getQuantity (product) {
       if (this.isStockInfoLoading) return // stock info is already loading
@@ -297,7 +335,10 @@ export default {
         this.maxQuantity = maxQuantity
         this.editModeSetFilters(filter)
       }
-    }
+    },
+    notifyUser (notificationData) {
+      this.$store.dispatch('notification/spawnNotification', notificationData, { root: true })
+    },
   },
   watch: {
     isOnline: {

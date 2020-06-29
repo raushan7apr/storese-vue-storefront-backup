@@ -49,9 +49,9 @@ export default {
             gaData.old_quantity = currentQuantity;
             this.$ga.event('Change_Quantity', 'click', JSON.stringify(gaData));
           }
-          // diffLog.clientNotifications.forEach(notificationData => {
-          //   this.notifyUser(notificationData)
-          // })
+          diffLog.clientNotifications.forEach(notificationData => {
+            this.notifyUser(notificationData)
+          })
         } catch (message) {
           this.notifyUser(notifications.createNotification({ type: 'error', message }))
         }
