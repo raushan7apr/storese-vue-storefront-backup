@@ -752,7 +752,7 @@ $more-background: color(rgb(242, 242, 242));
   font-weight: 900;
   padding-right: 12px;
   padding-top: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 7px;
   color: #000;
   cursor: pointer;
 }

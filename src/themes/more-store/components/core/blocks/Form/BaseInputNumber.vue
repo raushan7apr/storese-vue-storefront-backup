@@ -130,7 +130,7 @@ export default {
   font-weight: 900;
   padding-right: 12px;
   padding-top: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   width: 33.33%;
   cursor: pointer;
 }
