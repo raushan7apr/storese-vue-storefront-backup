@@ -29,16 +29,30 @@ export default {
       this.$forceUpdate()
     },
     async addToCart (product) {
-      if (this.$ga) {
-        this.$ga.event('Add_To_Cart', 'click', JSON.stringify(this.gaData(product)));
-      }
-      try {
-        const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
-        diffLog.clientNotifications.forEach(notificationData => {
-          this.notifyUser(notificationData)
-        })
-      } catch (message) {
-        this.notifyUser(notifications.createNotification({ type: 'error', message }))
+      const res = await this.$store.dispatch('stock/check', {
+        product: product,
+        qty: product.qty
+      })
+      if(maxQuantity > 0) {
+        try {
+          const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
+          if (this.$ga) {
+            this.$ga.event('Add_To_Cart', 'click', JSON.stringify(this.gaData(product)));
+          }
+          diffLog.clientNotifications.forEach(notificationData => {
+            this.notifyUser(notificationData)
+          })
+        } catch (message) {
+          this.notifyUser(notifications.createNotification({ type: 'error', message }))
+        }
+      } else {
+        if (this.$ga) {
+          let gaData = {
+            product_name: product.name
+          }
+          this.$ga.event('Out_of_Stock', 'click', JSON.stringify(gaData));
+        }
+        this.notifyUser(notifications.outOfStock());
       }
     },
     gaData(product) {
