@@ -2,7 +2,7 @@
   <component
     :is="compontentType"
     :to="redirectionLink"
-    class="button-outline no-outline py15 bg-cl-transparent h4 no-underline sans-serif fs-medium"
+    class="button-outline no-outline py15 bg-cl-transparent h4 no-underline helvetica fs-medium"
     :class="{
       light : color === 'light', 'brdr-white' : color === 'light', 'cl-white' : color === 'light',
       px0 : link ? true : false,
@@ -52,7 +52,9 @@ $black: color(black);
   border: 2px solid;
   height: 62px;
 }
-
+.helvetica {
+  font-family: Helvetica;
+}
 @media screen and (min-width: 900px) {
   .button-outline {
     border: 2px solid;

@@ -1184,6 +1184,7 @@
   "images": {
     "useExactUrlsNoProxy": false,
     "baseUrl": "https://vuefront.store-se.in/img/",
+    "categoryBaseUrl": "https://preprod-admin.storese.in/pub/media/catalog/category/",
     "useSpecificImagePaths": false,
     "paths": {
       "product": "/catalog/product"

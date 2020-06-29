@@ -11,16 +11,16 @@
         <table class="brdr-1 brdr-cl-bg-secondary">
           <thead>
             <tr>
-              <th class="serif lh20">
+              <th class="helvetica lh20">
                 {{ $t('Product Name') }}
               </th>
-              <th class="serif lh20">
+              <th class="helvetica lh20">
                 {{ $t('Price') }}
               </th>
-              <th class="serif lh20">
+              <th class="helvetica lh20">
                 {{ $t('Qty') }}
               </th>
-              <th class="serif lh20">
+              <th class="helvetica lh20">
                 {{ $t('Subtotal') }}
               </th>
             </tr>
@@ -109,6 +109,9 @@ export default {
 $color-tertiary: color(tertiary);
 $color-white-smoke: color(white-smoke);
 
+.helvetica {
+  font-family: Helvetica;
+}
 .modal {
   font-size: 18px;
 }

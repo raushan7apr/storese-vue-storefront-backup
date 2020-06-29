@@ -74,7 +74,7 @@
             v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
           >MRP : {{ product.price_incl_tax | price(storeView) }}</span>
     </div>
-    <div class="qty-container">
+    <button class="qty-container">
 
       <div class="add-to-cart add-button" v-if="cartQuantity(product, productsInCart) === 0">
         <div class="increase">
@@ -98,7 +98,7 @@
           </add-to-cart-plus-search>
         </div>
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -231,7 +231,10 @@ $color-white: color(white);
   display: flex;
   justify-content: center;
   /* border-top: 1px solid #e1e1e1;*/
-  margin-top: 8px;
+  // margin-top: 8px;
+  border: none;
+  text-transform: uppercase;
+  background-color: #fff;
 }
 
 .add-to-cart {
@@ -317,13 +320,13 @@ $color-white: color(white);
 }
 
 .product-name {
-  font: 500 14px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 500 14px/1.35 Helvetica;
   font-size: 16px;
 }
 
 .price {
   color: #f04d24cf;
-  font: 600 18px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 600 18px/1.35 Helvetica;
 }
 
 .product-details-container {
@@ -359,7 +362,7 @@ $color-white: color(white);
 }
 
   .product-name {
-    font: 500 14px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    font: 500 14px/1.35 Helvetica;
     font-size: 14px;
     text-align:left;
   }
@@ -383,7 +386,7 @@ $color-white: color(white);
     float: left;
     // margin-top: 5px;
     color: #f04d24cf;
-    font: 300 14px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    font: 300 14px/1.35 Helvetica;
     line-height: 6px;
   }
   .product-details-container {

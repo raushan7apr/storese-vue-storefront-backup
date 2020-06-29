@@ -138,7 +138,7 @@ export default {
     },
     getCategoryBanner () {
       if (this.getCurrentCategory.image){
-      return('https://preprod-admin.storese.in/pub/media/catalog/category/' + this.getCurrentCategory.image)
+      return(config.images.categoryBaseUrl + this.getCurrentCategory.image)
       }
     },
     isCategoryEmpty () {

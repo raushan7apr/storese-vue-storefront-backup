@@ -14,7 +14,7 @@
             <h2 class="title m0 h1">
               {{ banner.title }}
             </h2>
-            <p class="subtitle m0 serif h3 uppercase">
+            <p class="subtitle m0 helvetica h3 uppercase">
               {{ banner.subtitle }}
             </p>
           </div>
@@ -35,7 +35,7 @@
               <h2 class="title m0 h1">
                 {{ banner.title }}
               </h2>
-              <p class="subtitle m0 serif h3 uppercase">
+              <p class="subtitle m0 helvetica h3 uppercase">
                 {{ banner.subtitle }}
               </p>
             </div>
@@ -59,7 +59,7 @@
             <h2 class="title m0 h1">
               {{ banner.title }}
             </h2>
-            <p class="subtitle m0 serif h3 uppercase">
+            <p class="subtitle m0 helvetica h3 uppercase">
               {{ banner.subtitle }}
             </p>
           </div>
@@ -103,6 +103,9 @@ export default {
       padding-bottom: 0;
     }
   }
+  .helvetica {
+    font-family: Helvetica;
+  }
   .offer {
     height: 735px;
     display: flex;
@@ -133,7 +136,7 @@ export default {
     }
 
     .subtitle {
-      font-family: 'Roboto', sans-serif;
+      font-family: Helvetica;
       @media (max-width: 767px) {
         background-color: rgba(255,255,255,0.4);
         padding: 0.5rem;

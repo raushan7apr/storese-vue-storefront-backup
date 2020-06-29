@@ -6,7 +6,7 @@
         <input
           class="
             py10 w-100 border-box brdr-none brdr-bottom-1
-            brdr-cl-primary h4 sans-serif
+            brdr-cl-primary h4 helvetica
           "
           v-if="option.type === 'field'"
           type="text"
@@ -67,7 +67,9 @@ export default {
   $bg-secondary: color(secondary, $colors-background);
   $color-secondary: color(secondary);
   $color-error: color(error);
-
+  .helvetica {
+    font-family: Helvetica;
+  }
   .custom-option > label {
     font-weight: bold;
     margin-bottom: 10px;

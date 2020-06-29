@@ -68,7 +68,7 @@
               <button-full
                 @click.native="placeOrder"
                 data-testid="orderReviewSubmit"
-                class="submit-details place-order-btn no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+                class="submit-details place-order-btn no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium mt20 router-link-active no-underline pointer align-center border-box"
                 :disabled="$v.orderReview.$invalid"
               >
                 {{ $t('Place the order') }}

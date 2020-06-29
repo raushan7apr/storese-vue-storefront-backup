@@ -137,7 +137,7 @@
                   :custom-options="getCurrentCustomOptions"
                 />
               </div>
-              <div class="col-xs-12 product-quantity-container">
+              <button class="col-xs-12 product-quantity-container">
                 <!-- <product-quantity
                   class="row m0 mb35"
                   v-if="getCurrentProduct.type_id !== 'grouped' && getCurrentProduct.type_id !== 'bundle'"
@@ -181,7 +181,7 @@
                     />
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
             <!-- <div class="m0">
               <add-to-cart
@@ -592,6 +592,9 @@ $more-background: color(rgb(242, 242, 242));
 .product-quantity-container {
     margin-bottom: -6px;
     padding-left: 0px;
+    border: none;
+    text-transform: uppercase;
+    background-color: #fff;
   }
 @media (min-width: 767px) {
   .details-mobile {
@@ -693,6 +696,8 @@ $more-background: color(rgb(242, 242, 242));
   float: left;
   width: 33.33%;
   color: #aaaaaa;
+  height: 36px;
+  line-height: 36px;
   text-align: center;
 }
 .column-100 {
@@ -747,7 +752,7 @@ $more-background: color(rgb(242, 242, 242));
   font-weight: 900;
   padding-right: 12px;
   padding-top: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 7px;
   color: #000;
   cursor: pointer;
 }

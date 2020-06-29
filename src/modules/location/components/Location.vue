@@ -458,7 +458,7 @@ export default {
     line-height: 1.2;
     border-radius: 2px;
     font-size: 15px;
-    font-family: Rajdhani,sans-serif;
+    font-family: 'Helvetica';
     font-style: normal;
     font-weight: 500;
   }
@@ -530,7 +530,7 @@ export default {
     padding: 8px 15px;
     background-color: #DB5E32;
     color: #fff;
-    font-family: Rajdhani, sans-serif;
+    font-family: 'Helvetica';
     font-style: normal;
     font-weight: 700;
     text-transform: uppercase;

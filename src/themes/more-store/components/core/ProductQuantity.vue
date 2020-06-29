@@ -1,5 +1,5 @@
 <template>
-  <div class="product-quantity">
+  <button class="product-quantity">
     <base-input-number
       :name="name"
       :value="value"
@@ -21,7 +21,7 @@
       ]"
     />
     <!--<spinner v-if="loading" />-->
-  </div>
+  </button>
 </template>
 
 <script>
@@ -104,6 +104,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .product-quantity {
+  border: none;
+  text-transform: uppercase;
+  background-color: #fff;
+
   position: relative;
   margin-right: 18px;
   /deep/ .spinner {
