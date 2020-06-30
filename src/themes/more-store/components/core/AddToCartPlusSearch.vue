@@ -113,10 +113,12 @@ export default {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px;
+    font-size: 12px;
     margin: 4px 2px;
     border-radius: 5px;
-    padding-bottom: 5px;
+    padding-bottom: 4px;
+    font-weight: 600;
+    padding-left: 16px;
   }
 
 </style>
