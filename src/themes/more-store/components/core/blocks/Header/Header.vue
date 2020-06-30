@@ -298,18 +298,15 @@ $color-icon-hover: color(secondary, $colors-background);
 }
 
 .minicart-count {
-    font-size: 12px;
-    background-color: #f04d24cf;
+        font-size: 9px;
+    background-color: #f04d24;
     color: #fff;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: -40px;
-    padding-left: 9px;
-    padding-right: 9px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
-    margin-top:10px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: -49px;
+    border-radius: 100%;
+    margin-top: 9px;
 }
 
 @media (max-width: 45em) {

@@ -53,7 +53,7 @@ export default {
   mounted () {
     setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % (this.totalSlides)
-    }, 4000)
+    }, 16000)
   },
   created () {
     this.updateSliderData(sliderData)
