@@ -92,6 +92,7 @@ export default {
 }
 
 .right-sidebar {
+  margin-top: 35px;
   top: 0;
   right: 0;
   z-index: 4;
@@ -101,6 +102,7 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  background: #f5f5f5;
 }
 
 .left-sidebar{
