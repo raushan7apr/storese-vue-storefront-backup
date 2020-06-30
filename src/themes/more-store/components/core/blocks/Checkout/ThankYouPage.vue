@@ -374,6 +374,11 @@ export default {
   .continue-shopping {
     @media (max-width: 767px) {
       background-color: #EC6D34;
+      position: fixed;
+      bottom: 0;
+      display: block;
+      width: 100%;
+      z-index: 2;
     }
   }
 
