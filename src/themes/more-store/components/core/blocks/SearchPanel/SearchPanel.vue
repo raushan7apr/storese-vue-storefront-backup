@@ -3,6 +3,7 @@
     <div>
       <div>
         <div class="search-input-group">
+          <i class="material-icons left-icon" @click="closeSearch()">keyboard_arrow_left</i>
           <input
             ref="search"
             id="search"
@@ -89,6 +90,9 @@ export default {
     window.removeEventListener('click', this.close);
   },
   methods: {
+    closeSearch () {
+      this.$store.commit('ui/setSearchpanel', false)
+    },
     close (e) {
       if (!this.$el.contains(e.target)) {
         this.open = false;
@@ -153,7 +157,7 @@ export default {
 @import "~theme/css/variables/grid";
 @import "~theme/css/variables/typography";
 
-  @media (min-width: 767px) {
+@media (min-width: 767px) {
   .product-listing-border {
     border: 3px solid #bdbdbd;
     border-top: none;
@@ -163,15 +167,17 @@ export default {
     background: #fff;
   }
 }
+
 .searchpanel {
   height: auto;
-  width: 800px;
+  width: 100%;
   top: 0;
   right: 0;
   z-index: 3;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  background: #fff;
 
   .close-icon-row {
     display: flex;
@@ -222,7 +228,7 @@ export default {
     padding-right: map-get($grid-gutter-widths, lg) / 2;
 
     @media #{$media-xs} {
-      width: 50%;
+      width: 100%;
       padding-left: map-get($grid-gutter-widths, xs) / 2;
       padding-right: map-get($grid-gutter-widths, xs) * 3;
     }
@@ -238,11 +244,25 @@ export default {
   }
 
   .search-icon {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .left-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (min-width: 767px) {
+    .left-icon {
+      display: none;
+    }
   }
 
   .search-panel-input {
