@@ -116,39 +116,40 @@ export default {
 
 .add-to-cart {
   display: flex;
+  -ms-flex-pack: center;
   justify-content: center;
+  -ms-flex-align: center;
   align-items: center;
-  width: 108px;
-  height: 36px;
-  border: 4px solid #f36e4d;
-  border-radius: 15px;
-  // margin-top: 8px;
-  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
+  width: 65px;
+  height: 20px;
+  border: 1px solid #f04d24cf;
+  border-radius: 30px;
+  margin-top: 8px;
 }
 .add-to-cart > .decrease {
-  font-size: 24px;
-  font-weight: 900;
-  padding-right: 12px;
-  padding-top: 4px;
-  margin-bottom: 8px;
-  width: 33.33%;
+  font-size: 20px;
+  font-weight: 600;
+  padding-left: 2px;
+  padding-top: 0px;
+  margin-bottom: 2px;
   cursor: pointer;
+  color: #f57151;
 }
 
 .add-to-cart > .qty {
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 12px;
+  font-weight: 600;
   padding: 0px 8px 0px 8px;
-  color: #aaaaaa;
+  color: #4d4d4d;
 }
 
 .add-to-cart > .increase {
-  font-size: 24px;
-  font-weight: 900;
-  padding-left: 12px;
-  margin-bottom: 2px;
-  width: 33.33%;
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 2px;
+  margin-bottom: 0px;
   cursor: pointer;
+  color: #f57151;
 }
 .base-input-number {
   &__input {
