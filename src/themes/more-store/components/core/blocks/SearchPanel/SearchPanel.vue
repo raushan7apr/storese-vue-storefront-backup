@@ -3,7 +3,7 @@
     <div>
       <div>
         <div class="search-input-group">
-          <i class="material-icons left-icon" @click="closeSearch()">keyboard_arrow_left</i>
+          <i class="material-icons left-icon" @click="closeSearch()">arrow_back</i>
           <input
             ref="search"
             id="search"
@@ -13,7 +13,6 @@
             class="search-panel-input ml0 mr0"
             :placeholder="$t('Search')"
             type="search"
-            autofocus="true"
             @click="open = true"
           >
           <i class="material-icons search-icon">search</i>
@@ -143,7 +142,7 @@ export default {
   },
   mounted () {
     // add autofocus to search input field
-    this.$refs.search.focus()
+    this.$refs.search.click()
     // disableBodyScroll(this.$el)
   },
   destroyed () {
@@ -166,6 +165,10 @@ export default {
     margin: 0px;
     background: #fff;
   }
+}
+
+.search-input-group {
+  border-bottom: 1px solid #d1d2d3;
 }
 
 .searchpanel {
@@ -230,7 +233,7 @@ export default {
     @media #{$media-xs} {
       width: 100%;
       padding-left: map-get($grid-gutter-widths, xs) / 2;
-      padding-right: map-get($grid-gutter-widths, xs) * 3;
+      // padding-right: map-get($grid-gutter-widths, xs) * 3;
     }
   }
 
@@ -274,6 +277,7 @@ export default {
     outline: 0;
     font-size: 18px;
     font-family: Helvetica;
+    caret-color: #f57151;
     // font-family: "map-get($font-families, secondary)";
 
     @media #{$media-xs} {
