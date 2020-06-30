@@ -7,24 +7,26 @@
       >
         <sub-btn type="back" class="bg-cl-transparent brdr-none" />
       </div>
-      <div class="col-xs bg-cl-primary d-flex">
-      
-        <button
+      <div class="col-xs bg-cl-primary d-flex menu-header">
+        <div class="w-100 inline-flex bg-cl-transparent brdr-none p0 p15">
+           {{ $t('Categories') }}
+        </div>
+        <div
           type="button"
           :aria-label="$t('Close')"
           class="w-100 inline-flex end-xs bg-cl-transparent brdr-none p0 close-btn"
           @click="closeMenu"
         >
-          <i class="material-icons p15">close</i>
-        </button>
+          <i class="material-icons p15">highlight_off</i>
+        </div>
       </div>
     </div>
     <div class="sidebar-menu__container row" ref="container">
       <div class="col-xs-12 h4 helvetica">
         <ul class="p0 m0 relative sidebar-menu__list" :style="mainListStyles">
-          <li
+          <!-- <li
             @click="closeMenu"
-            class="brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary"
+            class="sidebar-element-home brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary"
           >
             <router-link
               class="block px25 8 cl-accent no-underline"
@@ -33,9 +35,30 @@
             >
               {{ $t('Home') }}
             </router-link>
-          </li>
-          <li
-            class="brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary flex"
+          </li> -->
+         <li @click="closeMenu" :key="category.slug" v-for="category in visibleCategories">
+          <div v-if="category.children_count > 0">
+          <sub-category-menu 
+            :category-links="category.children_data"
+            :id="category.id"
+            :parent-slug="category.slug"
+            :parent-path="category.url_path"
+            :title="category.name" height="h-24"/>
+          </div>
+          <div class="sidebar-element brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary" v-else >
+            <router-link
+                class="py8 cl-accent no-underline col-xs"
+                :to="categoryLink(category)"
+              >
+              <span class="bullets-container">&#8226; </span>
+              <span class="category-name-container">
+                {{ category.name }}
+             </span>
+            </router-link>
+          </div>
+        </li>
+          <!-- <li
+            class="sidebar-element brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary flex"
             :key="category.slug"
             @click="closeMenu"
             v-for="category in visibleCategories"
@@ -46,7 +69,7 @@
             >
               <sub-btn
                 v-if="category.children_count > 0"
-                class="bg-cl-transparent brdr-none fs-medium"
+                class="bg-cl-transparent brdr-none fs-medium helvetica"
                 :id="category.id"
                 :name="category.name"
               />
@@ -64,7 +87,7 @@
               :parent-slug="category.slug"
               :parent-path="category.url_path"
             />
-          </li>
+          </li> -->
           <!-- <li
             v-if="isCurrentMenuShowed"
             @click="closeMenu"
@@ -142,12 +165,14 @@ import i18n from '@vue-storefront/i18n'
 import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/SidebarMenu/SidebarMenu'
 import SubBtn from 'theme/components/core/blocks/SidebarMenu/SubBtn'
 import SubCategory from 'theme/components/core/blocks/SidebarMenu/SubCategory'
+import SubCategoryMenu from 'theme/components/core/blocks/SidebarMenu/SubCategoryMenu'
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 
 export default {
   components: {
     SubCategory,
+    SubCategoryMenu,
     SubBtn
   },
   mixins: [SidebarMenu],
@@ -201,7 +226,8 @@ export default {
     },
     visibleCategories () {
       return this.categories.filter(category => {
-        return (category.product_count > 0 || category.children_count > 0)  && ( category.include_in_menu === 1  || category.include_in_menu === true )
+        category.open = false;
+        return (category.product_count > 0 || category.children_count > 0) && ( category.include_in_menu === 1  || category.include_in_menu === true )
       })
     },
     isCurrentMenuShowed () {
@@ -227,6 +253,10 @@ export default {
         })
       }
     },
+    openSubMenu (category) {
+
+      category.open=true
+    },
     categoryLink (category) {
       return formatCategoryLink(category)
     }
@@ -242,10 +272,30 @@ $bg-secondary: color(secondary, $colors-background);
 $color-gainsboro: color(gainsboro);
 $color-matterhorn: color(matterhorn);
 $color-mine-shaft: color(mine-shaft);
+
 .helvetica {
   font-family: Helvetica;
 }
+.sidebar-element {
+  padding: 15px 0px 15px 15px;
+}
+.sidebar-element-home  {
+  padding: 15px 0px;
+}
+.menu-header {
+  background: #f04d24cf;
+  color: #fff;
+  font-weight: 500;
+  font-size: 24px;
+}
+.bullets-container {
+  font-size: 17px;
+}
+.category-name-container {
+
+}
 .sidebar-menu {
+  background: #fff;
   height: 100%;
   width: 90%;
   overflow: hidden;
@@ -274,28 +324,28 @@ $color-mine-shaft: color(mine-shaft);
   li {
     &:hover,
     &:focus {
-      background-color: $color-gainsboro;
+      // background-color: $color-gainsboro;
     }
     &.bg-cl-primary {
       &:hover,
       &:focus {
-        background-color: $bg-secondary;
+        // background-color: $bg-secondary;
       }
     }
     a {
-      color: #f04e23;
+      color: #000;
       font-size: 14px;
     }
   }
 
-  .subcategory-item {
-    display: flex;
-    width: 100%;
-  }
+  // .subcategory-item {
+  //   display: flex;
+  //   width: 100%;
+  // }
 
   button {
-    color: #f04e23;a {
-      color: #f04e23;
+    color: #000;a {
+      color: #000;
     }
   }
 

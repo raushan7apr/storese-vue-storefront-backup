@@ -10,7 +10,7 @@
         class="brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary flex"
       >
         <router-link
-          class="px25 py8 cl-accent no-underline col-xs"
+          class="px10 sidebar-sub-element cl-accent no-underline col-xs"
           :to="categoryLink({ url_path: parentPath, slug: parentSlug })"
           data-testid="categoryLink"
         >
@@ -18,7 +18,7 @@
         </router-link>
       </li>
       <li
-        class="brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary flex"
+        class="sidebar-sub-element brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary flex"
         :key="link.slug"
         v-for="link in children"
       >
@@ -34,7 +34,7 @@
           />
           <router-link
             v-else
-            class="px25 py8 cl-accent no-underline col-xs"
+            class="py8 cl-accent no-underline col-xs"
             :to="categoryLink(link)"
           >
             {{ link.name }}
@@ -174,12 +174,15 @@ export default {
     min-height: 100%;
     transform: translateX(-100%);
   }
-
+.sidebar-sub-element {
+  font-size: 14px;
+  padding: 15px 0px;
+}
 .cl-accent {
   color:#f04e23;
 }
-  .subcategory-item {
+  /* .subcategory-item {
     display: flex;
     width: 100%;
-  }
+  } */
 </style>

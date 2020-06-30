@@ -7,7 +7,7 @@
       :opacity="1"
     >
       <slot default>
-        <logo width="auto" height="256px" />
+        <logo width="auto" :height="height" />
       </slot>
     </loading>
     <component :is="layout">
@@ -37,6 +37,7 @@ export default {
     return {
       ordersData: [],
       isLoading: true,
+      height: '0px', 
       fullPage: true,
       defaultTitle: storeView.seo.defaultTitle ? storeView.seo.defaultTitle : config.seo.defaultTitle
     }
@@ -88,6 +89,12 @@ export default {
     })
   },
   mounted () {
+    if(screen.width<786){
+      this.height = '128px';
+    }
+    else{
+      this.height = '256px';
+    }
     document.onreadystatechange = () => { 
       if (document.readyState == "complete") { 
           this.isLoading = false
