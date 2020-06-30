@@ -109,7 +109,6 @@ export default {
   background-color: #fff;
 
   position: relative;
-  margin-right: 18px;
   /deep/ .spinner {
     position: absolute;
     top: 0;

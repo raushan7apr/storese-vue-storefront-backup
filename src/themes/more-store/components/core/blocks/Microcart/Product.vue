@@ -1,6 +1,6 @@
 <template>
-  <li class="row py10 bg-cl-white" :class="{ 'relative': editMode }">
-    <div class="mx10 w-100 py10 mb15 edit-mode flex between-xs middle-xs" v-if="editMode">
+  <li class="row py10 bg-cl-white list-item" :class="{ 'relative': editMode }">
+    <!--<div class="mx10 w-100 py10 mb15 edit-mode flex between-xs middle-xs" v-if="editMode">
       Edit mode
       <button class="brdr-none bg-cl-transparent" @click="closeEditMode">
         <span class="cl-accent">
@@ -9,14 +9,14 @@
           </i>
         </span>
       </button>
-    </div>
-    <div class="blend">
+    </div>-->
+    <div class="blend col-xs-4">
       <div>
         <product-image :image="image" />
       </div>
     </div>
-    <div class="col-xs flex flex-wrap">
-      <div class="flex flex-nowrap details">
+    <div class="col-xs-8 flex flex-wrap">
+      <div class="flex flex-nowrap details pr5">
         <div class="flex w-100 flex-wrap between-xs">
           <div class="full-width">
             <router-link
@@ -49,6 +49,7 @@
               {{ product.info | formatProductMessages }}
             </div> -->
 
+            {{ product.totals }}
             <div class="flex mr10 align-left start-xs between-sm prices">
               <div class="prices" v-if="!displayItemDiscounts || !isOnline">
                 <span class="h4 helvetica cl-error price-special" v-if="product.special_price">
@@ -75,6 +76,9 @@
               <div class="prices" v-else>
                 <span class="h5 helvetica price-regular">
                   {{ (product.regular_price || product.price_incl_tax) * product.qty | price(storeView) }}
+                </span>
+                <span class="h5 helvetica price-original" v-if="product.price != product.original_price">
+                  {{ (product.original_price || product.price_incl_tax) * product.qty | price(storeView) }}
                 </span>
               </div>
             </div>
@@ -129,10 +133,10 @@
           {{ $t('Update item') }}
         </button-full>
       </div>
-      <div class="w-100 flex middle-xs actions" v-if="!editMode">
+      <!--<div class="w-100 flex middle-xs actions" v-if="!editMode">
         <edit-button class="mx5" @click="openEditMode" v-if="productsAreReconfigurable && !editMode" />
         <remove-button class="mx5" @click="removeItem" />
-      </div>
+      </div>-->
     </div>
   </li>
 </template>
@@ -372,6 +376,10 @@ export default {
     flex: 0 0 150px;
   }
 
+  .list-item {
+    border-bottom: 1px solid #D0D2D3;
+  }
+
   .image {
     mix-blend-mode: multiply;
     vertical-align: top;
@@ -392,6 +400,8 @@ export default {
   }
 
   .name {
+    color: #4D4D4D;
+    opacity: 1;
     @media (max-width: 767px) {
       font-size: 14px;
     }
@@ -433,6 +443,10 @@ export default {
 
   .price-original {
     text-decoration: line-through;
+    color: #6D6E71;
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 12px;
   }
 
   input {
