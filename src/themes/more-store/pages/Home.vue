@@ -5,7 +5,7 @@
       <div class="row center-xs">
         <header class="col-md-12 start-xs">
           <div class="header-text">
-            <b>{{$t('Shop by')}}</b>  {{$t('Category') }}
+            <span class="sb_bold">{{$t('Shop by')}}</span>  {{$t('Category') }}
           </div>
         </header>
         <home-categories />
@@ -124,6 +124,7 @@ export default {
     @media (max-width: 767px) {
       margin-top: 20px;
       font-size: 20px;
+      margin-bottom:-18px;
     }
   }
   .header-text b {
@@ -138,5 +139,6 @@ export default {
     @media (max-width: 767px) {
       padding-top: 0;
     }
+   
   }
 </style>

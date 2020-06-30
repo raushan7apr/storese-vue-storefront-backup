@@ -135,7 +135,7 @@ export default {
       font-size:12px;
       margin-right: -8px;
     margin-left: -8px;
-    padding-top: 2px;
+    padding-top: 5px;
     }
   }
   .mb10 {
@@ -216,6 +216,9 @@ export default {
     width: 115px;
     object-fit: cover;
     }
+    @media(max-width:386px) {
+      max-width:100%;
+    }
   }
   .category-banner {
     // height: 300px;
@@ -223,11 +226,13 @@ export default {
     @media (max-width: 767px) {
     // height: 115px;
     // width: 115px;
-        margin: 14px 0px 7px;
+        
+    margin: 10px 0px 5px;
+
     }
   }
   .offer-product {
-    padding:15px;
+    padding:6px;
     height: 180px;
     background-position: 50% 20%;
 
@@ -243,6 +248,48 @@ export default {
   .subtitle {
     @media (max-width: 767px) {
       font-size: 18px;
+    }
+  }
+  @media(max-width:380px){
+    .category-name {
+          padding-top: 5px;
+    }
+    .header-text {
+      margin-top: 24px;
+    }
+   /* .offer-product {
+          height: 164px;
+    }*/
+    .offer-product-image {
+          max-height: 115px;
+    height: 100%;
+    width: 100%;
+    }
+  }
+
+  @media(max-width:374px) {
+    .category-name {
+      font-size:11px!important;
+    }
+    .offer-product {
+      height:161px;
+    }
+  }
+
+  @media(max-width:420px) {
+    
+    .offer-product {
+          height: 157px;
+    }
+    .category-name {
+      font-size: 11.7px!important;
+      overflow:hidden;
+      padding-top:1px;
+    }
+  }
+  @media(min-width:768px) {
+    .category-banner {
+      margin:20px 0px;
     }
   }
 </style>
