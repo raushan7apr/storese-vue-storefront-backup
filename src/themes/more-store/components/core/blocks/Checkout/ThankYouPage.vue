@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="thank-you-title bg-cl-secondary pt20">
+    <header class="thank-you-title hide-mobile bg-cl-secondary pt20">
       <div class="container pb15">
         <breadcrumbs
           :with-homepage="true"
@@ -13,66 +13,91 @@
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-12 order-confirmation justify-content-center align-self-center">
-            <img src="https://cdn.pixabay.com/photo/2017/01/13/01/22/ok-1976099_960_720.png" height="90">
-            <div> Thank you, we've received your order</div>
+            <img src="/assets/thank-you-tick.png" height="66">
+            <div class="thank-you-text mt5"> THANK YOU</div>
+            <div class="thank-you-text"> for shopping from More Megastore</div>
           </div>
-          <p class="order-number" v-if="OnlineOnly && lastOrderConfirmation.orderNumber" v-html="this.$t('The OrderNumber is {id}', { id: lastOrderConfirmation.orderNumber })" />
+          <p class="order-number" v-if="OnlineOnly && lastOrderConfirmation.orderNumber" >
+            ORDER ID #{{ lastOrderConfirmation.orderNumber }}
+          </p>
           <p class="order-receipt">
-            A copy of the receipt has been sent to: {{ checkoutPersonalEmailAddress }}
+            A copy of receipt sent to {{ checkoutPersonalEmailAddress }}
           </p>
         </div>
       </div>
       <div class="row center-md">
-        <div class="col-md-12 start-md">
-          <p class="sub-title">Delivery Details</p>
-          <p>{{ shipping.firstName }}  {{ shipping.lastName }}</p>
-          <p>{{ shipping.phoneNumber }}</p>
-          <p>
-            {{ shipping.apartmentNumber }}, {{ shipping.streetAddress }},
-            {{ shipping.city }}, {{ shipping.region_id }}, {{ shipping.zipCode }},
-            <span v-if="shipping.state">{{ shipping.state }}, </span>
-            <span>{{ getCountryName() }}</span>
-          </p>
-        </div>
-      </div>
-      <div class="row center-md">
-        <div class="col-md-12 start-md">
+        <div class="col-md-12 start-md mobile-bg-f7f7f7">
           <p class="sub-title">
-            Order Summary
+            Delivering to
+          </p>
+        </div>
+        <div class="col-md-12 start-md">
+          <p class="delivery-details">
+            <b>Address : </b><span v-if="shipping.apartmentNumber">{{ shipping.apartmentNumber }},</span> 
+            <span v-if="shipping.streetAddress">{{ shipping.streetAddress }},</span>
+            <span v-if="shipping.city">{{ shipping.city }},</span> 
+            <span v-if="shipping.state">{{ shipping.state }},</span> 
+            <span v-if="shipping.zipCode">{{ shipping.zipCode }}</span>
+          </p>
+          <p class="delivery-details">{{ shipping.firstName }} {{ shipping.lastName }} | {{ shipping.phoneNumber }}</p>
+          <!--<p>
+            <span>{{ getCountryName() }}</span>
+          </p>-->
+        </div>
+      </div>
+      <div class="row center-md">
+        <div class="col-md-12 start-md mobile-bg-f7f7f7">
+          <p class="sub-title">
+            Purchased Items
           </p>
         </div>
         
         <div class="col-md-12 start-md">
-          <product v-for="product in myProducts" :key="product.server_item_id || product.id" :product="product" />
+          <product v-for="product in myProducts" :key="product.server_item_id || product.id" :product="product" class="hide-mobile" />
+          <product-mobile v-for="product in myProducts" :key="product.server_item_id || product.id" :product="product" class="hide-desktop" />
+        </div>
+
+        <div class="col-md-12 start-md mobile-bg-f7f7f7">
+          <p class="sub-title">
+            Cart Details
+          </p>
         </div>
 
         <div v-if="myProducts && myProducts.length" class="col-md-12 start-md">
-          <div v-for="(segment, index) in myTotals" :key="index" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'" class="row">
-            <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
-              Shipping Fee
+          <div class="row cart-content">
+            <div v-if="myProducts.length == 1" class="col-md-8 col-xs-6 start-md content">
+              Cart Amount | {{ myProducts.length }} Item
             </div>
-            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-8 col-xs-6 start-md content">
-              {{ segment.title }}
+            <div v-else class="col-md-8 col-xs-6 start-md content">
+              Cart Amount | {{ myProducts.length }} Items
             </div>
-            <div v-if="segment.value != null && segment.title!='Cash on delivery'" class="pl20 col-md-3 col-xs-6 end-xs center-md content">
-              {{ segment.value | price(storeView) }}
+            <div class="pl20 col-md-3 col-xs-6 end-xs center-md content">
+              {{ myTotals[0].value | price(storeView) }}
             </div>
           </div>
 
-          <div v-for="(segment, index) in myTotals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'" class="row">
-            <div v-if="segment.code === 'shipping'" class="col-md-8 col-xs-6 start-md content">
-              Shipping Fee
+          <div class="row cart-content">
+            <div class="col-md-8 col-xs-6 start-md content">
+              Shipping Charge
             </div>
-            <div v-if="segment.code !== 'shipping' && segment.title!='Cash on delivery'" class="col-md-8 col-xs-6 start-md content weight-700">
-              {{ segment.title }}
+            <div v-if="myTotals[3].value && myTotals[3].value!=0" class="pl20 col-md-3 col-xs-6 end-xs center-md content">
+              {{ myTotals[3].value | price(storeView) }}
             </div>
-            <div class="pl20 col-md-3 col-xs-6 end-xs center-md content weight-700">
-              {{ segment.value | price(storeView) }}
+            <div v-else class="pl20 col-md-3 col-xs-6 end-xs center-md content">
+              Free
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-6 start-md content weight-700 font-color-E86026">
+              Grand total
+            </div>
+            <div class="pl20 col-md-3 col-xs-6 end-xs center-md content weight-700 font-color-E86026">
+              {{ myTotals[0].value + myTotals[3].value | price(storeView) }}
             </div>
           </div>
         </div>
       </div>
-      <p>
+      <div class="row continue-shopping">
         <button-outline
           color="dark"
           @click.native="$router.push(localizedRoute('/'))"
@@ -80,7 +105,7 @@
         >
           {{ $t('Continue shopping') }}
         </button-outline>
-      </p>
+      </div>
     </div>
     <!--<div class="thank-you-content align-justify py40 pl20">
       <div class="container">
@@ -152,6 +177,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import Product from './Product'
+import ProductMobile from './ProductMobile'
 import Composite from '@vue-storefront/core/mixins/composite'
 import Breadcrumbs from 'theme/components/core/Breadcrumbs'
 import BaseTextarea from 'theme/components/core/blocks/Form/BaseTextarea'
@@ -263,23 +289,92 @@ export default {
     BaseTextarea,
     Breadcrumbs,
     ButtonOutline,
-    Product
+    Product,
+    ProductMobile
   }
 }
 </script>
 
 <style lang="scss">
+  .hide-mobile {
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  .hide-desktop {
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  .mobile-bg-f7f7f7 {
+    @media (max-width: 767px) {
+      background-color: #f7f7f7;
+    }
+  }
+
+  .font-color-E86026 {
+    color: #E86026;
+  }
+
+  .thank-you-text {
+    @media (max-width: 767px) {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0px;
+      color: #4D4D4D;
+      opacity: 1;
+    }
+  }
+
+  .delivery-details {
+    @media (max-width: 767px) {
+      font-size: 14px;
+      color: #58595B;
+      opacity: 1;
+    }
+  }
+
+  .cart-content {
+    @media (max-width: 767px) {
+      font-size: 14px;
+      color: #58595B;
+      opacity: 1;
+    }
+  }
+
   .continue-shopping-button {
     border-radius: 5px;
     background-color: #f04d24cf;
     border: 1px solid #f04d24cf;
     color: #fff;
+    @media (max-width: 767px) {
+      color: #fff;
+      opacity: 1;
+      width: 100%;
+      text-transform: uppercase;
+      background-color: #EC6D34;
+      font-size: 14px;
+    }
   }
 
   .sub-title {
     font-weight: 600;
     font-size: 18px;
     color: #f04d24cf;
+    @media (max-width: 767px) {
+      color: #58595B;
+      margin: 12px 0px 6px 0px;
+      font-size: 14px;
+      background-color: #f7f7f7;
+    }
+  }
+
+  .continue-shopping {
+    @media (max-width: 767px) {
+      background-color: #EC6D34;
+    }
   }
 
   .content {
@@ -294,11 +389,19 @@ export default {
   .order-number {
     text-align: center;
     font-weight: 600;
-    margin: 0;
+    font-size: 12px;
+    margin: 0 0 3px 0;
+    letter-spacing: 0px;
+    color: #4D4D4D;
+    opacity: 1;
   }
   .order-receipt {
     text-align: center;
     font-size: 12px;
+    letter-spacing: 0px;
+    color: #4D4D4D;
+    opacity: 1;
+    margin-top: 0;
   }
   .thank-you-content {
     padding-left: 0;
