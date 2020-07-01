@@ -27,13 +27,19 @@
           </span>
         </div>
       </div>
-      <div class="col-xs end-xs hide-mobile">
+
+      <div class="col-xs end-xs">
+        <div class="amount-saved weight-600">
+          Saved <span class="rupee-sign">&#x20b9;</span>{{ amountSaved }}
+        </div>
+      </div>
+      <!--<div class="col-xs end-xs hide-mobile">
         <clear-cart-button
         class="py30"
         v-if="productsInCart.length"
         @click.native="clearCart"
       />
-      </div>
+      </div>-->
     </div>
     <!-- <div
       class="row py20 px40 middle-xs actions"
@@ -258,6 +264,13 @@ export default {
     }),
     storeView () {
       return currentStoreView()
+    },
+    amountSaved() {
+      let amountSaved = 0;
+      for(let product of this.productsInCart) {
+        amountSaved = amountSaved + (product.original_price - product.final_price)*product.qty
+      }
+      return amountSaved
     }
   },
   methods: {
@@ -333,6 +346,23 @@ export default {
 
   .pay {
     background-color: #E86026;
+  }
+
+  .amount-saved {
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    background-color: #E86026;
+    color: #FFFFFF;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-right: -2px;
+    margin-top: 17px;
+  }
+
+  .rupee-sign {
+    font-size: 10px;
   }
 
   .hide-mobile {
