@@ -5,11 +5,11 @@
       v-if="initialPrice.special && price.default && price.original"
     >
       <span
-        class="price-original h3"
-      >MRP. {{ price.original | price(storeView) }}</span>&nbsp;
-      <span
         class="price-discount h2 weight-700"
       >{{ price.special | price(storeView) }}</span>
+      <span
+        class="price-original h3"
+      >{{ price.original | price(storeView) }}</span>&nbsp;
     </div>
     <div
       class="h2 weight-700"
@@ -95,11 +95,14 @@ export default {
 $color-primary: color(primary);
 .price-original {
   text-decoration: line-through;
-  color: #f04d24cf;
+  color: #4d4d4d;
+  font-size: 18px;
+  font-weight: 300;
 }
 
 .price-discount {
   color: #f04d24cf;
+  font-size: 18px;
 }
 
 .helvetica {

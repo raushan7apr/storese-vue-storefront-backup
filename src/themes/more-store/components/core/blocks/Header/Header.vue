@@ -84,7 +84,7 @@
             </div>
           </div>
           <div class="col-xs-8 center-xs">
-            <div v-if="!isCategoryPage">
+            <div v-if="!isCategoryPage || isProductPage">
               <logo width="auto" height="60px" />
             </div>
             <div v-else>

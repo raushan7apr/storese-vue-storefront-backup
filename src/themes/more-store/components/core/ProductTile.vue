@@ -432,7 +432,8 @@ $color-white: color(white);
     color: #4d4d4d;
     font: 300 14px/1.35 Helvetica;
     line-height: 6px;
-    padding-top: 6px;
+    position: relative;
+    bottom: -6px;
   }
   .price-special {
     color: #f04d24cf;
@@ -451,6 +452,8 @@ $color-white: color(white);
     // margin-top: -10px;
     // margin-right: 10px;
     z-index: 999;
+    position: relative;
+    bottom: 0px;
   }
 }
 .column {

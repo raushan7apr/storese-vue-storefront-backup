@@ -1,16 +1,16 @@
 <template>
   <div id="product" class="product-page">
-    <header class="bg-cl-secondary product-page-header">
+    <!-- <header class="bg-cl-secondary product-page-header">
       <div class="container-fluid">
         <breadcrumbs />
       </div>
-    </header>
+    </header> -->
     <section class="bg-cl-secondary px20 product-top-section">
       <div class="container-fluid">
         <section class="row m0 between-xs bg-cl-white shadow-box">
           <div class="col-xs-12 data product-mobile-view">
             <div
-              class="mb20 mt20 product-name"
+              class="mb10 mt10 product-name"
               data-testid="productName"
             >
               {{ getCurrentProduct.name | htmlDecode }}
@@ -136,52 +136,52 @@
                   :product="getCurrentProduct"
                   :custom-options="getCurrentCustomOptions"
                 />
+                <button class="col-xs-6 product-quantity-container">
+                  <!-- <product-quantity
+                    class="row m0 mb35"
+                    v-if="getCurrentProduct.type_id !== 'grouped' && getCurrentProduct.type_id !== 'bundle'"
+                    v-model="getCurrentProduct.qty"
+                    :max-quantity="maxQuantity"
+                    :loading="isStockInfoLoading"
+                    :is-simple-or-configurable="isSimpleOrConfigurable"
+                    :show-quantity="manageQuantity"
+                    :check-max-quantity="manageQuantity"
+                    @error="handleQuantityError"
+                  />
+                  -->
+                  <div class="add-to-cart add-button" :disabled="isAddToCartDisabled" v-if="cartQuantity(getCurrentProduct, productsInCart) === 0">
+                    <div class="column-100 cursor-pointer increase">
+                      <add-to-cart-plus
+                        :product="getCurrentProduct"
+                      >
+                      </add-to-cart-plus>
+                    </div>
+                  </div>
+                  <div class="add-to-cart" v-else>
+                    <!-- <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease">
+                      -
+                    </div>
+                    <div class="qty">
+                      {{ cartQuantity(getCurrentProduct, productsInCart) }}
+                    </div>
+                    <div class="increase">
+                      <add-to-cart-plus
+                        :product="getCurrentProduct"
+                      >
+                      </add-to-cart-plus>
+                    </div> -->
+                    <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease column cursor-pointer">-</div>
+                    <div class="column qty">
+                      {{ cartQuantity(getCurrentProduct, productsInCart) }}
+                    </div>
+                    <div class="increase column cursor-pointer increase">
+                      <add-to-cart-plus
+                        :product="getCurrentProduct"
+                      />
+                    </div>
+                  </div>
+                </button>
               </div>
-              <button class="col-xs-12 product-quantity-container">
-                <!-- <product-quantity
-                  class="row m0 mb35"
-                  v-if="getCurrentProduct.type_id !== 'grouped' && getCurrentProduct.type_id !== 'bundle'"
-                  v-model="getCurrentProduct.qty"
-                  :max-quantity="maxQuantity"
-                  :loading="isStockInfoLoading"
-                  :is-simple-or-configurable="isSimpleOrConfigurable"
-                  :show-quantity="manageQuantity"
-                  :check-max-quantity="manageQuantity"
-                  @error="handleQuantityError"
-                />
-                 -->
-                <div class="m0 add-to-cart add-button add-to-cart-button no-outline button-full block w-100 px10 py20 ripple weight-400 h4 cl-white helvetica fs-medium col-xs-12 col-sm-4 col-md-6" :disabled="isAddToCartDisabled" v-if="cartQuantity(getCurrentProduct, productsInCart) === 0">
-                  <div class="column-100 cursor-pointer">
-                    <add-to-cart-plus
-                      :product="getCurrentProduct"
-                    >
-                    </add-to-cart-plus>
-                  </div>
-                </div>
-                <div class="add-to-cart add-to-cart-button no-outline button-full block w-100 px10 py20 ripple weight-400 h4 cl-white helvetica fs-medium col-xs-12 col-sm-4 col-md-6" v-else>
-                  <!-- <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease">
-                    -
-                  </div>
-                  <div class="qty">
-                    {{ cartQuantity(getCurrentProduct, productsInCart) }}
-                  </div>
-                  <div class="increase">
-                    <add-to-cart-plus
-                      :product="getCurrentProduct"
-                    >
-                    </add-to-cart-plus>
-                  </div> -->
-                  <div @click="updateProductQty(getCurrentProduct, productsInCart)" class="decrease column cursor-pointer">-</div>
-                  <div class="column">
-                    {{ cartQuantity(getCurrentProduct, productsInCart) }}
-                  </div>
-                  <div class="increase column cursor-pointer">
-                    <add-to-cart-plus
-                      :product="getCurrentProduct"
-                    />
-                  </div>
-                </div>
-              </button>
             </div>
             <!-- <div class="m0">
               <add-to-cart
@@ -582,7 +582,7 @@ $more-background: color(rgb(242, 242, 242));
 }
 
 .product-name {
-  font: 600 24px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 500 16px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
   color: #414b56;
   font-size: 36px;
   @media (max-width: 767px) {
@@ -590,12 +590,13 @@ $more-background: color(rgb(242, 242, 242));
   }
 }
 .product-quantity-container {
-    margin-bottom: -6px;
-    padding-left: 0px;
-    border: none;
-    text-transform: uppercase;
-    background-color: #fff;
-  }
+  margin-bottom: -6px;
+  padding-left: 0px;
+  border: none;
+  text-transform: uppercase;
+  background-color: #fff;
+  float: right;
+}
 @media (min-width: 767px) {
   .details-mobile {
     display: none;
@@ -719,61 +720,55 @@ $more-background: color(rgb(242, 242, 242));
   /* border-top: 1px solid #e1e1e1;*/
   margin-top: 8px;
 }
-
 .add-to-cart {
-  // margin: auto;
-  // width: 50%;
-  // padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 130px;
-  height: 55px;
-  border: 4px solid #f04d24cf;
-  border-radius: 15px;
-  margin-top: 8px;
+  width: 65px;
+  height: 25px;
+  border: 1px solid #f04d24cf;
+  border-radius: 30px;
+  margin-top: 15px;
+  // box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
 }
 .add-button {
-  // margin: auto;
-  // width: 50%;
-  // padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 130px;
-  height: 55px;
-  border: 4px solid #f04d24cf;
-  background: #f04d24cf;
-  border-radius: 15px;
-  margin-top: 8px;
+  width: 65px;
+  height: 25px;
+  border: 1px solid #f04d24cf;
+  background: #fff;
+  border-radius: 30px;
+  margin-top: 15px;
+  // box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
 }
 .add-to-cart > .decrease {
-  font-size: 24px;
-  font-weight: 900;
-  padding-right: 12px;
-  padding-top: 4px;
-  margin-bottom: 7px;
-  color: #000;
+  font-size: 20px;
+  font-weight: 600;
+  padding-left: 6px;
+  padding-top: 0px;
+  margin-bottom: 4px;
   cursor: pointer;
+  color: #f57151;
 }
-
 .cursor-pointer {
   cursor: pointer;
 }
 .add-to-cart > .qty {
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 12px;
+  font-weight: 600;
   padding: 0px 8px 0px 8px;
-  color: #aaaaaa;
+  color: #4d4d4d;
 }
 
 .add-to-cart > .increase {
-  font-size: 24px;
-  font-weight: 900;
-  padding-left: 12px;
-  margin-bottom: 2px;
-  color: #000;
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 6px;
+  margin-bottom: 0px;
   cursor: pointer;
+  color: #f57151;
 }
 .error {
   color: red;
@@ -782,17 +777,17 @@ $more-background: color(rgb(242, 242, 242));
 }
 .data {
   @media (max-width: 767px) {
-    border-bottom: 1px solid $bg-secondary;
+    // border-bottom: 1px solid $bg-secondary;
   }
 }
 @media (min-width: 767px) {
   .add-to-cart {
-    // float: right;
+    float: right;
   }
   .product-price-mobile {
     display: none;
   }
-.product-mobile-view {
+  .product-mobile-view {
     display: none;
   }
   .details-title-mobile {
@@ -801,7 +796,9 @@ $more-background: color(rgb(242, 242, 242));
 }
 .image {
   @media (max-width: 1023px) {
-    margin-bottom: 20px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $bg-secondary;
   }
 }
 
@@ -855,7 +852,6 @@ $more-background: color(rgb(242, 242, 242));
 
 .details-title {
   // padding: 0 8px;
-
   @media (max-width: 767px) {
     display: none;
     font-size: 18px;
