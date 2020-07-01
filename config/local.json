@@ -29,7 +29,7 @@
     ],
     "invalidateCacheKey": "aeSu7aip",
     "invalidateCacheForwarding": false,
-    "invalidateCacheForwardUrl": "https://vuefront.store-se.in/invalidate?key=aeSu7aip&tag=",
+    "invalidateCacheForwardUrl": "https://more-vue-prod.storese.in/invalidate?key=aeSu7aip&tag=",
     "dynamicConfigReload": true,
     "dynamicConfigContinueOnError": false,
     "dynamicConfigExclude": [
@@ -105,7 +105,7 @@
     "port": 8080
   },
   "api": {
-    "url": "https://vuefront.store-se.in",
+    "url": "https://more-vue-prod.storese.in",
     "saveBandwidthOverCache": true
   },
   "elasticsearch": {
@@ -1169,7 +1169,7 @@
     "endpoint": "/api/user",
     "history_endpoint": "/api/user/order-history?token={{token}}&pageSize={{pageSize}}&currentPage={{currentPage}}",
     "resetPassword_endpoint": "/api/user/reset-password",
-    "createPassword_endpoint": "https://vuefront.store-se.in/api/user/create-password",
+    "createPassword_endpoint": "https://more-vue-prod.storese.in/api/user/create-password",
     "changePassword_endpoint": "/api/user/change-password?token={{token}}",
     "login_endpoint": "/api/user/login",
     "create_endpoint": "/api/user/create",
@@ -1183,7 +1183,7 @@
   },
   "images": {
     "useExactUrlsNoProxy": false,
-    "baseUrl": "https://vuefront.store-se.in/img/",
+    "baseUrl": "https://more-vue-prod.storese.in/img/",
     "categoryBaseUrl": "https://preprod-admin.storese.in/pub/media/catalog/category/",
     "useSpecificImagePaths": false,
     "paths": {
@@ -1326,7 +1326,7 @@
   "razorpay" : {
     "method_code": "razorpay",
     "title": "Razorpay",
-    "endpoint": "https://vuefront.store-se.in/api/ext/payment-razorpay",
+    "endpoint": "https://more-vue-prod.storese.in/api/ext/payment-razorpay",
     "api_url": "https://checkout.razorpay.com/v1/checkout.js",
     "key": "rzp_test_9DP0EQp7MFfqzm",
     "keySecret": "eD8oFPOlLFGQK7vpZAFMfedu",
