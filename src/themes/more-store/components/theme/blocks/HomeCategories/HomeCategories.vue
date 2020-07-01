@@ -7,8 +7,11 @@
         :key="index"
       >
         <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
-          <img v-if="category.thumbnail" v-bind:src="category.thumbnail" class="mb10 offer-product-image">
-          <img v-else src="/assets/placeholder.svg" class="mb10 offer-product-image" style="opacity: 0.5">
+        
+          <img v-if="category.thumbnail" v-bind:src="category.thumbnail" class="offer-product-image cat_icon">
+          
+          
+          <img v-else src="/assets/placeholder.svg" class="offer-product-image cat_icon" style="opacity: 0.5">
           <div class="category-name m0 h1">
             {{ category.name }}
           </div>
@@ -20,10 +23,11 @@
         v-for="(category, index) in ChildrenCategory"
         :key="index"
       >
+       <div class="img_sub_banner_box">
         <img v-if="category.image" v-bind:src="category.image" class="category-banner">
        
          <img v-else src="/assets/placeholder.svg" class="category-banner" style="opacity: 0.5">
-        
+        </div>
         <div class="row product_bottom">
         <div
           class="col-xs-4 col-sm-4 col-md-4"
@@ -31,8 +35,8 @@
           :key="index"
         >
           <div @click="categoryRedirect(children_category)" class="offer offer-product border-box flex">
-            <img v-if="children_category.thumbnail" v-bind:src="children_category.thumbnail" class="mb10 offer-product-image">
-            <img v-else src="/assets/placeholder.svg" class="mb10 offer-product-image" style="opacity: 0.4">
+            <img v-if="children_category.thumbnail" v-bind:src="children_category.thumbnail" class="offer-product-image cat_icon">
+            <img v-else src="/assets/placeholder.svg" class="offer-product-image cat_icon" style="opacity: 0.4">
             <div class="category-name m0 h1">
               {{ children_category.name }}
             </div>
@@ -279,17 +283,26 @@ export default {
   @media(max-width:420px) {
     
     .offer-product {
-          height: 157px;
+              height: 147px;
     }
     .category-name {
-      font-size: 11.7px!important;
-      overflow:hidden;
-      padding-top:1px;
+      font-size: 11.7px !important;
+    overflow: hidden;
+    padding-top: 6px;
     }
   }
   @media(min-width:768px) {
     .category-banner {
       margin:20px 0px;
+    }
+  }
+
+  @media(max-width:767px) {
+    .img_sub_banner_box {
+        margin: 0px -5px!important;
+    }
+    .category-banner {
+        margin: 8px 0px 3px;
     }
   }
 </style>

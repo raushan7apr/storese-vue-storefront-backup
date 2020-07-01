@@ -122,14 +122,12 @@ export default {
     margin-bottom: -12px;
     text-transform: capitalize;
     @media (max-width: 767px) {
-      margin-top: 20px;
-      font-size: 20px;
-      margin-bottom:-18px;
+      margin-top: 12px;
+      font-size: 17px;
+      margin-bottom:-23px;
     }
   }
-  .header-text b {
-   
-  }
+ 
 
   .bg-d1d1d1 {
     background-color: rgb(242, 242, 242);

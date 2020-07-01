@@ -219,4 +219,7 @@ color: #828282;
 a.store-locale {
       color: #808184;
 }
+.footer__version-info[data-v-00152f92] {
+      margin-top: 3px;
+}
 </style>
