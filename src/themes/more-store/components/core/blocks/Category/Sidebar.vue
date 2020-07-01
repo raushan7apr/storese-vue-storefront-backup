@@ -144,12 +144,23 @@ export default {
   .sidebar__header__text{
     margin: 20px 20px
   }
+  .sidebar {
+    background-color: #fff;
+    box-shadow: 2px 2px 5px 1px #e1e1e1;
+  }
 }
 @media (max-width:768px){
   .sidebar__header__text{
     margin: 12px 20px;
     text-transform: uppercase;
     font-family: 'Helvetica';
+  }
+  .sidebar {
+    background-color: transparent;
+    box-shadow: 0px;
+  }
+  .sidebar__header {
+    display: none;
   }
 }
 .sidebar__header {
@@ -176,8 +187,6 @@ cancel-icon {
 //   background-color: #f04d24cf;
 // }
 .sidebar {
-  background-color: #fff;
-  box-shadow: 2px 2px 5px 1px #e1e1e1;
   &__header {
     justify-content: space-between;
     min-height: 47px;

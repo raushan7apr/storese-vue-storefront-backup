@@ -109,15 +109,16 @@ export default {
 <style lang="scss" scoped>
 
   .add-to-cart-button {
-    width: 100%;
-    color: #fff;
+    color: #f57151;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px;
-    // margin: 4px 2px;
+    font-size: 12px;
+    margin: 4px 2px;
     border-radius: 5px;
-    padding-bottom: 5px;
+    padding-bottom: 4px;
+    font-weight: 600;
+    padding-left: 16px;
   }
 
 </style>

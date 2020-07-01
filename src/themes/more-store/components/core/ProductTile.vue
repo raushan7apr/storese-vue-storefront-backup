@@ -45,39 +45,38 @@
         </p>
         <div class="price">
           <span
-                class="price-original price mr5 lh30 cl-secondary"
-                v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
-              >MRP: {{ product.original_price_incl_tax | price(storeView) }}</span>
-              <span
-                class="price-special price lh30 cl-accent weight-700"
-                v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
-              >{{ product.price_incl_tax | price(storeView) }}</span>
-              <span
-                class="lh30 cl-secondary price"
-                v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
-              >{{ product.price_incl_tax | price(storeView) }}</span>
+            class="price-special price lh30 cl-accent weight-700"
+            v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
+          >{{ product.price_incl_tax | price(storeView) }}</span>
+          <span
+            class="price-special lh30 cl-secondary price"
+            v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
+          >{{ product.price_incl_tax | price(storeView) }}</span>
+          <span
+            class="price-original price mr5 lh30 cl-secondary"
+            v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
+          >{{ product.original_price_incl_tax | price(storeView) }}</span>
         </div>
       </div>
     </div>
     <div class="price-mobile ml5 mt5">
       <span
-            class="price-original price-mobile mr5 lh30 cl-secondary"
-            v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
-          >MRP : {{ product.original_price_incl_tax | price(storeView) }}</span>
-          <br />
-          <span
-            class="price-special price-mobile lh30 cl-accent mt20 weight-700"
-            v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
-          >{{ product.price_incl_tax | price(storeView) }}</span>
-          <span
-            class="lh30 cl-secondary price-mobile"
-            v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
-          >{{ product.price_incl_tax | price(storeView) }}</span>
+        class="price-special price-mobile lh30 cl-accent weight-700"
+        v-if="product.special_price && parseFloat(product.special_price) > 0 && !onlyImage"
+      >{{ product.price_incl_tax | price(storeView) }}</span>
+      <span
+        class="price-special lh30 cl-secondary price-mobile"
+        v-if="!product.special_price && parseFloat(product.price_incl_tax) > 0 && !onlyImage"
+      >{{ product.price_incl_tax | price(storeView) }}</span>
+      <span
+        class="price-original price-mobile mr5 lh30 cl-secondary"
+        v-if="product.special_price && parseFloat(product.original_price_incl_tax) > 0 && !onlyImage"
+      >{{ product.original_price_incl_tax | price(storeView) }}</span>
     </div>
     <button class="qty-container">
 
       <div class="add-to-cart add-button" v-if="cartQuantity(product, productsInCart) === 0">
-        <div class="column-100 cursor-pointer">
+        <div class="column-100 cursor-pointer increase">
           <add-to-cart-plus
             :product="product"
           >
@@ -85,13 +84,13 @@
         </div>
       </div>
       <div class="add-to-cart" v-else>
-        <div @click="updateProductQty(product, productsInCart)" class="column cursor-pointer">
+        <div @click="updateProductQty(product, productsInCart)" class="column cursor-pointer decrease">
           -
         </div>
-        <div class="column">
+        <div class="column qty">
           {{ cartQuantity(product, productsInCart) }}
         </div>
-        <div class="column cursor-pointer">
+        <div class="column cursor-pointer increase">
           <add-to-cart-plus
             :product="product"
           >
@@ -275,47 +274,49 @@ $color-white: color(white);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 108px;
-  height: 36px;
-  border: 4px solid #f36e4d;
-  border-radius: 15px;
-  // margin-top: 8px;
-  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
+  width: 65px;
+  height: 20px;
+  border: 1px solid #f04d24cf;
+  border-radius: 30px;
+  margin-top: 8px;
+  // box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
 }
 .add-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 108px;
-  height: 36px;
-  border: 4px solid #f36e4d;
-  background: #f04d24cf;
-  border-radius: 15px;
-  // margin-top: 8px;
-  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
+  width: 65px;
+  height: 20px;
+  border: 1px solid #f04d24cf;
+  background: #fff;
+  border-radius: 30px;
+  margin-top: 8px;
+  // box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 6px 0 rgba(0, 0, 0, 0.19);
 }
 .add-to-cart > .decrease {
-  font-size: 24px;
-  font-weight: 900;
-  padding-right: 12px;
-  padding-top: 4px;
+  font-size: 20px;
+  font-weight: 600;
+  padding-left: 6px;
+  padding-top: 0px;
   margin-bottom: 4px;
   cursor: pointer;
+  color: #f57151;
 }
 
 .add-to-cart > .qty {
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 12px;
+  font-weight: 600;
   padding: 0px 8px 0px 8px;
-  color: #aaaaaa;
+  color: #4d4d4d;
 }
 
 .add-to-cart > .increase {
-  font-size: 24px;
-  font-weight: 900;
-  padding-left: 12px;
-  margin-bottom: 2px;
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 6px;
+  margin-bottom: 0px;
   cursor: pointer;
+  color: #f57151;
 }
 
 .product {
@@ -398,6 +399,10 @@ $color-white: color(white);
   .product-details-container {
     min-height: 90px;
   }
+  .price-original {
+    color: #4d4d4d;
+    font: 300 14px/1.35 Helvetica;
+  }
 }
 @media (max-width: 767px) {
   .product-name {
@@ -424,9 +429,15 @@ $color-white: color(white);
   .price-mobile {
     float: left;
     // margin-top: 5px;
-    color: #f04d24cf;
+    color: #4d4d4d;
     font: 300 14px/1.35 Helvetica;
     line-height: 6px;
+    padding-top: 6px;
+  }
+  .price-special {
+    color: #f04d24cf;
+    padding-right: 8px;
+    font-weight: 600;
   }
   .product-details-container {
     display:block;
@@ -437,8 +448,8 @@ $color-white: color(white);
   }
   .qty-container {
     float: right;
-    margin-top: -10px;
-    margin-right: 10px;
+    // margin-top: -10px;
+    // margin-right: 10px;
     z-index: 999;
   }
 }

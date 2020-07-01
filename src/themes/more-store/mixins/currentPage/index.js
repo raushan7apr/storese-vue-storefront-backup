@@ -13,7 +13,8 @@ export default {
         'configurable-product'
       ],
       isProductPage: false,
-      isCheckoutPage: false
+      isCheckoutPage: false,
+      isCategoryPage: false
     }
   },
   watch: {
@@ -33,6 +34,7 @@ export default {
     setCurrentPage () {
       this.isProductPage = !!this.$route.params.parentSku
       this.isCheckoutPage = this.$route.name === 'checkout'
+      this.isCategoryPage = !!this.$route.params.slug
     },
     // Check if history is empty
     isHistoryEmpty () {

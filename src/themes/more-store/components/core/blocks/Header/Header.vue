@@ -76,13 +76,21 @@
       <div class="container-fluid mobile-screen">
         <div class="row">
           <div class="col-xs-2 start-xs">
-            <div>
+            <div v-if="!isCategoryPage">
               <hamburger-icon class="p15 bg-f04d24cf icon" />
+            </div>
+            <div v-else>
+              <i class="material-icons left-icon" @click="$router.go(-1)">arrow_back</i>
             </div>
           </div>
           <div class="col-xs-8 center-xs">
-            <div>
+            <div v-if="!isCategoryPage">
               <logo width="auto" height="60px" />
+            </div>
+            <div v-else>
+              <span class="category-name">
+                {{ current | htmlDecode }}
+              </span>
             </div>
           </div>
           <div class="col-xs-1 end-xs mobile-search-icon">
@@ -146,6 +154,7 @@ import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/Si
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
 import SearchPanel from '../SearchPanel/SearchPanel';
 import { configureProducts } from '@vue-storefront/core/modules/catalog/helpers/configure'
+import { Breadcrumbs } from '@vue-storefront/core/modules/breadcrumbs/components/Breadcrumbs.ts'
 
 export default {
   name: 'Header',
@@ -160,7 +169,7 @@ export default {
     SearchIcon,
     WishlistIcon
   },
-  mixins: [CurrentPage, SidebarMenu],
+  mixins: [CurrentPage, SidebarMenu, Breadcrumbs],
   data () {
     return {
       displayList: true,
@@ -216,6 +225,9 @@ export default {
     }, 250)
   },
   methods: {
+    goBack () {
+
+    },
     navBarCategoryToggle () {
       this.displayList = !this.displayList;
     },
@@ -258,6 +270,19 @@ export default {
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
 
+.category-name {
+  float: left;
+  font-size: 16px;
+  padding-top: 22px;
+  margin-left: -14px;
+}
+.left-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .cursor_pointer {
   cursor: pointer;
 }

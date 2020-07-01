@@ -5,9 +5,10 @@
       class="cl-secondary sort-by-select"
       v-model="sortby"
       @change="changeOrder"
+      style="color: #000"
     >
       <option selected="selected" disabled value="" v-if="!hasLabel">
-        {{ $t('Sort By') }}
+        {{ $t('Sort') }}
       </option>
       <option v-for="variant in sortingVariants" :value="variant" :key="variant.id">
         {{ $t(variant.label) }}
@@ -56,13 +57,10 @@ export default {
     .sort-by {
         display: inline-flex;
         position: relative;
-        border: 1px solid $color-tertiary;
-        margin-left: 12px;
-        padding-left: 12px;
-        margin-right: 32px;
+        border-bottom: 1px solid #f04d24cf;
         select {
             @extend .h4;
-            font-size: 14px;
+            font-size: 16px;
             border: none;
             width: 100%;
             border-radius: 0;
@@ -82,10 +80,10 @@ export default {
     }
     @media (max-width: 770px) {
       .sort-by {
-        width: 100%;
+        width: 75%;
       }
       .sort-by-select {
-        height: 35px;
+        height: 20px;
       }
     }
 </style>
