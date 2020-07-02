@@ -178,7 +178,8 @@
     "multistore": true,
     "commonCache": false,
     "mapStoreUrlsFor": [
-      "test_more_view"
+      "test_more_view",
+      "more_sarjapur_storeview"
     ],
     "test_more_view": {
       "storeCode": "test_more_view",
@@ -203,7 +204,31 @@
       "seo": {
         "defaultTitle": "More Indore"
       }
+    },
+    "more_sarjapur_storeview": {
+    "storeCode": "more_sarjapur_storeview",
+    "storeId": 86,
+    "name": "More Sarjapur",
+    "url": "/more_sarjapur_storeview",
+    "appendStoreCode": true,
+    "elasticsearch": {
+      "host": "/api/catalog",
+      "index": "vue_storefront_catalog_more_sarjapur_storeview"
+    },
+    "tax": {
+      "defaultCountry": "IN"
+    },
+    "i18n": {
+      "fullCountryName": "More Sarjapur",
+      "fullLanguageName": "English",
+      "defaultCountry": "IN",
+      "defaultLanguage": "EN",
+      "defaultLocale": "en-US"
+    },
+    "seo": {
+      "defaultTitle": "More Sarjapur"
     }
+   }
   },
   "entities": {
     "optimize": true,
