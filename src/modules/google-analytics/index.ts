@@ -18,7 +18,8 @@ export const GoogleAnalyticsModule: StorefrontModule = function ({ store, router
         id: appConfig.analytics.id,
         router,
         ecommerce: {
-          enabled: true
+          enabled: true,
+          enhanced: true
         }
       })
     })

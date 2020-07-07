@@ -12,9 +12,9 @@
         <path fill="none" d="M0 0h24v24H0V0z"/><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
         </svg>
     </div>
-    <ul class="py8 no-underline col-xs" :class="this.class" v-show="showMenu">
+    <ul class="py8 no-underline col-xs sub_cat_menu" :class="this.class" v-show="showMenu">
       <li
-        class="sidebar-sub-element brdr-bottom-1 brdr-cl-bg-secondary bg-cl-primary flex"
+        class="sidebar-sub-element brdr-bottom-1 brdr-cl-bg-secondary flex"
         :key="link.slug"
         v-for="link in children"
       >
@@ -117,5 +117,51 @@ export default {
 }
 svg.rotate-90 {
     transform: rotate(90deg);
+}
+
+@media(max-width:767px) {
+  .sub_cat_menu {
+    background:#F7F7F7;
+  }
+  li.sidebar-sub-element.brdr-bottom-1.brdr-cl-bg-secondary.bg-cl-primary.flex {
+    width: 100%;
+    border-bottom: 1px solid #f1f1f1;
+    padding-left: 3px;
+}
+li.sidebar-element.sub-element div {
+    padding-bottom: 13px;
+}
+li.sidebar-element.sub-element div {
+    padding-bottom: 13px;
+    padding-left: 22px;
+}
+
+li.sidebar-element.sub-element.brdr-bottom-1.brdr-cl-bg-secondary.bg-cl-primary {
+    padding-bottom: 0px;
+}
+
+.sub_cat_menu li.sidebar-sub-element {
+    background: #f7f7f7;
+        padding-left: 15px;
+        border-color:#eee!important
+}
+li.sidebar-element.sub-element {
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
+.sub_cat_menu a {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+
+}
+
+li.sidebar-sub-element.brdr-bottom-1.brdr-cl-bg-secondary.flex:last-child {
+    border-bottom: 0px;
+}
+
+li.sidebar-element.sub-element {
+  border-color:#eee!important;
+}
 }
 </style>

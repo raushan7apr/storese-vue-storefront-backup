@@ -1,6 +1,6 @@
 <template>
   <section class="container bg-d1d1d1 w-100 my30">
-    <div class="row">
+    <div class="row _cat_row">
       <div
         class="col-xs-4 col-sm-4 col-md-4"
         v-for="(category, index) in visibleCategories"
@@ -28,7 +28,7 @@
        
          <img v-else src="/assets/placeholder.svg" class="category-banner" style="opacity: 0.5">
         </div>
-        <div class="row product_bottom">
+        <div class="row product_bottom _cat_row">
         <div
           class="col-xs-4 col-sm-4 col-md-4"
           v-for="(children_category, index) in category.children_data"
@@ -135,7 +135,7 @@ export default {
     // color: #232d5f;
     // font-weight: bold;
     @media (max-width: 767px) {
-      height: 16px;
+      //height: 16px;
       font-size:12px;
       margin-right: -8px;
     margin-left: -8px;
@@ -173,7 +173,7 @@ export default {
     opacity: 1;
     transition: 0.3s all;
     background-color: #fff;
-    margin: 3.1px -5px;
+    margin: 3.1px -6px;
     box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.08);
     border-radius: 3px;
     cursor: pointer;
@@ -212,12 +212,14 @@ export default {
     }
   }
   .offer-product-image {
+    max-width:100%;
+    max-height:100%;
     object-fit: cover;
-    height: 132px;
-    width: 132px;
+    /*height: 132px;
+    width: 132px;*/
     @media (max-width: 767px) {
-    height: 115px;
-    width: 115px;
+    /*height: 115px;
+    width: 115px;*/
     object-fit: cover;
     }
     @media(max-width:386px) {
@@ -236,12 +238,13 @@ export default {
     }
   }
   .offer-product {
-    padding:6px;
+    padding:4px;
     height: 180px;
     background-position: 50% 20%;
+        box-shadow: 0px 0px 8px #f6f1ea!important;
 
     @media (max-width: 767px) {
-      height: 168px;
+      height: 164px;
     }
   }
   .title {
@@ -266,8 +269,8 @@ export default {
     }*/
     .offer-product-image {
           max-height: 115px;
-    height: 100%;
-    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
     }
   }
 
@@ -283,12 +286,12 @@ export default {
   @media(max-width:420px) {
     
     .offer-product {
-              height: 147px;
+              height: 160px;
     }
     .category-name {
       font-size: 11.7px !important;
     overflow: hidden;
-    padding-top: 6px;
+    padding-top: 8px;
     }
   }
   @media(min-width:768px) {
@@ -304,5 +307,44 @@ export default {
     .category-banner {
         margin: 8px 0px 3px;
     }
+    ._cat_row .col-xs-4.col-sm-4.col-md-4 {
+      margin:0px;
+      padding:0px;
+    }
+    .offer-product{
+      height:auto!important;
+    }
+    .offer-product {
+          padding: 5px!important;
+    box-shadow: 0px 0px 8px #f6f1ea!important;
+    background: #fff!important;
+    margin: 2px 2px 3px !important;
+    min-height: 144px!important;
+    }
   }
+  @media(max-width:374px) {
+    .category-name {
+      font-size:11px!important;
+      }
+      .offer-product {
+        min-height:140px!important;;
+      }
+  }
+  @media (max-width:425px) {
+    .offer-product {
+      min-height:160px!important;
+    }
+  }
+  @media only screen and (max-width: 390px) and (min-width: 374px) {
+  
+    .offer-product {
+      min-height:148px!important;
+    }
+  }
+@media only screen and (max-width: 374px) {
+  .offer-product{
+       min-height:140px!important;
+  }
+}
+
 </style>

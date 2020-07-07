@@ -20,7 +20,7 @@
         <div class="flex w-100 flex-wrap between-xs">
           <div class="full-width">
             <router-link
-              class="helvetica h5 name"
+              class=" h5 name"
               :to="productLink"
               data-testid="productLink"
               @click.native="$store.commit('ui/setMicrocart', false)"
@@ -52,33 +52,33 @@
             {{ product.totals }}
             <div class="flex mr10 align-left start-xs between-sm prices">
               <div class="prices" v-if="!displayItemDiscounts || !isOnline">
-                <span class="h4 helvetica cl-error price-special" v-if="product.special_price">
-                  {{ product.price_incl_tax * product.qty | price(storeView) }}
+                <span class="h4 cl-error price-special" v-if="product.special_price">
+                  {{ product.price_incl_tax | price(storeView) }}
                 </span>
-                <span class="h6 helvetica price-original" v-if="product.special_price">
-                  {{ product.original_price_incl_tax * product.qty | price(storeView) }}
+                <span class="h6 price-original" v-if="product.special_price">
+                  {{ product.original_price_incl_tax | price(storeView) }}
                 </span>
-                <span class="h4 helvetica price-regular" v-else data-testid="productPrice">
-                  {{ (product.original_price_incl_tax ? product.original_price_incl_tax : product.price_incl_tax) * product.qty | price(storeView) }}
+                <span class="h4  price-regular" v-else data-testid="productPrice">
+                  {{ (product.original_price_incl_tax ? product.original_price_incl_tax : product.price_incl_tax) | price(storeView) }}
                 </span>
               </div>
               <div class="prices" v-else-if="isOnline && product.totals">
-                <span class="h5 helvetica cl-error price-special" v-if="product.totals.discount_amount">
+                <span class="h5 cl-error price-special" v-if="product.totals.discount_amount">
                   {{ product.totals.row_total - product.totals.discount_amount + product.totals.tax_amount | price(storeView) }}
                 </span>
-                <span class="h6 helvetica price-original" v-if="product.totals.discount_amount">
+                <span class="h6 price-original" v-if="product.totals.discount_amount">
                   {{ product.totals.row_total_incl_tax | price(storeView) }}
                 </span>
-                <span class="h4 helvetica price-regular" v-if="!product.totals.discount_amount">
+                <span class="h4 price-regular" v-if="!product.totals.discount_amount">
                   {{ product.totals.row_total_incl_tax | price(storeView) }}
                 </span>
               </div>
               <div class="prices" v-else>
-                <span class="h5 helvetica price-regular">
-                  {{ (product.regular_price || product.price_incl_tax) * product.qty | price(storeView) }}
+                <span class="h5 price-regular">
+                  {{ (product.final_price || product.price_incl_tax) | price(storeView) }}
                 </span>
-                <span class="h5 helvetica price-original" v-if="product.price != product.original_price">
-                  {{ (product.original_price || product.price_incl_tax) * product.qty | price(storeView) }}
+                <span class="h5 price-original" v-if="product.price != product.original_price">
+                  {{ (product.original_price || product.price_incl_tax) | price(storeView) }}
                 </span>
               </div>
             </div>
@@ -272,7 +272,7 @@ export default {
           let currentQty = this.productQty
           await this.$store.dispatch('cart/updateQuantity', { product: this.product, qty: quantity })
           if (quantity > currentQty) {
-            this.notifyUser(notifications.createNotification({ type: 'success', message: 'Product has been added to the Cart!!' }))
+            // this.notifyUser(notifications.createNotification({ type: 'success', message: 'Product has been added to the Cart!!' }))
           }
           if(this.$ga) {
             let gaData = this.gaData(this.product)

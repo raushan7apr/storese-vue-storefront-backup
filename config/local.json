@@ -175,6 +175,7 @@
   },
   "defaultStoreCode": "",
   "storeViews": {
+    "minimumOrder": 750,
     "multistore": true,
     "commonCache": false,
     "mapStoreUrlsFor": [
@@ -574,7 +575,9 @@
     "collecttotals_endpoint": "/api/cart/collect-totals?token={{token}}&cartId={{cartId}}",
     "deletecoupon_endpoint": "/api/cart/delete-coupon?token={{token}}&cartId={{cartId}}",
     "applycoupon_endpoint": "/api/cart/apply-coupon?token={{token}}&cartId={{cartId}}&coupon={{coupon}}",
-    "getshippinginfo_endpoint": "/api/ext/shipping/shipping-info"
+    "getshippinginfo_endpoint": "/api/ext/shipping/shipping-info",
+    "cartcreation_endpoint": "/api/ext/cart-creation",
+    "fetchbanners_endpoint": "/api/ext/banners/fetch"
   },
   "attributes": {
     "disablePersistentAttributesCache": false

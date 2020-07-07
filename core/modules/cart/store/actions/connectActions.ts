@@ -4,6 +4,7 @@ import config from 'config'
 import { StorageManager } from '@vue-storefront/core/lib/storage-manager'
 import { CartService } from '@vue-storefront/core/data-resolver'
 import { createDiffLog } from '@vue-storefront/core/modules/cart/helpers'
+import EventBus from '@vue-storefront/core/compatibility/plugins/event-bus'
 
 const connectActions = {
   toggleMicrocart ({ commit }) {
@@ -70,6 +71,17 @@ const connectActions = {
     if (storedItems.length && !cartToken) {
       Logger.info('Creating server cart token', 'cart')()
       return dispatch('connect', { guestCart: false })
+    }
+  },
+  async creation ({ getters, commit }) {
+    EventBus.$emit('load_checkout')
+    const response = await CartService.cartCreation(getters['getCartItems'], getters['getCartToken'])
+    if (response.code === 500) {
+      commit(types.CART_LOAD_CART_SERVER_TOKEN, response.result.quote_id)
+      EventBus.$emit('product_out_of_stock', response.result.quote_items)
+    } else if (response.code === 200) {
+      commit(types.CART_LOAD_CART_SERVER_TOKEN, response.result)
+      EventBus.$emit('go_ahead_checkout')
     }
   }
 }

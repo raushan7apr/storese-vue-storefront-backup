@@ -24,6 +24,7 @@
       class="block no-underline product-link"
       :to="productLink"
       data-testid="productLink"
+      @click.native="$store.commit('ui/setSearchpanel', false)"
     >
 
       <div
@@ -242,7 +243,7 @@ $color-white: color(white);
   justify-content: center;
   align-items: center;
   width: 65px;
-  height: 20px;
+  height: 25px;
   border: 1px solid #f04d24cf;
   border-radius: 30px;
   margin-top: 8px;
@@ -252,11 +253,19 @@ $color-white: color(white);
   justify-content: center;
   align-items: center;
   width: 65px;
-  height: 20px;
+  height: 25px;
   border: 1px solid #f04d24cf;
   background: #fff;
   border-radius: 30px;
   margin-top: 8px;
+}
+
+#category .add-to-cart {
+    margin-right: 10px;
+}
+
+#category .add-button {
+    margin-right: 10px;
 }
 .add-to-cart > .decrease {
   font-size: 20px;
@@ -323,13 +332,13 @@ $color-white: color(white);
 }
 
 .product-name {
-  font: 500 14px/1.35 Helvetica;
+  // font: 500 14px/1.35 Helvetica;
   font-size: 16px;
 }
 
 .price {
   color: #f04d24cf;
-  font: 600 18px/1.35 Helvetica;
+  // font: 600 18px/1.35 Helvetica;
 }
 
 .product-details-container {
@@ -365,7 +374,7 @@ $color-white: color(white);
 }
 
   .product-name {
-    font: 500 14px/1.35 Helvetica;
+    // font: 500 14px/1.35 Helvetica;
     font-size: 14px;
     text-align:left;
   }
@@ -389,7 +398,7 @@ $color-white: color(white);
     float: left;
     // margin-top: 5px;
     color: #4d4d4d;
-    font: 300 14px/1.35 Helvetica;
+    // font: 300 14px/1.35 Helvetica;
     line-height: 6px;
     position: relative;
     bottom: -12px;
@@ -409,7 +418,7 @@ $color-white: color(white);
   .qty-container {
     float: right;
     margin-right: 0px;
-    z-index: 999;
+    z-index: 2;
     position: relative;
     bottom: -12px;
   }

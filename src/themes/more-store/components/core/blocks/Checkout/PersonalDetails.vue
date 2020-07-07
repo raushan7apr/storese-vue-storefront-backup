@@ -12,7 +12,7 @@
       <div class="col-xs-11 col-sm-9 col-md-11 mt20">
         <div class="row mb15">
           <div class="col-xs-9 col-md-7" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
-            <h3 class="m0 mb5 helvetica">
+            <h3 class="m0 mb5">
               {{ $t('Personal Details') }}
             </h3>
           </div>
@@ -76,7 +76,7 @@
             v-model="personalDetails.emailAddress"
             @blur="$v.personalDetails.emailAddress.$touch()"
             autocomplete="email"
-            @keyup.enter="sendDataToCheckout"
+            @keyup.enter="sendPersonalDataToCheckout"
             :validations="[
               {
                 condition: $v.personalDetails.emailAddress.$error && !$v.personalDetails.emailAddress.required,
@@ -162,9 +162,9 @@
           <div class="col-xs-12 col-xl-7 px20 button-container">
             <button-full
               data-testid="personalDetailsSubmit"
-              @click.native="sendDataToCheckout"
+              @click.native="sendPersonalDataToCheckout"
               :disabled="createAccount ? $v.$invalid : $v.personalDetails.$invalid"
-              class="submit-details no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+              class="submit-details no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white fs-medium mt20 router-link-active no-underline pointer align-center border-box"
             >
               {{ $t((isVirtualCart ? 'Continue to payment' : 'Continue to shipping')) }}
             </button-full>
@@ -221,12 +221,10 @@
 <script>
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators'
 import { PersonalDetails } from '@vue-storefront/core/modules/checkout/components/PersonalDetails'
-
 import BaseCheckbox from 'theme/components/core/blocks/Form/BaseCheckbox'
 import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import Tooltip from 'theme/components/core/Tooltip'
-
 export default {
   components: {
     ButtonFull,
@@ -267,6 +265,9 @@ export default {
 .helvetica {
   font-family: Helvetica;
 }
+h3 {
+  font-family: 'Nunito', sans-serif !important;
+}
 .checkout-step-header-inactive {
    box-shadow: 2px 2px 5px 1px #e1e1e1;
   -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -294,6 +295,7 @@ export default {
   color: #f04d24cf;
   border-radius: 8px;
   border-style: solid;
+  font-family: 'Nunito', sans-serif !important;
 }
 .submit-details:hover {
   background: #f04d24cf;
@@ -310,7 +312,6 @@ export default {
 .link {
   text-decoration: underline;
 }
-
 .login-prompt {
   @media (min-width: 1200px) {
     margin-top: 30px;

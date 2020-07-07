@@ -2,7 +2,7 @@
   <footer :class="{ 'brdr-top-1 brdr-cl-secondary': isCheckoutPage }">
     <!-- <newsletter class=" flex brdr-bottom-1 brdr-cl-secondary" v-if="!isCheckoutPage" /> -->
     <div
-      class="footer-links pt30 pb60 bg-cl-secondary"
+      class="footer-links pt10 pb60 bg-cl-secondary"
       v-if="!isCheckoutPage"
     >
       <div class="container-fluid">
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid">
+    <!-- <div class="container-fluid" v-if="!isCheckoutPage">
       <div class="row middle-xs px15 bottom-links">
         <div class="col-xs-5 col-sm-3 cl-tertiary">
           <language-switcher v-if="multistoreEnabled" />
@@ -57,14 +57,8 @@
           </ul>
         </div>
       </div>
-    </div>
-    <back-to-top bottom="20px" right="20px" visibleoffset="200">
-      <button type="button" class="btn-top button no-outline brdr-none cl-white bg-cl-mine-shaft :bg-cl-th-secondary py10 px10">
-        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
-          <path d="M23.245 20l-11.245-14.374-11.219 14.374-.781-.619 12-15.381 12 15.391-.755.609z" fill="white" />
-        </svg>
-      </button>
-    </back-to-top>
+    </div> -->
+   
   </footer>
 </template>
 
@@ -199,9 +193,8 @@ footer {
 .footer_info {
   display:flex;
   justify-content:space-between;
-      width: 100%;
-    border-bottom: 1px solid #fff;
-    padding-bottom: 26px;
+  width: 100%;
+  padding-bottom: 16px;
 }
 
 .footer-links {

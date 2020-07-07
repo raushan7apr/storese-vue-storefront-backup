@@ -26,14 +26,14 @@
             </div>
 
             <div class="row container col-xs-6 mobile-sort-filter" style="padding-right: 0px;">
-              <div class="col-xs-6" style="padding-right:0; padding-left: 0; display: table-cell; vertical-align: middle; text-align: center; padding-top: 4px;">
+              <div class="col-xs-6" style="padding-right:0; padding-left: 0; display: table-cell; vertical-align: middle; text-align: center; padding-top: 5px;">
                 <!-- <div style="position: relative; display: inline-block; border-bottom: 1px solid #f04d24cf;">Sort <i style="position: absolute; bottom: -1px; border-bottom: 1px solid #f04d24cf;" class="material-icons">keyboard_arrow_up</i></div> -->
                 <sort-by
                   @change="changeFilter"
                   :value="getCurrentSearchQuery.sort"
                 />
               </div>
-              <div @click="toggleFilters" class="col-xs-6" style="padding-right:0; padding-left: 0; display: table-cell; vertical-align: middle; text-align: center; padding-top: 6px;">
+              <div @click="toggleFilters" class="col-xs-6" style="padding-right:0; padding-left: 0; display: table-cell; vertical-align: middle; text-align: center; padding-top: 5px;">
                 <div :style="!mobileFilters ? 'position: relative; display: inline-block; border-bottom: 1px solid #f04d24cf;' : 'position: relative; display: inline-block; border-bottom: 1px solid #f04d24cf; color: #f04d24cf; font-size: 17px;'">Filter <i style="position: absolute; bottom: -1px; border-bottom: 1px solid #f04d24cf; font-size: 18px; font-weight: bold;" class="material-icons">{{ !mobileFilters ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</i></div>
               </div>
             </div>
@@ -133,6 +133,12 @@ export default {
       }
     },
     isCategoryEmpty () {
+      
+      console.log(this.getCurrentSearchQuery);
+      console.log(this.getCategoryProductsTotal);
+      
+      console.log(this.getCategoryProducts);
+      console.log(this.getCurrentCategory);
       return this.getCategoryProductsTotal === 0
     }
   },
@@ -239,6 +245,9 @@ export default {
       box-shadow: 0px;
       -moz-box-shadow: 0px;
       -webkit-box-shadow: 0px;
+    }
+    #category {
+      padding-top: 110px;
     }
   }
   .btn {

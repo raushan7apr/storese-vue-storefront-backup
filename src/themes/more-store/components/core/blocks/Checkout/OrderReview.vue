@@ -12,7 +12,7 @@
       <div class="col-xs-11 col-sm-9 col-md-11 mt20">
         <div class="row mb15">
           <div class="col-md-12" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
-            <h3 class="m0 mb5 helvetica">
+            <h3 class="m0 mb5 nunito">
               {{ $t('Review order') }}
             </h3>
           </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="row mb15 mt20">
           <div class="col-xs-12">
-            <p class="h4 helvetica">
+            <p class="h4 nunito">
               {{ $t('Please check if all data are correct') }}
             </p>
             <div class="row">
@@ -37,7 +37,7 @@
                 <cart-summary />
               </div>
               <base-checkbox
-                class="col-xs-11 col-sm-12 col-md-8 p15 mb35 ml10 helvetica"
+                class="col-xs-11 col-sm-12 col-md-8 p15 mb35 ml10 nunito"
                 id="acceptTermsCheckbox"
                 @blur="$v.orderReview.terms.$touch()"
                 v-model="orderReview.terms"
@@ -68,7 +68,7 @@
               <button-full
                 @click.native="placeOrder"
                 data-testid="orderReviewSubmit"
-                class="submit-details place-order-btn no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+                class="submit-details place-order-btn no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white nunito fs-medium mt20 router-link-active no-underline pointer align-center border-box"
                 :disabled="$v.orderReview.$invalid"
               >
                 {{ $t('Place the order') }}
@@ -83,7 +83,7 @@
       <p slot="header">
         {{ $t('Terms and conditions') }}
       </p>
-      <div slot="content helvetica">
+      <div slot="content nunito">
         <p>
           This website ("website") is operated by Luma Inc., which includes Luma stores, and Luma Private Sales. This privacy policy only covers information collected at this website, and does not cover any information collected offline by Luma. All Luma websites are covered by this privacy policy.
         </p>
@@ -110,7 +110,6 @@
 <script>
 import { sameAs } from 'vuelidate/lib/validators'
 import Composite from '@vue-storefront/core/mixins/composite'
-
 import BaseCheckbox from 'theme/components/core/blocks/Form/BaseCheckbox'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import CartSummary from 'theme/components/core/blocks/Checkout/CartSummary'
@@ -118,7 +117,6 @@ import Modal from 'theme/components/core/Modal'
 import { OrderReview } from '@vue-storefront/core/modules/checkout/components/OrderReview'
 import { OrderModule } from '@vue-storefront/core/modules/order'
 import { registerModule } from '@vue-storefront/core/lib/modules'
-
 export default {
   components: {
     BaseCheckbox,
@@ -155,7 +153,6 @@ export default {
   .link {
     text-decoration: underline;
   }
-
   .cartsummary-wrapper {
     @media (min-width: 767px) {
       display: none;
@@ -164,9 +161,11 @@ export default {
   checkout-order-review-additional {
     background: #fff;
   }
-
 .helvetica {
   font-family: Helvetica;
+}
+.nunito {
+  font-family: 'Nunito', sans-serif !important;
 }
 .checkout-step-header-inactive {
    box-shadow: 2px 2px 5px 1px #e1e1e1;

@@ -38,6 +38,11 @@ export default {
           const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
           if (this.$ga) {
             this.$ga.event('Add_To_Cart', 'click', JSON.stringify(this.gaData(product)));
+            this.$ga.ecommerce.setAction('checkout', {
+              'step': 3,
+              'option': 'Add to Cart'
+            })
+            this.$ga.ecommerce.send('checkout')
           }
           diffLog.clientNotifications.forEach(notificationData => {
             this.notifyUser(notificationData)

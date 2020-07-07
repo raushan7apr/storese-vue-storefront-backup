@@ -1,9 +1,9 @@
 <template>
   <section class="main-slider w-100 bg-cl-th-accent cl-white">
     <no-ssr>
-      <carousel :per-page="1" pagination-active-color="#ffffff" pagination-color="#4d4d4d" v-bind:autoplay="true" v-bind:loop="true">
+      <carousel :per-page="1" pagination-active-color="#f04d24" pagination-color="#4d4d4d" v-bind:autoplay="true" v-bind:loop="true">
         <slide v-for="(slide, index) in slides" :key="index">
-          <div class="container w-100" v-lazy:background-image="slide.image">
+          <div class="container w-100" v-lazy:background-image="slide.image_url" v-link="slide.link" @click="$router.push(slide.link)">
             <div class="row middle-xs center-xs">
               <!--<div class="col-md-12 px10p">
                 <p
@@ -28,6 +28,7 @@
 import NoSSR from 'vue-no-ssr'
 import sliderData from 'theme/resource/slider.json'
 import ButtonOutline from 'theme/components/theme/ButtonOutline'
+import { CategoryService } from '@vue-storefront/core/data-resolver'
 
 export default {
   name: 'CarouselSlide',
@@ -35,7 +36,8 @@ export default {
     return {
       currentSlide: 1,
       slides: [],
-      totalSlides: 1
+      totalSlides: 1,
+      sliderData: []
     }
   },
   components: {
@@ -46,8 +48,16 @@ export default {
   },
   methods: {
     updateSliderData (data) {
-      this.slides = data.slides
-      this.totalSlides = data.total
+      if (data.code === 200) {
+        this.slides = data.result.banner_items
+        this.totalSlides = data.result.banner_items.length
+      } else {
+        this.slides = sliderData.slides
+        this.totalSlides = sliderData.total
+      }
+    },
+    async fetchHomepageBanners () {
+      this.updateSliderData(await CategoryService.fetchBanners())
     }
   },
   mounted () {
@@ -56,7 +66,7 @@ export default {
     }, 16000)
   },
   created () {
-    this.updateSliderData(sliderData)
+    this.fetchHomepageBanners()
   }
 }
 </script>
@@ -67,20 +77,35 @@ $color-white: color(white);
 .main-slider {
   .VueCarousel-pagination {
     position: absolute;
-    bottom: 15px;
+    bottom: -4px;
   }
   .VueCarousel-dot--active .VueCarousel-dot-inner {
     border: 2px solid $color-white;
     margin-top: -2px;
   }
   }
+  .VueCarousel-dot--active .VueCarousel-dot-inner {
+    border: 2px solid $color-white;
+    margin-top: -2px;
+  }
+  
+  .VueCarousel-pagination button.VueCarousel-dot {
+    padding:6px 4px!important;
+  }
 </style>
 <style scoped>
+
+.VueCarousel {
+  box-shadow: 1px 1px 10px #ccc;
+  transform:translateY(-8px);
+}
 h1 {
   font-size: 72px;
 }
 .main-slider {
+  cursor: pointer;
   height: 520px;
+  background:#f7f7f7!important;
 }
 .container {
   background-size: cover;
@@ -164,4 +189,7 @@ h1 {
     height:130px;
   }
 }
+
+
+
 </style>

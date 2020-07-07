@@ -276,10 +276,10 @@ export default {
     border: none;
     outline: 0;
     font-size: 18px;
-    font-family: Helvetica;
+    // font-family: Helvetica;
     caret-color: #f57151;
     // font-family: "map-get($font-families, secondary)";
-
+    font-family: 'Nunito', sans-serif !important;
     @media #{$media-xs} {
       font-size: 16px;
     }

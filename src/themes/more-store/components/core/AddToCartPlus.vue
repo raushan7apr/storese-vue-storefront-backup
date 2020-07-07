@@ -42,6 +42,11 @@ export default {
           const diffLog = await this.$store.dispatch('cart/addItem', { productToAdd: product })
           if (this.$ga && currentQuantity === 0) {
             this.$ga.event('Add_To_Cart', 'click', JSON.stringify(this.gaData(product)));
+            this.$ga.ecommerce.setAction('checkout', {
+              'step': 3,
+              'option': 'Add to Cart'
+            })
+            this.$ga.ecommerce.send('checkout')
           }
           if(this.$ga && currentQuantity > 0) {
             let gaData = this.gaData(product)
@@ -50,7 +55,7 @@ export default {
             this.$ga.event('Change_Quantity', 'click', JSON.stringify(gaData));
           }
           diffLog.clientNotifications.forEach(notificationData => {
-            this.notifyUser(notificationData)
+            // this.notifyUser(notificationData)
           })
         } catch (message) {
           this.notifyUser(notifications.createNotification({ type: 'error', message }))
@@ -114,11 +119,12 @@ export default {
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin: 4px 2px;
+    margin: 3px 2px;
     border-radius: 5px;
     padding-bottom: 4px;
     font-weight: 600;
-    padding-left: 16px;
+    padding-left: 20px;
+    font-family: 'Nunito', sans-serif !important;
   }
 
 </style>

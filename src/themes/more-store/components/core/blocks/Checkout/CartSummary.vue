@@ -5,28 +5,37 @@
         <div class="col-xs-11 col-sm-9 col-md-11 mt20">
           <div class="row mb15">
             <div class="col-xs-12 col-md-5">
-              <h3 class="m0 mb5 summary-title helvetica">
+              <h3 class="m0 mb5 summary-title nunito">
                 {{ $t('Order Summary') }}
               </h3>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="productsInCart && productsInCart.length" class="checkout pt10 helvetica cl-accent">
+      <div v-if="productsInCart && productsInCart.length" class="checkout pt10 nunito cl-accent">
         <div v-for="(segment, index) in totals" :key="index" class="row pt15 pb20 pl30 pr55 " v-if="segment.code !== 'grand_total' && segment.code !== 'tax' && segment.code!=='payment'">
           <div class="col-xs cl-accent">
-            <div v-if="segment.code === 'shipping'">
-              Shipping Fee
-            </div>
             <div v-if="segment.code !== 'shipping'">
               {{ segment.title }}
             </div>
           </div>
-          <div v-if="segment.value != null" class="col-xs align-right cl-accent h4">
+          <div v-if="segment.value !== null && segment.code !== 'shipping'" class="col-xs align-right cl-accent h4">
             {{ segment.value | price(storeView) }}
           </div>
         </div>
-
+        <div class="row pt15 pb20 pl30 pr55">
+          <div class="col-xs cl-accent">
+            <div>
+              Shipping Fee
+            </div>
+          </div>
+          <div v-if="shippingMethods[0].amount !== 0" class="col-xs align-right cl-accent h4">
+            {{ shippingMethods[0].amount | price(storeView) }}
+          </div>
+          <div v-else class="col-xs align-right cl-accent h4">
+            Free
+          </div>
+        </div>
         <div class="row pt20 pb20 pl30 pr55 weight-400 h3" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total' && segment.code !== 'tax'">
           <div class="col-xs">
             <div v-if="segment.code === 'shipping'">
@@ -37,7 +46,7 @@
             </div>
           </div>
           <div class="col-xs align-right">
-            {{ segment.value | price(storeView) }}
+            {{ totals[0].value + shippingMethods[0].amount  | price(storeView) }}
           </div>
         </div>
       <!-- <div class="col-xs-1 col-sm-2 col-md-1">
@@ -48,11 +57,11 @@
           2
         </div>
       </div> -->
-        <div class="row summary-header-container helvetica" @click="show=!show">
+        <div class="row summary-header-container nunito" @click="show=!show">
           <div class="col-xs-11 col-sm-9 col-md-11 mt20">
             <div class="row mb15">
               <div class="col-xs-9 col-md-6">
-                <h3 class="m0 mb5 summary-title helvetica">
+                <h3 class="m0 mb5 summary-title nunito">
                   {{ $t('Cart Items') }}
                 </h3>
               </div>
@@ -98,6 +107,8 @@
 import { CartSummary } from '@vue-storefront/core/modules/checkout/components/CartSummary'
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
 import Product from './Product'
+import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping';
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -108,12 +119,79 @@ export default {
   components: {
     Product
   },
+  created () {
+    let total_amount = this.totals[0].value
+    let delivery_charges = JSON.parse(sessionStorage.getItem('delivery_charges'))
+    console.log(delivery_charges)
+    if(delivery_charges) {
+      let shipping_arr = []
+      for(let k in delivery_charges) {
+        shipping_arr.push(parseInt(k))
+      }
+      let key = shipping_arr[shipping_arr.length - 1];
+      for (let i=0; i<shipping_arr.length; i++) {
+        if (total_amount < shipping_arr[i]) {
+          key = shipping_arr[i-1];
+          break;
+        }
+      }
+      const method = {
+        method_title: delivery_charges[key].method_title,
+        method_code: delivery_charges[key].method_code,
+        carrier_code: delivery_charges[key].carrier_code,
+        amount: delivery_charges[key].amount,
+        price_incl_tax: delivery_charges[key].price_incl_tax,
+        default: true,
+        offline: true
+      }
+      this.$store.dispatch('checkout/addShippingMethod', method, { root: true })
+    }
+  },
   computed: {
     storeView () {
       return currentStoreView()
-    }
+    },
+    ...mapGetters({
+      isAddingToCart: 'cart/getIsAdding',
+      productsInCart: 'cart/getCartItems',
+      myTotals: 'cart/getTotals'
+    })
   },
-  mixins: [CartSummary]
+  mixins: [CartSummary, Shipping],
+  watch: {
+    myTotals: function () {
+      let total_amount = this.myTotals[0].value
+      let delivery_charges = JSON.parse(sessionStorage.getItem('delivery_charges'))
+      if(delivery_charges) {
+        let shipping_arr = []
+        for(let k in delivery_charges) {
+          shipping_arr.push(parseInt(k))
+        }
+        
+        let key = shipping_arr[shipping_arr.length - 1];
+        if(total_amount >= shipping_arr[0]) {
+          for (let i=0; i<shipping_arr.length; i++) {
+            if (total_amount < shipping_arr[i]) {
+              key = shipping_arr[i-1];
+              break;
+            }
+          }
+        } else {
+          key = shipping_arr[0];
+        }
+        const method = {
+          method_title: delivery_charges[key].method_title,
+          method_code: delivery_charges[key].method_code,
+          carrier_code: delivery_charges[key].carrier_code,
+          amount: delivery_charges[key].amount,
+          price_incl_tax: delivery_charges[key].price_incl_tax,
+          default: true,
+          offline: true
+        }
+        this.$store.dispatch('checkout/addShippingMethod', method, { root: true })
+      }
+    }
+  }
 }
 </script>
 
@@ -121,6 +199,9 @@ export default {
 
   .helvetica {
     font-family: Helvetica;
+  }
+  .nunito {
+    font-family: 'Nunito', sans-serif !important;
   }
   .pr45 {
     padding-right: 45px;

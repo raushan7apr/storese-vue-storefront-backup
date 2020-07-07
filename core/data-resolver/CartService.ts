@@ -151,6 +151,21 @@ const getShippingInfo = async (address: any): Promise<Task> =>
     silent: true
   });
 
+const cartCreation = async (products: any, cart_id: any): Promise<Task> =>
+  TaskQueue.execute({
+    url: processLocalizedURLAddress(getApiEndpointUrl(config.cart, 'cartcreation_endpoint')),
+    payload: {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      mode: 'cors',
+      body: JSON.stringify({
+        products,
+        cart_id
+      })
+    },
+    silent: true
+  });
+
 export const CartService: DataResolver.CartService = {
   setShippingInfo,
   getTotals,
@@ -160,6 +175,7 @@ export const CartService: DataResolver.CartService = {
   getPaymentMethods,
   getShippingMethods,
   getShippingInfo,
+  cartCreation,
   getItems,
   applyCoupon,
   removeCoupon

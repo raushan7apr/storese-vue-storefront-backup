@@ -113,9 +113,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .sb_bold {
+    // font-family: 'SF Compact Display';
+    font-weight: 800;
+  }
   .header-text {
-    font: 400 20px/1.35 Helvetica ;
+    // font: 400 20px/1.35 Helvetica ;
+    font-size: 20px;
+    font-weight: 400;
     color: #4d4d4d;
     margin-top: 30px;
     font-size: 28px;
@@ -138,5 +143,11 @@ export default {
       padding-top: 0;
     }
    
+  }
+
+  @media (max-width: 767px) {
+    #home {
+      padding-top: 100px;
+    }
   }
 </style>

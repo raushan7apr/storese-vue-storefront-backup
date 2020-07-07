@@ -121,10 +121,11 @@ export default {
   -ms-flex-align: center;
   align-items: center;
   width: 65px;
-  height: 20px;
+  height: 25px;
   border: 1px solid #f04d24cf;
   border-radius: 30px;
   margin-top: 8px;
+  font-family: 'Nunito', sans-serif !important;
 }
 .add-to-cart > .decrease {
   font-size: 20px;

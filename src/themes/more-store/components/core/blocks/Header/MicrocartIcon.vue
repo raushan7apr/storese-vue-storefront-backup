@@ -2,8 +2,6 @@
   <button
     type="button"
     class="bg-cl-transparent brdr-none inline-flex"
-    @click="openMicrocart"
-    data-testid="openMicrocart"
     :aria-label="$t('Open microcart')"
   >
     <i class="material-icons-1 cart-icon-1"><img src="/assets/shopping-cart.png" style="width:30px;"/></i>
@@ -21,7 +19,7 @@ export default {
   mounted () {
     syncCartWhenLocalStorageChange.addEventListener()
     this.$once('hook:beforeDestroy', () => {
-      syncCartWhenLocalStorageChange.removeEventListener()
+
     })
   },
   computed: {

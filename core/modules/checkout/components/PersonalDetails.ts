@@ -40,7 +40,7 @@ export const PersonalDetails = {
         emailAddress: receivedData.email
       }
     },
-    sendDataToCheckout () {
+    sendPersonalDataToCheckout () {
       if (this.createAccount) {
         this.personalDetails.password = this.password
         this.personalDetails.createAccount = true

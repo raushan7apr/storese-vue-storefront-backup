@@ -1,16 +1,15 @@
 <template>
   <div>
-    <div class="bg-cl-secondary py35 pl20">
+    <!--<div class="bg-cl-secondary py35 pl20">
       <div class="container">
         <breadcrumbs :with-homepage="true" :routes="[]" :active-route="$props.title" />
         <h2 class="fs-big">
-          <!-- {{ $props.title }} -->
+          {{ $props.title }}
         </h2>
       </div>
-    </div>
-
-    <div class="container pt45 pb70">
-      <div class="row pl20 pt0">
+    </div>-->
+    <div class="container pb70">
+      <div class="row pt0">
         <!-- <div class="col-sm-3">
           <nav class="static-menu serif h4 mb35">
             <ul class="m0 p0">
@@ -27,6 +26,15 @@
         </div>
       </div>
     </div>
+    <div class="continue-shopping">
+      <button-outline
+        color="dark"
+        @click.native="$router.push(localizedRoute('/'))"
+        class="continue-shopping-button"
+      >
+        GO TO HOME
+      </button-outline>
+    </div>
   </div>
 </template>
 
@@ -38,10 +46,11 @@ import StaticShortExample from 'theme/components/theme/blocks/Static/Short'
 import TermsAndCondition from 'theme/components/theme/blocks/Static/T&C'
 import { getPathForStaticPage } from 'theme/helpers'
 import { localizedRoute } from '@vue-storefront/core/lib/multistore'
-
+import ButtonOutline from 'theme/components/theme/ButtonOutline'
 export default {
   components: {
-    Breadcrumbs
+    Breadcrumbs,
+    ButtonOutline
   },
   metaInfo () {
     return {
@@ -87,12 +96,10 @@ export default {
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
 $border-primary: color(primary, $colors-border);
-
 .static-menu {
   ul {
     list-style: none;
   }
-
   a::after {
     content: "";
     position: absolute;
@@ -102,29 +109,53 @@ $border-primary: color(primary, $colors-border);
     height: 1px;
     background-color: $border-primary;
   }
-
   a:hover::after,
   .router-link-active::after {
     opacity: 0;
   }
 }
-
 .static-content {
   *:first-of-type {
     margin-top: 0;
   }
 }
 </style>
-
 <style lang="scss">
 .static-content {
   h3 {
     margin-top: 40px;
     margin-bottom: 25px;
     @media (max-width: 767px) {
-      margin-top: 35px;
+      margin-top: 20px;
       margin-bottom: 10px;
     }
+  }
+}
+.continue-shopping-button {
+  border-radius: 5px;
+  text-transform: uppercase;
+  background-color: #EC6D34;
+  color: #fff;
+  @media (max-width: 767px) {
+    color: #fff;
+    opacity: 1;
+    width: 100%;
+    text-transform: uppercase;
+    background-color: #EC6D34;
+    font-size: 14px;
+    border: none;
+  }
+}
+.continue-shopping {
+  @media (max-width: 767px) {
+    background-color: #EC6D34;
+    position: fixed;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    z-index: 2;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 </style>
