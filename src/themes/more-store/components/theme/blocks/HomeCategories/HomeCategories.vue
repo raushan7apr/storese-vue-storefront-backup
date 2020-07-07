@@ -7,12 +7,48 @@
         :key="index"
       >
         <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
-          <img v-if="category.image" v-bind:src="category.image" class="m10 offer-product-image">
-          <img v-else src="/assets/placeholder.svg" class="m10 offer-product-image" style="opacity: 0.4">
+        
+          <img v-if="category.thumbnail" v-bind:src="category.thumbnail" class="offer-product-image cat_icon">
+          
+          
+          <img v-else src="/assets/placeholder.svg" class="offer-product-image cat_icon" style="opacity: 0.5">
           <div class="category-name m0 h1">
             {{ category.name }}
           </div>
         </div>
+      </div>
+    </div>
+      <div
+        class="banner_img"
+        v-for="(category, index) in ChildrenCategory"
+        :key="index"
+      >
+       <div class="img_sub_banner_box">
+        <img v-if="category.image" v-bind:src="category.image" class="category-banner">
+       
+         <img v-else src="/assets/placeholder.svg" class="category-banner" style="opacity: 0.5">
+        </div>
+        <div class="row product_bottom">
+        <div
+          class="col-xs-4 col-sm-4 col-md-4"
+          v-for="(children_category, index) in category.children_data"
+          :key="index"
+        >
+          <div @click="categoryRedirect(children_category)" class="offer offer-product border-box flex">
+            <img v-if="children_category.thumbnail" v-bind:src="children_category.thumbnail" class="offer-product-image cat_icon">
+            <img v-else src="/assets/placeholder.svg" class="offer-product-image cat_icon" style="opacity: 0.4">
+            <div class="category-name m0 h1">
+              {{ children_category.name }}
+            </div>
+          </div>
+        </div>
+        <!-- <div @click="categoryRedirect(category)" class="offer offer-product border-box flex">
+          <img v-if="category.image" v-bind:src="category.image" class="m10 offer-product-image">
+          <img v-else src="/assets/place_holder_2.png" class="m10 offer-product-image" style="opacity: 0.4">
+          <div class="category-name m0 h1">
+            {{ category.name }}
+          </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -22,6 +58,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/SidebarMenu/SidebarMenu';
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
+import config from 'config'
 
 export default {
   name: 'HomeCategories',
@@ -37,9 +74,32 @@ export default {
     visibleCategories () {
       return this.categories.filter(category => {
         if (category.image && category.image.indexOf('http') === -1) {
-          category.image = 'https://preprod-admin.storese.in/pub/media/catalog/category/' + category.image;
+          category.image = config.images.categoryBaseUrl + category.image;
         }
-        return category.product_count > 0 || category.children_count > 0
+        if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
+          category.thumbnail = config.images.categoryBaseUrl + category.thumbnail;
+        }
+        return category.product_count > 0 && category.children_count === 0 && category.include_in_menu === 0
+      })
+    },
+    ChildrenCategory () {
+      return this.categories.filter(category => {
+        if (category.image && category.image.indexOf('http') === -1) {
+          category.image = config.images.categoryBaseUrl + category.image;
+        }
+        if (category.thumbnail && category.thumbnail.indexOf('http') === -1) {
+          category.thumbnail = config.images.categoryBaseUrl + category.thumbnail;
+        }
+        if(category.children_count>0){
+          category.children_data.forEach(function(item){
+             if (item.thumbnail && item.thumbnail.indexOf('http') === -1) {
+              item.thumbnail = config.images.categoryBaseUrl + item.thumbnail;
+            }
+            // item.thumbnail = config.images.categoryBaseUrl + item.thumbnail
+            // item.thumbnail = item.thumbnail ? (config.images.categoryBaseUrl + item.thumbnail) : undefined
+          });
+        }
+        return category.product_count > 0 && category.children_count > 0 && ( category.include_in_menu === 0  || category.include_in_menu === false )
       })
     }
   },
@@ -65,10 +125,10 @@ export default {
 
 <style lang="scss" scoped>
   .category-name {
-    padding-top: 0px;
+        padding-top: 0px;
     font-size: 12px;
-    color: #f04e23;
-    font-weight: bold;
+    color: #4d4d4d;
+    
     margin-right: 5px;
     margin-left: 5px;
     // font-size: 16px;
@@ -76,7 +136,17 @@ export default {
     // font-weight: bold;
     @media (max-width: 767px) {
       height: 16px;
+      font-size:12px;
+      margin-right: -8px;
+    margin-left: -8px;
+    padding-top: 5px;
     }
+  }
+  .mb10 {
+    margin-bottom:10px;
+  }
+  .product_bottom {
+      //margin-bottom:25px;
   }
 
   .bg-d1d1d1 {
@@ -103,7 +173,7 @@ export default {
     opacity: 1;
     transition: 0.3s all;
     background-color: #fff;
-    margin: 8px -5px;
+    margin: 3.1px -5px;
     box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.08);
     border-radius: 3px;
     cursor: pointer;
@@ -127,7 +197,7 @@ export default {
     }
 
     .subtitle {
-      font-family: 'Roboto', sans-serif;
+      font-family: Helvetica;
       @media (max-width: 767px) {
         background-color: rgba(255,255,255,0.4);
         padding: 0.5rem;
@@ -142,14 +212,31 @@ export default {
     }
   }
   .offer-product-image {
+    object-fit: cover;
     height: 132px;
     width: 132px;
     @media (max-width: 767px) {
     height: 115px;
     width: 115px;
+    object-fit: cover;
+    }
+    @media(max-width:386px) {
+      max-width:100%;
+    }
+  }
+  .category-banner {
+    // height: 300px;
+     max-width: 100%;
+    @media (max-width: 767px) {
+    // height: 115px;
+    // width: 115px;
+        
+    margin: 10px 0px 5px;
+
     }
   }
   .offer-product {
+    padding:6px;
     height: 180px;
     background-position: 50% 20%;
 
@@ -165,6 +252,57 @@ export default {
   .subtitle {
     @media (max-width: 767px) {
       font-size: 18px;
+    }
+  }
+  @media(max-width:380px){
+    .category-name {
+          padding-top: 5px;
+    }
+    .header-text {
+      margin-top: 24px;
+    }
+   /* .offer-product {
+          height: 164px;
+    }*/
+    .offer-product-image {
+          max-height: 115px;
+    height: 100%;
+    width: 100%;
+    }
+  }
+
+  @media(max-width:374px) {
+    .category-name {
+      font-size:11px!important;
+    }
+    .offer-product {
+      height:161px;
+    }
+  }
+
+  @media(max-width:420px) {
+    
+    .offer-product {
+              height: 147px;
+    }
+    .category-name {
+      font-size: 11.7px !important;
+    overflow: hidden;
+    padding-top: 6px;
+    }
+  }
+  @media(min-width:768px) {
+    .category-banner {
+      margin:20px 0px;
+    }
+  }
+
+  @media(max-width:767px) {
+    .img_sub_banner_box {
+        margin: 0px -5px!important;
+    }
+    .category-banner {
+        margin: 8px 0px 3px;
     }
   }
 </style>

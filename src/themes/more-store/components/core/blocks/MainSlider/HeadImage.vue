@@ -44,7 +44,7 @@ export default {
     .subtitle {
       font-size: 0.8rem;
       max-width: 340px;
-      font-family: 'Roboto', sans-serif;
+      font-family: Helvetica;
       line-height: 1.2rem;
     }
   }
@@ -114,6 +114,16 @@ export default {
   }
   .row {
     height: 200px;
+  }
+}
+@media(max-width:767px) {
+   section.head-image {
+    height: 150px;
+  }
+}
+@media(max-width:422px) {
+  section.head-image {
+  height:130px;
   }
 }
 </style>

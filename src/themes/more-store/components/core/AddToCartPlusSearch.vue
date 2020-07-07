@@ -1,10 +1,10 @@
 <template>
-  <div class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0" @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
+  <span class="add-to-cart-button pr15 pb10" v-if="cartQuantity(product, productsInCart) == 0" @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
     Add
-  </div>
-  <div v-else @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
+  </span>
+  <span v-else @click="addToCart(product, cartQuantity(product, productsInCart))" :disabled="isProductDisabled" data-testid="addToCart">
     +
-  </div>
+  </span>
 </template>
 
 <script>

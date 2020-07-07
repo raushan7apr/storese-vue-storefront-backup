@@ -1,33 +1,15 @@
 <template>
   <div id="category" class="category">
-    <header class="bg-cl-secondary header-class pl20">
-      <div class="container-fluid">
-        <breadcrumbs />
-      </div>
-    </header>
+    <img v-if="getCategoryBanner" v-bind:src="getCategoryBanner" class="m10 category-image-banner">
+    <!-- <img v-if="getCategoryBanner" src="https://preprod-admin.storese.in/pub/media/catalog/category/Cooking_Ess_Wide_range_Sub.jpg" class="m10 category-image-banner"> -->
     <div class="container-fluid pb60 bgd1d1d1 product-list-container">
       <div class="row m0">
         <div class="col-md-2 start-xs category-filters">
           <sidebar :filters="getAvailableFilters" @changeFilter="changeFilter" />
         </div>
-        <div class="col-md-3 start-xs mobile-filters" v-show="mobileFilters">
-          <div class="close-container absolute w-100">
-            <i class="material-icons p15 close cl-accent" @click="closeFilters">close</i>
-          </div>
-          <sidebar class="mobile-filters-body" :filters="getAvailableFilters" @changeFilter="changeFilter" />
-          <div class="relative pb20 pt15">
-            <div class="brdr-top-1 brdr-cl-primary absolute divider w-100" />
-          </div>
-          <button-full
-            class="mb20 btn__filter"
-            @click.native="closeFilters"
-          >
-            {{ $t('Filter') }}
-          </button-full>
-        </div>
         <div class="col-xs-12 col-md-10 border-box products-list">
-          <div class="row middle-sm item-sort-by-container">
-            <div class="col-sm-9 pl20 col-xs-4 category-title">
+          <div class="row middle-sm item-sort-by-container" style="margin-right: -5px; margin-left: -5px;">
+            <div class="col-sm-9 pl20 col-xs-6 category-title">
               {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
             </div>
             <!--<div class="sorting col-sm-2">
@@ -43,22 +25,21 @@
               />
             </div>
 
-            <div class="container pr30 col-xs-8">
-              <div class="row m0 product-filter-container">
-                <button
-                  class="col-xs-5 mt25 mr15 mobile-filters-button"
-                  @click="openFilters"
-                >
-                  {{ $t('Filter') }}
-                </button>
-                <div class="mobile-sorting col-xs-6 mt25">
-                  <sort-by
-                    @change="changeFilter"
-                    :value="getCurrentSearchQuery.sort"
-                  />
-                </div>
+            <div class="row container col-xs-6 mobile-sort-filter" style="padding-right: 0px;">
+              <div class="col-xs-6" style="padding-right:0; padding-left: 0; display: table-cell; vertical-align: middle; text-align: center; padding-top: 4px;">
+                <!-- <div style="position: relative; display: inline-block; border-bottom: 1px solid #f04d24cf;">Sort <i style="position: absolute; bottom: -1px; border-bottom: 1px solid #f04d24cf;" class="material-icons">keyboard_arrow_up</i></div> -->
+                <sort-by
+                  @change="changeFilter"
+                  :value="getCurrentSearchQuery.sort"
+                />
+              </div>
+              <div @click="toggleFilters" class="col-xs-6" style="padding-right:0; padding-left: 0; display: table-cell; vertical-align: middle; text-align: center; padding-top: 6px;">
+                <div :style="!mobileFilters ? 'position: relative; display: inline-block; border-bottom: 1px solid #f04d24cf;' : 'position: relative; display: inline-block; border-bottom: 1px solid #f04d24cf; color: #f04d24cf; font-size: 17px;'">Filter <i style="position: absolute; bottom: -1px; border-bottom: 1px solid #f04d24cf; font-size: 18px; font-weight: bold;" class="material-icons">{{ !mobileFilters ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</i></div>
               </div>
             </div>
+        </div>
+        <div v-show="mobileFilters">
+          <sidebar class="mobile-filters-body" :filters="getAvailableFilters" @changeFilter="changeFilter" />
         </div>
           <!--<p class="col-xs-12 end-md m0 pb20 cl-secondary">
             {{ $t('{count} items', { count: getCategoryProductsTotal }) }}
@@ -146,6 +127,11 @@ export default {
     isLazyHydrateEnabled () {
       return config.ssr.lazyHydrateFor.includes('category-next.products')
     },
+    getCategoryBanner () {
+      if (this.getCurrentCategory.image){
+      return(config.images.categoryBaseUrl + this.getCurrentCategory.image)
+      }
+    },
     isCategoryEmpty () {
       return this.getCategoryProductsTotal === 0
     }
@@ -172,12 +158,12 @@ export default {
     }
   },
   methods: {
-    openFilters () {
-      this.mobileFilters = true
+    toggleFilters () {
+      this.mobileFilters = !this.mobileFilters
     },
-    closeFilters () {
-      this.mobileFilters = false
-    },
+    // closeFilters () {
+    //   this.mobileFilters = false
+    // },
     async changeFilter (filterVariant) {
       this.$store.dispatch('category-next/switchSearchFilters', [filterVariant])
     },
@@ -229,20 +215,31 @@ export default {
   }
   .item-sort-by-container {
     background-color: #fff;
-    margin:36px 0px 0px;
-    box-shadow: 2px 2px 5px 1px #e1e1e1;
+    margin:36px 0px -8px;
+    border-bottom: 1px solid #d8d9d9;
+    // box-shadow: 2px 2px 5px 1px #e1e1e1;
     // -moz-box-shadow: 2px 2px 5px 1px #e1e1e1;
     // -webkit-box-shadow: 2px 2px 5px 1px #e1e1e1;
   }
+  .category-image-banner {
+    width: 100%;
+    height: auto;
+  }
   @media (max-width: 770px) {
-   .item-sort-by-container {
-    //  background-color: transparent;
-     margin:20px -8px 3px;
-     border-radius: 3px;
-   }
-   .product-filter-container {
-     margin-bottom: 20px;
-   }
+    .category-image-banner {
+      width: 95%;
+      border-radius: 5px;
+    }
+    .product-filter-container {
+      margin-bottom: 20px;
+    }
+    .item-sort-by-container {
+      background-color: transparent;
+      margin: 0px;
+      box-shadow: 0px;
+      -moz-box-shadow: 0px;
+      -webkit-box-shadow: 0px;
+    }
   }
   .btn {
     &__filter {
@@ -292,6 +289,9 @@ export default {
     .product-list-container {
       margin-top: -30px;
     }
+    .mobile-sort-filter {
+      display: none;
+    }
   }
   @media (max-width: 64em) {
     .products-list {
@@ -309,7 +309,7 @@ export default {
       padding-left: 0px;
     }
     .category-title {
-      margin: 41px 0 27px 0;
+      margin: 16px 0 16px 0;
       font-size: 14px;
       line-height: 1px;
     }
@@ -329,6 +329,8 @@ export default {
       background: #fff;
       color: #828282;
       border: 1px solid #bdbdbd;
+      margin-top: 10px;
+      margin-bottom: -10px;
     }
 
     .sorting {
@@ -336,7 +338,9 @@ export default {
     }
 
     .mobile-sorting {
-      display: block;
+      display: block;    
+      margin-top: 10px;
+      margin-bottom: -10px;
     }
 
     .category-filters {
@@ -360,7 +364,7 @@ export default {
     }
 
     .mobile-filters-body {
-      margin-top: 50px;
+      // margin-top: 50px;
     }
   }
 

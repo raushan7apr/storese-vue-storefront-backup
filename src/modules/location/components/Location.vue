@@ -16,17 +16,17 @@
       <div id="form-wrap">
         <form class="search-fld">
           <img class="search-img"
-               alt="search location"
+               alt="Search your Street/"
                src="https://cdn.shopify.com/s/files/1/0385/5889/2171/files/StoreSe_App-113.png?v=1589971320"
           >
-          <input :disabled="isFetchingLocation" aria-label="search location" v-model="locationSearch" ref="address" type="text" id="search-rest" placeholder="search location" class="pac-target-input" autocomplete="off">
+          <input :disabled="isFetchingLocation" aria-label="search location" v-model="locationSearch" ref="address" type="text" id="search-rest" placeholder="Search your Street/ Address" class="pac-target-input" autocomplete="off">
         </form>
         <button class="detect-btn btn" ref="detectBtn" @click="detectLocation" :disabled="isFetchingLocation">
           <img src="https://cdn.shopify.com/s/files/1/0385/5889/2171/files/StoreSe_App-114.png?v=1589971320" alt="detect location"> Detect
         </button>
       </div>
       <div class="pt-10">
-        <span class="error-message">{{ errorMessage }}</span>
+        <span class="error-message h5">{{ errorMessage }}</span>
       </div>
       <div class="loc-footer-wrap">
         <span>Now delivering in Delhi, Mumbai, Kolkata, Bengaluru, Indore, and Mysuru</span>
@@ -248,6 +248,7 @@ export default {
         if (results && results.length) {
           this.locationSearch = results[0].formatted_address;
           this.locationValue = results[0].formatted_address;
+          this.getStores(lat, lng);
         }
       });
     },
@@ -294,7 +295,9 @@ export default {
               this.showLocationWrap = false;
               this.preventBodyScroll(false);
             }
-            window.location.href = response.stores[0].storeAppUrl;
+            else{
+              window.location.href = response.stores[0].storeAppUrl;
+            }
             this.selectedAddress = this.locationValue;
           });
         } else {
@@ -402,13 +405,18 @@ export default {
     z-index: 9999;
     background-color: #fff;
     padding: 1rem;
-    width: 300px;
+    width: 350px;
     height: 175px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+  @media (max-width: 767px) {
+      .location-content {
+        width: 300px;
+      }
   }
   .location-content-hide {
     @extend .location-content;
@@ -425,7 +433,7 @@ export default {
     top: -9px;
   }
   .loc-main-title {
-    color: #f04d24;
+    color: #000;
     font-size: 1.1rem;
     padding-top: 8px;
     font-weight: 600;
@@ -458,7 +466,7 @@ export default {
     line-height: 1.2;
     border-radius: 2px;
     font-size: 15px;
-    font-family: Rajdhani,sans-serif;
+    font-family: 'Helvetica';
     font-style: normal;
     font-weight: 500;
   }
@@ -530,7 +538,7 @@ export default {
     padding: 8px 15px;
     background-color: #DB5E32;
     color: #fff;
-    font-family: Rajdhani, sans-serif;
+    font-family: 'Helvetica';
     font-style: normal;
     font-weight: 700;
     text-transform: uppercase;

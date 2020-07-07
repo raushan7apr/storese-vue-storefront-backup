@@ -3,23 +3,23 @@
     <div>
       <div>
         <div class="search-input-group">
+          <i class="material-icons left-icon" @click="closeSearch()">arrow_back</i>
           <input
             ref="search"
             id="search"
             v-model="search"
             @input="makeSearch"
             @blur="$v.search.$touch()"
-            class="search-panel-input"
-            :placeholder="$t('Search product Here...')"
+            class="search-panel-input ml0 mr0"
+            :placeholder="$t('Search')"
             type="search"
-            autofocus="true"
             @click="open = true"
           >
           <i class="material-icons search-icon">search</i>
         </div>
       </div>
     </div>
-    <div v-if="open">
+    <div v-if="open" class="product-listing-border">
       <div v-if="visibleProducts.length && categories.length > 1" class="categories">
         <category-panel :categories="categories" v-model="selectedCategoryIds" />
       </div>
@@ -28,7 +28,7 @@
           v-for="product in visibleProducts"
           :key="product.id"
           :product="product"
-          @click.native="closeSearchpanel;open = false"
+          @click.native="closeSearchpanel;"
         />
         <transition name="fade">
           <div
@@ -89,9 +89,13 @@ export default {
     window.removeEventListener('click', this.close);
   },
   methods: {
+    closeSearch () {
+      this.$store.commit('ui/setSearchpanel', false)
+    },
     close (e) {
       if (!this.$el.contains(e.target)) {
         this.open = false;
+        this.search = ''
       }
     }
   },
@@ -138,7 +142,7 @@ export default {
   },
   mounted () {
     // add autofocus to search input field
-    this.$refs.search.focus()
+    this.$refs.search.click()
     // disableBodyScroll(this.$el)
   },
   destroyed () {
@@ -152,15 +156,31 @@ export default {
 @import "~theme/css/variables/grid";
 @import "~theme/css/variables/typography";
 
+@media (min-width: 767px) {
+  .product-listing-border {
+    border: 3px solid #bdbdbd;
+    border-top: none;
+    border-radius: 0px 0px 5px 5px;
+    outline: none;
+    margin: 0px;
+    background: #fff;
+  }
+}
+
+.search-input-group {
+  border-bottom: 1px solid #d1d2d3;
+}
+
 .searchpanel {
   height: auto;
-  width: 800px;
+  width: 100%;
   top: 0;
   right: 0;
   z-index: 3;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  background: #fff;
 
   .close-icon-row {
     display: flex;
@@ -200,6 +220,8 @@ export default {
   .product-listing {
     background: #fff;
     // padding-top: 30px;
+    margin-left: 0px; 
+    margin-right: 0px;
   }
 
   .product {
@@ -209,9 +231,9 @@ export default {
     padding-right: map-get($grid-gutter-widths, lg) / 2;
 
     @media #{$media-xs} {
-      width: 50%;
+      width: 100%;
       padding-left: map-get($grid-gutter-widths, xs) / 2;
-      padding-right: map-get($grid-gutter-widths, xs) / 2;
+      // padding-right: map-get($grid-gutter-widths, xs) * 3;
     }
   }
 
@@ -221,26 +243,42 @@ export default {
 
   .search-input-group {
     display: flex;
-    border-bottom: 1px solid #bdbdbd;
+    // border-bottom: 1px solid #bdbdbd;
   }
 
   .search-icon {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
+  .left-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (min-width: 767px) {
+    .left-icon {
+      display: none;
+    }
+  }
+
   .search-panel-input {
     width: 100%;
-    height: 60px;
+    max-height: 50px;
     padding-bottom: 0;
-    padding-top: 0;
+    padding-top: 8px;
     border: none;
     outline: 0;
     font-size: 18px;
-    font-family: map-get($font-families, secondary);
+    font-family: Helvetica;
+    caret-color: #f57151;
+    // font-family: "map-get($font-families, secondary)";
 
     @media #{$media-xs} {
       font-size: 16px;

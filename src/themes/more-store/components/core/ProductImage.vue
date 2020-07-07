@@ -7,7 +7,7 @@
   >
     <img
       v-show="showPlaceholder"
-      src="/assets/placeholder.svg"
+      src="/assets/place_holder_2.png"
       :alt="alt"
       class="product-image__placeholder"
     >

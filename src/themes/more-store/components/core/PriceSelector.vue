@@ -37,7 +37,7 @@ export default {
 
     &.active {
       .square {
-        background-color: $color-active;
+        background-color: #f04d24cf;
       }
     }
   }

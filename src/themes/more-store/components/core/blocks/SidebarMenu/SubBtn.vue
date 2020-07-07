@@ -1,7 +1,7 @@
 <template>
   <button
     v-if="type === 'next'"
-    class="inline-flex between-xs w-100 px25 py20 pr15 serif cl-accent"
+    class="inline-flex between-xs w-100 px25 pr15 serif cl-accent sb_btn_"
     type="button"
     @click.stop="next()"
     :aria-label="$t('Show subcategories')"
@@ -70,17 +70,28 @@ export default {
 @import '~theme/css/helpers/functions/color';
 $color-gray: color(gainsboro);
 $color-black: color(matterhorn);
-
+.sb_btn_ {
+  font-size:14px;
+}
+.subcategory-item a {
+  font-size:14px;
+}
+button.fs-medium{
+  font-size:14px;
+}
+.cl-accent {
+  color:#f04e23;
+}
 button {
   i {
-    color: $color-gray;
+    color: #f04e23;
     font-size: 28px;
     line-height: 24px;
   }
   &:hover,
   &:focus {
     i {
-      color: $color-black;
+      color: #f04e23;
     }
   }
 }

@@ -255,4 +255,8 @@ $color-secondary: color(secondary);
     padding-bottom: 30px;
   }
 }
+
+footer {
+  background:#4d4d4d;
+}
 </style>

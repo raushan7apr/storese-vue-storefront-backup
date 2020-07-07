@@ -1,7 +1,7 @@
 // Global styles for text
 body {
   font-size: 16px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Helvetica';
   font-weight: 400;
 }
 
@@ -10,7 +10,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Helvetica';
 }
 
 h1,
@@ -111,4 +111,12 @@ h6,
 // @todo its not in styleguite therefore shouldn't be here, ask Karol Bzik
 .fs16 {
   font-size: 16px;
+}
+.py8 {
+padding-top:8px;
+padding-bottom:8px;
+}
+
+.sb_bold {
+  font-weight:600;
 }

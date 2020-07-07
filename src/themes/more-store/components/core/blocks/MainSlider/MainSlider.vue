@@ -1,11 +1,11 @@
 <template>
   <section class="main-slider w-100 bg-cl-th-accent cl-white">
     <no-ssr>
-      <carousel :per-page="1" pagination-active-color="#ffffff" pagination-color="#e0e0e0">
+      <carousel :per-page="1" pagination-active-color="#ffffff" pagination-color="#4d4d4d" v-bind:autoplay="true" v-bind:loop="true">
         <slide v-for="(slide, index) in slides" :key="index">
           <div class="container w-100" v-lazy:background-image="slide.image">
             <div class="row middle-xs center-xs">
-              <div class="col-md-12 px10p">
+              <!--<div class="col-md-12 px10p">
                 <p
                   class="subtitle mb0 serif uppercase h3 align-center"
                   data-testid="mainSliderSubtitle"
@@ -15,7 +15,7 @@
                 <h1 class="title mt0 mb30 align-center" data-testid="mainSliderTitle">
                   {{ slide.title }}
                 </h1>
-              </div>
+              </div>-->
             </div>
           </div>
         </slide>
@@ -53,7 +53,7 @@ export default {
   mounted () {
     setInterval(() => {
       this.currentSlide = (this.currentSlide + 1) % (this.totalSlides)
-    }, 5000)
+    }, 16000)
   },
   created () {
     this.updateSliderData(sliderData)
@@ -145,6 +145,23 @@ h1 {
   }
   .row {
     height: 200px;
+  }
+}
+
+@media(max-width:767px) {
+  .main-slider {
+    max-height:150px!important;
+  }
+  .main-slider .container {
+    max-height:150px;
+  }
+}
+@media(max-width:422px) {
+  .main-slider {
+    height:130px;
+  }
+  .main-slider .container {
+    height:130px;
   }
 }
 </style>

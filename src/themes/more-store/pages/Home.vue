@@ -1,11 +1,11 @@
 <template>
   <div id="home">
     <head-image />
-    <section class="container-fluid bg-d1d1d1 pb60 px15">
+    <section class="container-fluid bg-d1d1d1 px15">
       <div class="row center-xs">
         <header class="col-md-12 start-xs">
           <div class="header-text">
-            {{ $t('Shop by Category') }}
+            <span class="sb_bold">{{$t('Shop by')}}</span>  {{$t('Category') }}
           </div>
         </header>
         <home-categories />
@@ -115,17 +115,19 @@ export default {
 <style lang="scss" scoped>
 
   .header-text {
-    font: 600 20px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
-    color: #232d5f;
-    margin-top: 80px;
+    font: 400 20px/1.35 Helvetica ;
+    color: #4d4d4d;
+    margin-top: 30px;
     font-size: 28px;
     margin-bottom: -12px;
     text-transform: capitalize;
     @media (max-width: 767px) {
-      margin-top: 20px;
-      font-size: 20px;
+      margin-top: 12px;
+      font-size: 17px;
+      margin-bottom:-23px;
     }
   }
+ 
 
   .bg-d1d1d1 {
     background-color: rgb(242, 242, 242);
@@ -135,5 +137,6 @@ export default {
     @media (max-width: 767px) {
       padding-top: 0;
     }
+   
   }
 </style>

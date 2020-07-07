@@ -26,11 +26,11 @@
             <wishlist-icon class="p15 icon pointer" />
           </div>-->
           <div class="col-md-2 col-xs-2 end-xs">
-            <div class="row">
+            <div class="row cart-icon">
               <!--<search-icon style="display: none;" class="p15 icon hidden-xs pointer" />-->
               <!--<wishlist-icon class="p15 icon hidden-xs pointer" />
               <compare-icon class="p15 icon hidden-xs pointer" />-->
-              <div class="col-md-4">
+              <div class="col-md-8">
                 <microcart-icon class="p15 icon pointer" />
               </div>
               <div class="col-md-1">
@@ -76,13 +76,21 @@
       <div class="container-fluid mobile-screen">
         <div class="row">
           <div class="col-xs-2 start-xs">
-            <div>
+            <div v-if="!isCategoryPage">
               <hamburger-icon class="p15 bg-f04d24cf icon" />
+            </div>
+            <div v-else>
+              <i class="material-icons left-icon" @click="$router.go(-1)">arrow_back</i>
             </div>
           </div>
           <div class="col-xs-8 center-xs">
-            <div>
+            <div v-if="!isCategoryPage || isProductPage">
               <logo width="auto" height="60px" />
+            </div>
+            <div v-else>
+              <span class="category-name">
+                {{ current | htmlDecode }}
+              </span>
             </div>
           </div>
           <div class="col-xs-1 end-xs mobile-search-icon">
@@ -117,7 +125,7 @@
             </ul>
           </div>
           <div class="col-md-1">
-            <img @click="navBarCategoryToggle" class="dot-icon" width="36" src="https://www.svgrepo.com/show/124304/three-dots.svg">
+            <img @click="navBarCategoryToggle" class="dot-icon" width="27" src="https://www.svgrepo.com/show/124304/three-dots.svg">
           </div>
           <div class="col-md-3 col-xs-2">
             <div class="search-input-group">
@@ -146,6 +154,7 @@ import SidebarMenu from '@vue-storefront/core/compatibility/components/blocks/Si
 import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
 import SearchPanel from '../SearchPanel/SearchPanel';
 import { configureProducts } from '@vue-storefront/core/modules/catalog/helpers/configure'
+import { Breadcrumbs } from '@vue-storefront/core/modules/breadcrumbs/components/Breadcrumbs.ts'
 
 export default {
   name: 'Header',
@@ -160,7 +169,7 @@ export default {
     SearchIcon,
     WishlistIcon
   },
-  mixins: [CurrentPage, SidebarMenu],
+  mixins: [CurrentPage, SidebarMenu, Breadcrumbs],
   data () {
     return {
       displayList: true,
@@ -193,7 +202,9 @@ export default {
     },
     visibleCategories () {
       return this.categories.filter(category => {
-        return category.product_count > 0 || category.children_count > 0
+        if (category.include_in_menu === 1 || category.include_in_menu === true) {
+          return category.product_count > 0 || category.children_count > 0
+        }
       })
     }
   },
@@ -214,6 +225,9 @@ export default {
     }, 250)
   },
   methods: {
+    goBack () {
+
+    },
     navBarCategoryToggle () {
       this.displayList = !this.displayList;
     },
@@ -256,18 +270,38 @@ export default {
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
 
+.category-name {
+  float: left;
+  font-size: 16px;
+  padding-top: 22px;
+  margin-left: -14px;
+}
+.left-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .cursor_pointer {
   cursor: pointer;
 }
-
-.dot-icon {
-  margin: 20% auto;
-  display: block;
-  justify-content: center;
-  text-align: center;
-  cursor: pointer;
+.search-and-category .col-md-1 {
+      border-right: 1px solid #f2f2f2;
+    max-width: 70px;
+    display: inline-block;
+    max-height: 50px;
+    margin-right: 20px;
 }
-
+.dot-icon {
+      margin: 0 auto;
+    padding-top: 24%;
+    vertical-align: middle;
+    margin-bottom: 0px;
+    -ms-flex-pack: center;
+    justify-content: center;
+    cursor: pointer;
+}
 .large-screen {
   @media (max-width: 767px) {
     display: none;
@@ -284,41 +318,37 @@ $color-icon-hover: color(secondary, $colors-background);
   margin-left: -20px;
 }
 .bg-f04d24cf {
-  color: #f04d24cf;
+  color: #4d4d4d;
   font-weight: 600;
 }
 
 .minicart-count {
-    font-size: 12px;
-    background-color: #a8aeba;
-    color: #000;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: -40px;
-    padding-left: 9px;
-    padding-right: 9px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
-    margin-top:10px;
+        font-size: 9px;
+    background-color: #f04d24;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: -49px;
+    border-radius: 100%;
+    margin-top: 9px;
 }
 
 @media (max-width: 45em) {
   .minicart-count {
-    font-size: 12px;
-    background: #f04d24cf;
+        background: #f36f51;
     color: #fff;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: 5px;
-    padding-left: 9px;
-    padding-right: 9px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
     position: absolute;
-    right: 8px;
-    top: 26px;
+    right: 6px;
+    top: 36px;
+    padding: 2px;
+    width: 12px;
+    line-height: 13px;
+    height: 13px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    border-radius: 100%;
   }
 }
 .categories-bar {
@@ -329,11 +359,13 @@ $color-icon-hover: color(secondary, $colors-background);
     margin-block-start: 0.5rem;
     margin-block-end: 0.5rem;
     li {
-      padding: 15px 60px 16px 0px;
+      padding: 8px 60px 16px 0px;
     }
   }
 }
-
+.cart-icon {
+  margin-top: 30px;
+}
 .search-input-group {
   display: flex;
   font: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
@@ -350,7 +382,7 @@ $color-icon-hover: color(secondary, $colors-background);
 
 .search-panel-input {
   width: 100%;
-  height: 60px;
+  max-height: 48px;
   padding-bottom: 0;
   padding-top: 0;
   border: none;
@@ -392,7 +424,7 @@ header {
   }
 }
 .icon {
-  opacity: 0.6;
+  opacity:1;
   &:hover,
   &:focus {
     color: #30794a;
@@ -421,7 +453,7 @@ header {
 }
 
 .categories-bar {
-  border-right: 1px solid rgb(242, 242, 242);
+  // border-right: 1px solid rgb(242, 242, 242);
 }
 @media (max-width: 767px) {
   .row.middle-xs {
@@ -444,7 +476,7 @@ header {
 }
 
 .search-and-category {
-  height: 64px;
+  max-height: 50px;
     box-shadow: 0px 0px 10px #d7d7d7!important;
     margin: 0px 0;
     margin-top:0px;
@@ -458,7 +490,7 @@ header {
   }
  .categories-bar a.underline:after, a:not(.no-underline):hover:after {
    background:#f04e23;
-   top:-24px;
+   top:-18.4px;
    bottom:unset;
    height:4px;
    transition: all .6s ease-in-out;

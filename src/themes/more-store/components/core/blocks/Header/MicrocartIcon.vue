@@ -6,7 +6,7 @@
     data-testid="openMicrocart"
     :aria-label="$t('Open microcart')"
   >
-    <i class="material-icons cart-icon">shopping_cart</i>
+    <i class="material-icons-1 cart-icon-1"><img src="/assets/shopping-cart.png" style="width:30px;"/></i>
     <!-- <span v-if="totalQuantity" class="cart-amount border-box center-xs middle-xs weight-600">&#8377;{{ totals[0].value }}.00</span> -->
     <!-- <span v-else class="cart-amount border-box center-xs middle-xs weight-600">&#8377;0.00</span> -->
   </button>
@@ -53,12 +53,12 @@ export default {
 <style scoped>
   .cart-icon {
     font-size: 34px;
-    color: #a8aeba;
+    color: #d4d4d4;
   }
   @media (max-width: 45em) {
   .cart-icon {
     font-size: 24px;
-    color: #f04d24cf;
+    color: #d4d4d4;
     }
   }
   .cart-amount {
@@ -66,7 +66,7 @@ export default {
     display: block;
     padding-top: 8px;
     font-size: 22px;
-    color: #a8aeba;
+    color: #f04d24cf;
     font-weight: 600;
   }
 </style>

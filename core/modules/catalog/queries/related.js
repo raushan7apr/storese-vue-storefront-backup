@@ -11,7 +11,7 @@ export function prepareRelatedQuery (key, sku) {
     .applyFilter({ key: 'status', value: { 'in': [1] } })
 
   if (config.products.listOutOfStockProducts === false) {
-    relatedProductsQuery = relatedProductsQuery.applyFilter({ key: 'stock.is_in_stock', value: { 'eq': true } })
+    relatedProductsQuery = relatedProductsQuery.applyFilter({ key: 'stock.is_in_stock', value: { 'eq': true } }).applyFilter({ key: 'stock.saleable_qty', value: { 'gt': 0 } })
   }
 
   return relatedProductsQuery

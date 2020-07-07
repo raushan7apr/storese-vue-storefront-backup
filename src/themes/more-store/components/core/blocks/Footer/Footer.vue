@@ -2,15 +2,15 @@
   <footer :class="{ 'brdr-top-1 brdr-cl-secondary': isCheckoutPage }">
     <!-- <newsletter class=" flex brdr-bottom-1 brdr-cl-secondary" v-if="!isCheckoutPage" /> -->
     <div
-      class="footer-links flex pt30 pb60 px40 bg-cl-secondary"
+      class="footer-links pt30 pb60 bg-cl-secondary"
       v-if="!isCheckoutPage"
     >
       <div class="container-fluid">
-        <div class="row m0 center-xs between-md">
+        <div class="row m0 between-md">
           <div
             class="row m0 col-xs-12 between-md between-xs"
           >
-            <div class="start-md">
+            <div class="start-md footer_info">
               <div class="mt15">
                 <router-link class="cl-secondary" :to="localizedRoute('/terms-and-condition')" exact>
                   {{ $t('Terms and Conditions') }}
@@ -189,7 +189,37 @@ $color-secondary: color(secondary);
   }
 
   .footer-links {
-    padding-bottom: 30px;
+    padding-bottom: 0px;
   }
+}
+footer {
+  background:#4d4d4d;
+}
+
+.footer_info {
+  display:flex;
+  justify-content:space-between;
+      width: 100%;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 26px;
+}
+
+.footer-links {
+  background:#4d4d4d;
+}
+ .footer-links a {
+   color:#fff;
+ }
+.bottomLinks li {
+color: #828282;
+}
+.bottomLinks li  a {
+  color: #808184;
+}
+a.store-locale {
+      color: #808184;
+}
+.footer__version-info[data-v-00152f92] {
+      margin-top: 3px;
 }
 </style>

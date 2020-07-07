@@ -4,7 +4,7 @@
       <input
         class="
          py10 w-100 border-box brdr-none brdr-bottom-1
-         brdr-cl-primary h4 sans-serif
+         brdr-cl-primary h4 helvetica
        "
         :class="{pr30: type === 'password', empty: value === ''}"
         :type="type === 'password' ? passType : type"
@@ -129,6 +129,9 @@ export default {
   $color-puerto-rico: color(puerto-rico);
   $color-hover: color(tertiary, $colors-background);
 
+  .helvetica {
+    font-family: Helvetica;
+  }
   .base-input {
     min-height: 4.5rem;
   }

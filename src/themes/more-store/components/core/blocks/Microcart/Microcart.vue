@@ -17,24 +17,29 @@
             @click="closeMicrocartExtend(totals)"
             data-testid="closeMicrocart"
           >
-            <i class="material-icons back-icon cl-accent">
-              keyboard_arrow_left
+            <i class="material-icons back-icon cl-accent mt2">
+              arrow_back
             </i>
           </button>
-          <span class="py30 cart-item-title">
+          <span class="py20 cart-item-title">
             <strong class="text">{{ $t('Your Cart') }}</strong>
-            <span class="count">{{ totalQuantity }}</span>
-            <span>Items</span>
+            <span class="count">{{ totalQuantity }} Item</span>
           </span>
         </div>
       </div>
+
       <div class="col-xs end-xs">
+        <div class="amount-saved weight-600">
+          Saved <span class="rupee-sign">&#x20b9;</span>{{ amountSaved }}
+        </div>
+      </div>
+      <!--<div class="col-xs end-xs hide-mobile">
         <clear-cart-button
         class="py30"
         v-if="productsInCart.length"
         @click.native="clearCart"
       />
-      </div>
+      </div>-->
     </div>
     <!-- <div
       class="row py20 px40 middle-xs actions"
@@ -79,10 +84,10 @@
       <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
     </ul>
     <div v-if="productsInCart.length" class="summary px40 cl-accent helvetica">
-      <h3 class="m0 pb10 weight-400 summary-heading helvetica">
+      <!--<h3 class="m0 pb10 weight-400 summary-heading helvetica">
         {{ $t('Shopping summary') }}
-      </h3>
-      <div v-for="(segment, index) in totals" :key="index" class="helvetica row py10" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
+      </h3>-->
+      <!--<div v-for="(segment, index) in totals" :key="index" class="helvetica row py10" v-if="segment.code !== 'grand_total' && segment.code !== 'tax'">
         <div class="col-xs">
           <div v-if="segment.code === 'shipping'">
             Shipping Fee
@@ -99,7 +104,7 @@
         <div v-if="segment.value != null" class="col-xs align-right">
           {{ segment.value | price(storeView) }}
         </div>
-      </div>
+      </div>-->
       <!-- <div class="row py20">
         <div v-if="OnlineOnly && !addCouponPressed" class="col-xs-12">
           <button
@@ -121,21 +126,27 @@
         </div>
       </div> -->
 
-      <div class="row pt30 pb20 weight-700 middle-xs" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">
-        <div class="col-xs h4 total-price-label">
+      <div class="row cart-total pt10 pb10 weight-600 middle-xs" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">
+        <!--<div class="col-xs h4 total-price-label">
           {{ segment.title }}
+        </div>-->
+        <div class="col-xs h4 total-price-label">
+          Cart Total
         </div>
-        <div class="col-xs align-right h4 total-price-value">
+        <!--<div class="col-xs align-right h4 total-price-value">
           {{ segment.value | price(storeView) }}
+        </div>-->
+        <div class="col-xs align-right h4 total-price-value">
+          {{ totals[0].value | price(storeView) }}
         </div>
       </div>
     </div>
 
     <div
-      class="row py20 px40 middle-xs actions-footer"
+      class="row py20 px20 middle-xs actions-footer hide-mobile"
       v-if="productsInCart.length && !isCheckoutMode"
     >
-      <div class="col-xs-6 first-xs col-sm-6 end-sm">
+      <div class="col-xs-6 first-xs col-sm-6 first-sm">
         <button
           type="button"
           class="cart-button"
@@ -148,12 +159,39 @@
       <!-- <div class="col-xs-12 col-sm first-sm">
         <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
       </div> -->
-      <div class="col-xs-6 first-xs col-sm-6 end-sm">
+      <div class="col-xs-6 end-xs col-sm-6 end-sm">
         <button-full class="checkout-button"
           :link="{ name: 'checkout' }"
           @click.native="closeMicrocartExtend(totals)"
         >
           {{ $t('Go to checkout') }}
+        </button-full>
+      </div>
+    </div>
+
+    <div
+      class="row hide-desktop"
+      v-if="productsInCart.length && !isCheckoutMode"
+    >
+      <div class="col-xs-4 first-xs back col-sm-6 first-sm">
+        <button
+          type="button"
+          class="back-button w-100"
+          @click="closeMicrocartExtend(totals)"
+          data-testid="closeMicrocart"
+        >
+          BACK
+        </button>
+      </div>
+      <!-- <div class="col-xs-12 col-sm first-sm">
+        <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
+      </div> -->
+      <div class="col-xs-8 end-xs pay col-sm-6 end-sm">
+        <button-full class="payment-button weight-700 w-100"
+          :link="{ name: 'checkout' }"
+          @click.native="closeMicrocartExtend(totals)"
+        >
+        MAKE PAYMENT
         </button-full>
       </div>
     </div>
@@ -226,6 +264,13 @@ export default {
     }),
     storeView () {
       return currentStoreView()
+    },
+    amountSaved() {
+      let amountSaved = 0;
+      for(let product of this.productsInCart) {
+        amountSaved = amountSaved + (product.original_price - product.final_price)*product.qty
+      }
+      return amountSaved
     }
   },
   methods: {
@@ -261,7 +306,7 @@ export default {
         }
         this.$ga.event('Continue_Checkout', 'click', JSON.stringify(gaData));
       }
-      this.toggleMicrocart()
+      this.$store.dispatch('ui/closeMicrocart')
       this.$store.commit('ui/setSidebar', false)
       this.addCouponPressed = false
     },
@@ -289,6 +334,55 @@ export default {
 
 <style lang="scss" scoped>
   @import "~theme/css/animations/transitions";
+  .mt2 {
+    @media (max-width: 767px) {
+      margin-top: 2px;
+    }
+  }
+
+  .back {
+    background-color: #F7F7F7;
+  }
+
+  .pay {
+    background-color: #E86026;
+  }
+
+  .amount-saved {
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+    background-color: #E86026;
+    color: #FFFFFF;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-right: -2px;
+    margin-top: 17px;
+  }
+
+  .rupee-sign {
+    font-size: 10px;
+  }
+
+  .hide-mobile {
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  .hide-desktop {
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  .cart-total {
+    @media (max-width: 767px) {
+      position: static;
+    }
+  }
+
   .helvetica {
     font-family: Helvetica;
   }
@@ -341,10 +435,11 @@ export default {
     background-color: #fff;
     margin-left: 0px;
     margin-right: 0px;
-    margin-bottom:30px;
     border-radius: 3px 3px 0 0;
     @media (max-width: 767px) {
       padding: 0 15px;
+      box-shadow: none;
+      border-bottom: 1px solid #D0D2D3;
     }
     .link {
       @media (max-width: 767px) {
@@ -392,6 +487,29 @@ export default {
     border-radius: 5px
   }
 
+  .back-button {
+    display: inline-block;
+    color: #E86026;
+    background-color: #F7F7F7;
+    opacity: 1;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+  }
+
+  .payment-button {
+    background-color: #E86026;
+    border-color: #E86026;
+    color: #fff;
+    padding: 16px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+  }
+
   .checkout-button {
     background-color: #f04d24cf;
     border-color: #f04d24cf;
@@ -403,7 +521,7 @@ export default {
     font-size: 14px;
     margin: 4px 2px;
     border-radius: 5px;
-    border: 2px solid #fff;
+    border: 2px solid #f04d24cf;
   }
   .summary {
     @media (max-width: 767px) {
@@ -426,7 +544,7 @@ export default {
 
   .total-price-value {
     @media (max-width: 767px) {
-      font-size: 24px;
+      font-size: 18px;
     }
   }
 
@@ -449,10 +567,16 @@ export default {
   }
 
   .text {
-    color: #f04d24cf
+    color: #4D4D4D;
+    letter-spacing: 0px;
+    font-size: 18px;
+    display: inline-block;
+    margin-left: 12px;
   }
   .count {
-    color: #f04d24cf
+    color: #E86026;
+    font-size: 18px;
+    font-weight: 600;
   }
   .overlay {
     top: 0;

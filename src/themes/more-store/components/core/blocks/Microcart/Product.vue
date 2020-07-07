@@ -1,6 +1,6 @@
 <template>
-  <li class="row py10 bg-cl-white" :class="{ 'relative': editMode }">
-    <div class="mx10 w-100 py10 mb15 edit-mode flex between-xs middle-xs" v-if="editMode">
+  <li class="row py10 bg-cl-white list-item" :class="{ 'relative': editMode }">
+    <!--<div class="mx10 w-100 py10 mb15 edit-mode flex between-xs middle-xs" v-if="editMode">
       Edit mode
       <button class="brdr-none bg-cl-transparent" @click="closeEditMode">
         <span class="cl-accent">
@@ -9,16 +9,16 @@
           </i>
         </span>
       </button>
-    </div>
-    <div class="blend">
+    </div>-->
+    <div class="blend col-xs-4">
       <div>
         <product-image :image="image" />
       </div>
     </div>
-    <div class="col-xs flex flex-wrap">
-      <div class="flex flex-nowrap details">
+    <div class="col-xs-8 flex flex-wrap">
+      <div class="flex flex-nowrap details pr5">
         <div class="flex w-100 flex-wrap between-xs">
-          <div>
+          <div class="full-width">
             <router-link
               class="helvetica h5 name"
               :to="productLink"
@@ -49,6 +49,7 @@
               {{ product.info | formatProductMessages }}
             </div> -->
 
+            {{ product.totals }}
             <div class="flex mr10 align-left start-xs between-sm prices">
               <div class="prices" v-if="!displayItemDiscounts || !isOnline">
                 <span class="h4 helvetica cl-error price-special" v-if="product.special_price">
@@ -75,6 +76,9 @@
               <div class="prices" v-else>
                 <span class="h5 helvetica price-regular">
                   {{ (product.regular_price || product.price_incl_tax) * product.qty | price(storeView) }}
+                </span>
+                <span class="h5 helvetica price-original" v-if="product.price != product.original_price">
+                  {{ (product.original_price || product.price_incl_tax) * product.qty | price(storeView) }}
                 </span>
               </div>
             </div>
@@ -129,10 +133,10 @@
           {{ $t('Update item') }}
         </button-full>
       </div>
-      <div class="w-100 flex middle-xs actions" v-if="!editMode">
+      <!--<div class="w-100 flex middle-xs actions" v-if="!editMode">
         <edit-button class="mx5" @click="openEditMode" v-if="productsAreReconfigurable && !editMode" />
         <remove-button class="mx5" @click="removeItem" />
-      </div>
+      </div>-->
     </div>
   </li>
 </template>
@@ -155,6 +159,7 @@ import { ProductOption } from '@vue-storefront/core/modules/catalog/components/P
 import { getThumbnailForProduct, getProductConfiguration } from '@vue-storefront/core/modules/cart/helpers'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import EditMode from './EditMode'
+import { notifications } from '@vue-storefront/core/modules/cart/helpers'
 
 export default {
   data () {
@@ -242,22 +247,59 @@ export default {
       this.updateVariant()
       this.closeEditMode()
     },
-    updateProductQty (qty) {
+    async updateProductQty (qty) {
       if (this.editMode) {
-        this.editModeSetQty(qty)
+        await this.editModeSetQty(qty)
         return
       }
 
-      this.updateQuantity(qty)
+      await this.updateQuantity(qty)
     },
     removeFromCart () {
       this.$store.dispatch('cart/removeItem', { product: this.product })
     },
-    updateQuantity (quantity) {
+    async updateQuantity (quantity) {
       if (quantity === 0) {
-        this.removeFromCart()
+        await this.removeFromCart()
+        if (this.$ga) {
+          this.$ga.event('Remove_From_Cart', 'click', JSON.stringify(this.gaData(this.product)));
+        }
+        return
       }
-      this.$store.dispatch('cart/updateQuantity', { product: this.product, qty: quantity })
+      const productMaxQuantity = await this.getQuantity(this.product)
+      if (productMaxQuantity && quantity <= productMaxQuantity) {
+        try {
+          let currentQty = this.productQty
+          await this.$store.dispatch('cart/updateQuantity', { product: this.product, qty: quantity })
+          if (quantity > currentQty) {
+            this.notifyUser(notifications.createNotification({ type: 'success', message: 'Product has been added to the Cart!!' }))
+          }
+          if(this.$ga) {
+            let gaData = this.gaData(this.product)
+            gaData.new_quantity = quantity;
+            gaData.old_quantity = currentQty;
+            this.$ga.event('Change_Quantity', 'click', JSON.stringify(gaData));
+          }
+        } catch (message) {
+          this.notifyUser(notifications.createNotification({ type: 'error', message }))
+        }
+      } else {
+        if (this.$ga) {
+          let gaData = {
+            product_name: this.product.name
+          }
+          this.$ga.event('Out_of_Stock', 'click', JSON.stringify(gaData));
+        }
+        this.notifyUser(notifications.outOfStock());
+      }
+    },
+    gaData(product) {
+      return {
+        product_name: product.name,
+        product_sku: product.sku,
+        product_price: product.original_price_incl_tax,
+        offer_price: product.special_price,
+      }
     },
     async getQuantity (product) {
       if (this.isStockInfoLoading) return // stock info is already loading
@@ -297,7 +339,10 @@ export default {
         this.maxQuantity = maxQuantity
         this.editModeSetFilters(filter)
       }
-    }
+    },
+    notifyUser (notificationData) {
+      this.$store.dispatch('notification/spawnNotification', notificationData, { root: true })
+    },
   },
   watch: {
     isOnline: {
@@ -331,6 +376,10 @@ export default {
     flex: 0 0 150px;
   }
 
+  .list-item {
+    border-bottom: 1px solid #D0D2D3;
+  }
+
   .image {
     mix-blend-mode: multiply;
     vertical-align: top;
@@ -340,6 +389,10 @@ export default {
     }
   }
 
+  .full-width {
+    width: 100%;
+  }
+
   .details {
     flex: 1 1 auto;
     display: flex;
@@ -347,6 +400,8 @@ export default {
   }
 
   .name {
+    color: #4D4D4D;
+    opacity: 1;
     @media (max-width: 767px) {
       font-size: 14px;
     }
@@ -388,6 +443,10 @@ export default {
 
   .price-original {
     text-decoration: line-through;
+    color: #6D6E71;
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 12px;
   }
 
   input {

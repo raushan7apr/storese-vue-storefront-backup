@@ -2,10 +2,9 @@
   <component
     :is="compontentType"
     :to="redirectionLink"
-    class="button-outline no-outline py15 bg-cl-transparent h4 no-underline sans-serif fs-medium"
+    class="button-outline no-outline py15 bg-cl-transparent no-underline helvetica"
     :class="{
       light : color === 'light', 'brdr-white' : color === 'light', 'cl-white' : color === 'light',
-      dark : color === 'dark', 'brdr-darkgray' : color === 'dark', 'cl-secondary' : color === 'dark',
       px0 : link ? true : false,
       px40 : link ? false : true
     }"
@@ -50,13 +49,13 @@ $white: color(white);
 $black: color(black);
 
 .button-outline {
-  border: 2px solid;
   height: 62px;
 }
-
+.helvetica {
+  font-family: Helvetica;
+}
 @media screen and (min-width: 900px) {
   .button-outline {
-    border: 2px solid;
     min-width: 220px;
   }
 }
