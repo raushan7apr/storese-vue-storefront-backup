@@ -57,37 +57,6 @@ export default {
     Loading,
     Logo
   },
-  created () {
-    CartService.getShippingInfo().then((response) => {
-      // store zipcodes and regions in session
-      sessionStorage.setItem('regions', JSON.stringify(response.result.regions))
-      sessionStorage.setItem('zipcodes', response.result.zipcodes)
-      // loop through shipping methods and add
-      let method = {
-        method_title: 'Free shipping',
-        method_code: 'freeshipping',
-        carrier_code: 'freeshipping',
-        amount: 0,
-        price_incl_tax: 0,
-        default: true,
-        offline: true
-      }
-      for (let i = 0; i < response.result.shipping_methods.length; i++) {
-        if (response.result.shipping_methods[i].method_code === 'flatrate') {
-          method = {
-            method_title: response.result.shipping_methods[i].method_title,
-            method_code: response.result.shipping_methods[i].method_code,
-            carrier_code: response.result.shipping_methods[i].carrier_code,
-            amount: response.result.shipping_methods[i].amount,
-            price_incl_tax: response.result.shipping_methods[i].price_incl_tax,
-            default: true,
-            offline: true
-          }
-        }
-      }
-      this.$store.dispatch('checkout/addShippingMethod', method, { root: true })
-    })
-  },
   mounted () {
     if(screen.width<786){
       this.height = '128px';
@@ -103,3 +72,14 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+  font-family: 'Nunito', sans-serif !important;
+}
+
+#app {
+  font-family: 'Nunito', sans-serif !important;
+}
+</style>

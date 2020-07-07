@@ -87,7 +87,7 @@ export const Payment = {
     }
   },
   methods: {
-    sendDataToCheckout () {
+    sendPaymentDataToCheckout () {
       this.$bus.$emit('checkout-after-paymentDetails', this.payment, this.$v)
       this.isFilled = true
     },

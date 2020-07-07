@@ -1,5 +1,5 @@
 <template>
-  <div id="product" class="product-page">
+  <div id="product" class="product-page pb-80">
     <!-- <header class="bg-cl-secondary product-page-header">
       <div class="container-fluid">
         <breadcrumbs />
@@ -131,7 +131,7 @@
             <div>
               <div class="col-xs-12">
                 <product-price
-                  class="mb40 product-price-mobile mt15" style="color: #f04d24cf;"
+                  class="mb15 product-price-mobile mt15" style="color: #f04d24cf;"
                   v-if="getCurrentProduct.type_id !== 'grouped'"
                   :product="getCurrentProduct"
                   :custom-options="getCurrentCustomOptions"
@@ -223,11 +223,11 @@
         </section>
       </div>
     </section>
-    <section class="container px15 pt50 pb35 cl-accent details-mobile">
-      <h2 class="h3 m0 mb10 helvetica lh20 details-title-mobile col-xs-12">
-        {{ $t('Product details') }}
-      </h2>
-      <div class="h4 details-wrapper-mobile" :class="{'details-wrapper-mobile--open': detailsOpen}">
+    <section class="container px15 pt10 pb15 cl-accent details-mobile">
+      <h5 class="m0 helvetica lh20 details-title-mobile col-xs-12">
+        {{ $t('Product Detail') }}
+      </h5>
+      <div class="mb40 details-wrapper-mobile" :class="{'details-wrapper-mobile--open': detailsOpen}">
         <div class="row between-md m0">
           <div class="col-xs-12 col-sm-12">
             <div class="lh30 h5" v-html="getCurrentProduct.description" />
@@ -243,7 +243,7 @@
               />
             </ul>
           </div>
-          <div class="details-overlay" @click="showDetails" />
+          <!-- <div class="details-overlay" @click="showDetails" /> -->
         </div>
       </div>
     </section>
@@ -586,7 +586,7 @@ $more-background: color(rgb(242, 242, 242));
   color: #414b56;
   font-size: 36px;
   @media (max-width: 767px) {
-    font-size: 36px;
+    font-size: 16px;
   }
 }
 .product-quantity-container {
@@ -604,6 +604,9 @@ $more-background: color(rgb(242, 242, 242));
   .product-details {
     padding-left: 0px;
   }
+}
+.details-mobile {
+  background-color: #f7f7f7;
 }
 // .add-to-cart-button {
 //   background: #fff;
@@ -639,7 +642,7 @@ $more-background: color(rgb(242, 242, 242));
     max-height: 140px;
     overflow: hidden;
     transition: all 0.3s ease;
-    font-size: 14px;
+    font-size: 10px;
     &--open {
       max-height: none;
     }
@@ -679,10 +682,13 @@ $more-background: color(rgb(242, 242, 242));
     box-shadow: none;
     }
   .product-name {
-    font-size: 24px;
+    font-size: 16px;
   }
   .product-view {
     display: none;
+  }
+  #product {
+    padding-top: 100px;
   }
 }
 .product {
@@ -800,6 +806,10 @@ $more-background: color(rgb(242, 242, 242));
     padding-bottom: 20px;
     border-bottom: 1px solid $bg-secondary;
   }
+}
+
+.pb-80 {
+  padding-bottom: 80px;
 }
 
 .variants-label {

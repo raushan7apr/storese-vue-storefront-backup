@@ -170,6 +170,11 @@ export default {
       }
       if (this.$ga) {
         this.$ga.event('Payment_Completed', 'click', JSON.stringify(gaData));
+        this.$ga.ecommerce.setAction('checkout', {
+          'step': 6,
+          'option': 'Order Placed'
+        })
+        this.$ga.ecommerce.send('checkout')
       }
       this.confirmation = payload.confirmation
       this.$store.dispatch('checkout/setThankYouPage', true)
@@ -223,24 +228,28 @@ export default {
     },
     checkStocks () {
       let isValid = true
-      for (let child of this.$children) {
-        if (child.hasOwnProperty('$v')) {
-          if (child.$v.$invalid) {
-            // Check if child component is Personal Details.
-            // If so, then ignore validation of account creation fields.
-            if (child.$v.hasOwnProperty('personalDetails')) {
-              if (child.$v.personalDetails.$invalid) {
-                isValid = false
-                break
-              }
-            } else {
-              isValid = false
-              break
-            }
-          }
-        }
-      }
-
+      // To do if account creation
+      // for (let child of this.$children) {
+      //   if (child.hasOwnProperty('$v')) {
+      //     if (child.$v.$invalid) {
+      //       // Check if child component is Personal Details.
+      //       // If so, then ignore validation of account creation fields.
+      //       console.log(child.$v.hasOwnProperty('personalDetails'))
+      //       if (child.$v.hasOwnProperty('personalDetails')) {
+      //         if (child.$v.personalDetails.$invalid) {
+      //           console.log('1st' + isValid)
+      //           isValid = false
+      //           break
+      //         }
+      //       } else {
+      //         console.log(child)
+      //         isValid = false
+      //         console.log('2nd' + isValid)
+      //         break
+      //       }
+      //     }
+      //   }
+      // }
       if (typeof navigator !== 'undefined' && navigator.onLine) {
         if (this.stockCheckCompleted) {
           if (!this.stockCheckOK) {
@@ -331,6 +340,13 @@ export default {
       return this.order
     },
     placeOrder () {
+      if (this.$ga) {
+        this.$ga.ecommerce.setAction('checkout', {
+          'step': 5,
+          'option': 'Place Order'
+        })
+        this.$ga.ecommerce.send('checkout')
+      }
       this.checkConnection({ online: typeof navigator !== 'undefined' ? navigator.onLine : true })
       if (this.checkStocks()) {
         this.$store.dispatch('checkout/placeOrder', { order: this.prepareOrder() })

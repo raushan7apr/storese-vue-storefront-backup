@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <h4 class="sidebar__header relative mt35 mb20 flex">
-      <span class="sidebar__header__text"> {{ $t('Filter') }} </span>
+      <span class="sidebar__header__text nunito"> {{ $t('Filter') }} </span>
       <span
         class="weight-400 sidebar__header__clear sidebar__header__text pointer sans-serif flex lh25"
         @click="resetAllFilters"
@@ -43,7 +43,7 @@
         />
       </div> -->
       <div v-if="filterIndex==='price'">
-        <h5 class="helvetica">
+        <h5 class="nunito">
           {{ $t(filterIndex + '_filter') }}
         </h5>
         <price-selector
@@ -137,6 +137,9 @@ export default {
 .helvetica {
   font-family: 'Helvetica';
 }
+.nunito {
+  font-family: 'Nunito', sans-serif !important;
+}
 @media (min-width: 768px){
   .sidebar__header {
     margin-top: 35px;
@@ -153,7 +156,6 @@ export default {
   .sidebar__header__text{
     margin: 12px 20px;
     text-transform: uppercase;
-    font-family: 'Helvetica';
   }
   .sidebar {
     background-color: transparent;
@@ -174,13 +176,13 @@ cancel-icon {
 .sidebar__header__text{
   color: #fff;
   text-transform: uppercase;
-  font-family: 'Helvetica';
+  // font-family: 'Helvetica';
 }
 .sidebar__elements{
   padding-bottom: 1px;
   margin: 20px 20px;
   text-transform: uppercase;
-  font-family: 'Helvetica';
+  // font-family: 'Helvetica';
 }
 // .price-select {
 //   border-color: #f04d24cf;

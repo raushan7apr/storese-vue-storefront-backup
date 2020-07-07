@@ -3,9 +3,10 @@
     <div class="relative">
       <input
         class="
-         py10 w-100 border-box brdr-none brdr-bottom-1
-         brdr-cl-primary h4
+         py10 w-100 border-box brdr-none
+         brdr-cl-primary h6 inputform
        "
+        :placeholder="placeholder"
         :class="{pr30: type === 'password', empty: value === ''}"
         :type="type === 'password' ? passType : type"
         :name="name"
@@ -18,7 +19,7 @@
         @keyup.enter="$emit('keyup.enter', $event.target.value)"
         @keyup="$emit('keyup', $event)"
       >
-      <label>{{ placeholder }}</label>
+      <!-- <label>{{ placeholder }}</label> -->
     </div>
     <button
       v-if="iconActive"
@@ -33,16 +34,17 @@
     >
       {{ icon }}
     </button>
-    <ValidationMessages v-if="validations" :validations="validations" />
+    <ValidationMessagesMobile v-if="validations" :validations="validations" />
   </div>
 </template>
 
 <script>
-import ValidationMessages from './ValidationMessages.vue'
+import ValidationMessagesMobile from './ValidationMessagesMobile.vue'
+
 export default {
-  name: 'BaseInput',
+  name: 'BaseInputMobile',
   components: {
-    ValidationMessages
+    ValidationMessagesMobile
   },
   data () {
     return {
@@ -127,23 +129,31 @@ export default {
   $color-black: color(black);
   $color-puerto-rico: color(puerto-rico);
   $color-hover: color(tertiary, $colors-background);
+  .inputform {
+    border-radius: 3px;
+    border-color: #a7a5a5;
+    padding-left: 15px;
+    border-width: 1px;
+    border-style: solid;
+    color: #000;
+  }
   .helvetica {
     font-family: Helvetica;
   }
   .base-input {
-    min-height: 4.5rem;
+    min-height: 3.5rem;
   }
-  .nunito {
-  font-family: 'Nunito', sans-serif !important;
-}
+
   input {
     background: inherit;
+
     &:hover,
     &:focus {
       outline: none;
       border-color: #f04d24cf;
       // border-color: $color-puerto-rico;
     }
+
     &:disabled,
     &:disabled + label {
       opacity: 0.5;
@@ -165,10 +175,11 @@ export default {
   }
   input:focus ~ label, input:not(.empty) ~ label{
     top: -10px;
-    font-size:14px;
+    font-size:10px;
     color:#f04d24cf;
     // color:$color-puerto-rico;
   }
+
   .icon {
     right: 6px;
     top: 10px;

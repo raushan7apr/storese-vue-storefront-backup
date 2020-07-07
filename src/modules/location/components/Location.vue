@@ -2,13 +2,13 @@
   <div class="location">
     <div class="address-wrap" ref="addressWrap">
       <div class="static-wrap">
-        <i class="material-icons">place</i>
+        <i class="place-icon"></i>
         <span>Delivering to</span>
-        <i class="material-icons">arrow_forward</i>
+        <i class="icon-forward"></i>
         <div class="dynamic-address">
           {{ selectedAddress }}
         </div>
-        <i class="material-icons">arrow_drop_down</i>
+        <i class="icon-down"></i>
       </div>
     </div>
     <div :class="[showLocationWrap ? 'location-content' : 'location-content-hide']">
@@ -69,11 +69,23 @@ export default {
       longitude: 0,
       defaultLat: 12.9716,
       defaultLng: 77.5946,
-      storedLocationInfo: {}
+      storedLocationInfo: {},
+      company: 'PERPULE'
     }
   },
   mounted () {
     this.setAddressAutoComplete()
+    // console.log(this.$refs.address)
+    setTimeout(() => {
+      this.$nextTick(() => this.$refs.address.focus())
+    }, 2000)
+    if (this.$ga) {
+      this.$ga.ecommerce.setAction('checkout', {
+        'step': 1,
+        'option': 'Landing Page'
+      })
+      this.$ga.ecommerce.send('checkout')
+    }
   },
   methods: {
     clearCart (place, latitude, longitude) {
@@ -269,9 +281,8 @@ export default {
     },
     getStores (lat, lng) {
       if (this.isFetchingLocation) return;
-
       this.isFetchingLocation = true;
-      fetch(`https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation?lat=${lat}&lng=${lng}`, {
+      fetch(`https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation?lat=${lat}&lng=${lng}&company=${this.company}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json'
@@ -290,8 +301,15 @@ export default {
             window.localStorage.setItem('user_add_data', JSON.stringify(locationObj));
             if (this.$ga) {
               this.$ga.event('StoreAvailable', 'search', JSON.stringify(locationObj));
+              if (this.$ga) {
+                this.$ga.ecommerce.setAction('checkout', {
+                  'step': 2,
+                  'option': 'Storeview'
+                })
+                this.$ga.ecommerce.send('checkout')
+              }
             }
-            if (response.stores[0].storeAppUrl === window.location.href) {
+            if ( response.stores[0].storeAppUrl === window.location.href || window.location.href.includes(response.stores[0].storeAppUrl) || window.location.hostname === 'localhost') {
               this.showLocationWrap = false;
               this.preventBodyScroll(false);
             }
@@ -307,7 +325,7 @@ export default {
           let locationObj = {
             lat: lat,
             lng: lng,
-            url: `https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation?lat=${lat}&lng=${lng}`,
+            url: `https://gdlugd95yi.execute-api.ap-south-1.amazonaws.com/api/getStoreByLocation?lat=${lat}&lng=${lng}&company=${this.company}`,
             address: this.locationValue
           }
           if (this.$ga) {
@@ -362,6 +380,19 @@ export default {
 </script>
 
 <style>
+.icon-forward:before {
+  content: "\e5c8";
+  font: normal normal normal 20px/30px 'Material Icons';
+}
+
+.icon-down:before {
+  content: "\e5c5";
+  font: normal normal normal 20px/30px 'Material Icons';
+}
+.place-icon:before {
+  content: "\e55f";
+  font: normal normal normal 20px/30px 'Material Icons';
+}
   .d-flex {
     display: flex;
   }

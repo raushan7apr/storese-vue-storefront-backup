@@ -269,13 +269,20 @@ $color-white: color(white);
     text-transform: uppercase;
     background-color: #fff;
 }
+#category .add-to-cart {
+    margin-right: 10px;
+}
+
+#category .add-button {
+    margin-right: 10px;
+}
 
 .add-to-cart {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 65px;
-  height: 20px;
+  height: 25px;
   border: 1px solid #f04d24cf;
   border-radius: 30px;
   margin-top: 8px;
@@ -286,7 +293,7 @@ $color-white: color(white);
   justify-content: center;
   align-items: center;
   width: 65px;
-  height: 20px;
+  height: 25px;
   border: 1px solid #f04d24cf;
   background: #fff;
   border-radius: 30px;
@@ -361,13 +368,16 @@ $color-white: color(white);
 }
 
 .product-name {
-  font: 500 14px/1.35 Helvetica;
+  // font: 500 14px/1.35 Helvetica;
+  font-weight: 500;
   font-size: 16px;
 }
 
 .price {
   color: #f04d24cf;
-  font: 600 18px/1.35 Helvetica;
+  // font: 600 18px/1.35 Helvetica;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .product-details-container {
@@ -401,12 +411,15 @@ $color-white: color(white);
   }
   .price-original {
     color: #4d4d4d;
-    font: 300 14px/1.35 Helvetica;
+    // font: 300 14px/1.35 Helvetica;
+    font-size: 14px;
+    font-weight: 300;
   }
 }
 @media (max-width: 767px) {
   .product-name {
-    font: 500 14px/1.35 Helvetica;
+    // font: 500 14px/1.35 Helvetica;
+    font-weight: 500;
     font-size: 16px;
     text-align:left;
   }
@@ -430,7 +443,9 @@ $color-white: color(white);
     float: left;
     // margin-top: 5px;
     color: #4d4d4d;
-    font: 300 14px/1.35 Helvetica;
+    // font: 300 14px/1.35 Helvetica;
+    font-size: 14px;
+    font-weight: 300;
     line-height: 6px;
     position: relative;
     bottom: -6px;
@@ -445,13 +460,14 @@ $color-white: color(white);
     float:left;
     flex-basis: 50%;
     width: 67%;
-    padding-right: 3%
+    padding-right: 3%;
+    min-height: 60px;
   }
   .qty-container {
     float: right;
     // margin-top: -10px;
     // margin-right: 10px;
-    z-index: 999;
+    z-index: 2;
     position: relative;
     bottom: 0px;
   }

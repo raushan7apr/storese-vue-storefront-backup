@@ -3,7 +3,7 @@
     class="microcart cl-accent relative"
     :class="[productsInCart.length ? 'bg-cl-secondary' : 'bg-cl-primary']"
     data-testid="microcart"
-  >
+  > <img v-if="showLoader" data-v-8b7e55fa="" src="/assets/loader.gif" class="loader">
     <transition name="fade">
       <div v-if="isEditMode" class="overlay" @click="closeEditMode" />
     </transition>
@@ -14,7 +14,7 @@
           <button
             type="button"
             class="p0 brdr-none bg-cl-transparent close"
-            @click="closeMicrocartExtend(totals)"
+            @click="goBack"
             data-testid="closeMicrocart"
           >
             <i class="material-icons back-icon cl-accent mt2">
@@ -23,15 +23,14 @@
           </button>
           <span class="py20 cart-item-title">
             <strong class="text">{{ $t('Your Cart') }}</strong>
-            <span class="count">{{ totalQuantity }} Item</span>
+            <span v-if="totalQuantity > 1" class="count">{{ totalQuantity }} Items</span>
+            <span v-else class="count">{{ totalQuantity }} Item</span>
           </span>
         </div>
       </div>
 
-      <div class="col-xs end-xs">
-        <div class="amount-saved weight-600">
-          Saved <span class="rupee-sign">&#x20b9;</span>{{ amountSaved }}
-        </div>
+      <div @click="clearCart" class="col-xs end-xs clear-cart">
+        Clear Cart
       </div>
       <!--<div class="col-xs end-xs hide-mobile">
         <clear-cart-button
@@ -69,8 +68,10 @@
         />
       </div>
     </div> -->
-
-    <h4 v-if="!productsInCart.length" class="cl-accent ml30">
+    <div class="minimum-order">
+      <span class="minimum-order-text" v-if="totals[0].value < minimumOrderAmount">*Minimum order amount is {{ minimumOrderAmount | price(storeView) }}</span>
+    </div>
+    <h4 v-if="!productsInCart.length" class="cl-accent ml30 nunito">
       {{ $t('Your shopping cart is empty.') }}
     </h4>
     <div v-if="!productsInCart.length" class="ml30" @click="closeMicrocartExtend(totals)">
@@ -80,10 +81,10 @@
       </router-link>
       {{ $t('to find something beautiful for You!') }}
     </div>
-    <ul v-if="productsInCart.length" class="bg-cl-primary m0 pl0 pr40 pb40 products">
+    <ul v-if="productsInCart.length" class="bg-cl-primary m0 pl0 pr40 pb92 products">
       <product v-for="product in productsInCart" :key="product.server_item_id || product.id" :product="product" />
     </ul>
-    <div v-if="productsInCart.length" class="summary px40 cl-accent helvetica">
+    <div v-if="productsInCart.length" class="summary cl-accent">
       <!--<h3 class="m0 pb10 weight-400 summary-heading helvetica">
         {{ $t('Shopping summary') }}
       </h3>-->
@@ -126,74 +127,76 @@
         </div>
       </div> -->
 
-      <div class="row cart-total pt10 pb10 weight-600 middle-xs" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">
+      <div class="row cart-total cart-mobile-sticky-bottom pt10 pb10 weight-600 middle-xs" v-for="(segment, index) in totals" :key="index" v-if="segment.code === 'grand_total'">
         <!--<div class="col-xs h4 total-price-label">
           {{ segment.title }}
         </div>-->
-        <div class="col-xs h4 total-price-label">
-          Cart Total
+        <div class="col-xs-7 h4 total-price-label">
+          Cart Total <!-- {{ productsInCart.length }} Item |-->  
+          <span v-if="amountSaved" class="saved-amount"> <span class="cl-accent">|</span> Saved &#x20b9;{{ amountSaved }}</span>
         </div>
         <!--<div class="col-xs align-right h4 total-price-value">
           {{ segment.value | price(storeView) }}
         </div>-->
-        <div class="col-xs align-right h4 total-price-value">
+        <div class="col-xs-5 align-right h4 total-price-value">
           {{ totals[0].value | price(storeView) }}
         </div>
       </div>
-    </div>
-
-    <div
-      class="row py20 px20 middle-xs actions-footer hide-mobile"
+      <div
+      class="row middle-xs actions-footer hide-mobile"
       v-if="productsInCart.length && !isCheckoutMode"
-    >
-      <div class="col-xs-6 first-xs col-sm-6 first-sm">
-        <button
-          type="button"
-          class="cart-button"
-          @click="closeMicrocartExtend(totals)"
-          data-testid="closeMicrocart"
-        >
-          {{ $t('Keep Shopping') }}
-        </button>
+      >
+        <div class="col-xs-4 first-xs col-sm-4 first-sm p0" style="height:49.49px">
+          <button
+            type="button"
+            class="back-button w-100"
+            @click="goBack"
+            data-testid="closeMicrocart"
+          >
+            {{ $t('BACK') }}
+          </button>
+        </div>
+        <!-- <div class="col-xs-12 col-sm first-sm">
+          <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
+        </div> -->
+        <div class="col-xs-8 end-xs col-sm-8 end-sm p0">
+          <button-full class="payment-button w-100"
+            @click.native="makePayment(totals)"
+            :disabled="totals[0].value < minimumOrderAmount ? true : false"
+          >
+            {{ $t('Go to checkout') }}
+          </button-full>
+        </div>
       </div>
-      <!-- <div class="col-xs-12 col-sm first-sm">
-        <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
-      </div> -->
-      <div class="col-xs-6 end-xs col-sm-6 end-sm">
-        <button-full class="checkout-button"
-          :link="{ name: 'checkout' }"
-          @click.native="closeMicrocartExtend(totals)"
-        >
-          {{ $t('Go to checkout') }}
-        </button-full>
+
+      <div
+        class="row hide-desktop bottom-sticky-buttons"
+        v-if="productsInCart.length && !isCheckoutMode"
+      >
+        <div class="col-xs-4 first-xs back col-sm-6 first-sm">
+          <button
+            type="button"
+            class="back-button w-100"
+            @click="goBack"
+            data-testid="closeMicrocart"
+          >
+            BACK
+          </button>
+        </div>
+        <!-- <div class="col-xs-12 col-sm first-sm">
+          <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
+        </div> -->
+        <div class="col-xs-8 end-xs pay col-sm-6 end-sm">
+          <button-full class="payment-button weight-700 w-100"
+            @click.native="makePayment(totals)"
+            :disabled="totals[0].value < minimumOrderAmount ? true : false"
+          >
+          CHECKOUT
+          </button-full>
+        </div>
       </div>
     </div>
-
-    <div
-      class="row hide-desktop"
-      v-if="productsInCart.length && !isCheckoutMode"
-    >
-      <div class="col-xs-4 first-xs back col-sm-6 first-sm">
-        <button
-          type="button"
-          class="back-button w-100"
-          @click="closeMicrocartExtend(totals)"
-          data-testid="closeMicrocart"
-        >
-          BACK
-        </button>
-      </div>
-      <!-- <div class="col-xs-12 col-sm first-sm">
-        <instant-checkout v-if="isInstantCheckoutRegistered" class="no-outline button-full block brdr-none px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white sans-serif fs-medium mt20" />
-      </div> -->
-      <div class="col-xs-8 end-xs pay col-sm-6 end-sm">
-        <button-full class="payment-button weight-700 w-100"
-          :link="{ name: 'checkout' }"
-          @click.native="closeMicrocartExtend(totals)"
-        >
-        MAKE PAYMENT
-        </button-full>
-      </div>
+    <div v-if="showLoader" class="overlay-wrapper">
     </div>
   </div>
 </template>
@@ -216,6 +219,8 @@ import ButtonFull from 'theme/components/theme/ButtonFull'
 import Product from 'theme/components/core/blocks/Microcart/Product'
 import EditMode from './EditMode'
 import { InstantCheckoutModule } from 'src/modules/instant-checkout'
+import config from 'config'
+import { CartService } from '@vue-storefront/core/data-resolver'
 
 export default {
   components: {
@@ -236,7 +241,9 @@ export default {
       addCouponPressed: false,
       couponCode: '',
       componentLoaded: false,
-      isInstantCheckoutRegistered: isModuleRegistered('InstantCheckoutModule')
+      showLoader: false,
+      isInstantCheckoutRegistered: isModuleRegistered('InstantCheckoutModule'),
+      minimumOrderAmount: null
     }
   },
   props: {
@@ -249,10 +256,17 @@ export default {
   beforeCreate () {
     registerModule(InstantCheckoutModule)
   },
+  created () {
+    this.$bus.$on('go_ahead_checkout', this.goCheckout)
+  },
+  beforeDestroy () {
+    this.$bus.$off('go_ahead_checkout', this.goCheckout)
+  },
   mounted () {
     this.$nextTick(() => {
       this.componentLoaded = true
     })
+    this.getShippingMethods()
   },
   computed: {
     ...mapGetters({
@@ -268,15 +282,74 @@ export default {
     amountSaved() {
       let amountSaved = 0;
       for(let product of this.productsInCart) {
-        amountSaved = amountSaved + (product.original_price - product.final_price)*product.qty
+        amountSaved = amountSaved + (product.original_price - product.price)*product.qty
       }
       return amountSaved
+    },
+    minimumOrder () {
+      return config.storeViews.minimumOrder
     }
   },
   methods: {
     ...mapActions({
       applyCoupon: 'cart/applyCoupon'
     }),
+    async getShippingMethods() {
+      let method = {
+        method_title: 'Free shipping',
+        method_code: 'freeshipping',
+        carrier_code: 'freeshipping',
+        amount: 0,
+        price_incl_tax: 0,
+        default: true,
+        offline: true
+      }
+      try {
+        const response = await CartService.getShippingInfo()
+        let shippingMethodFinal = 1;
+        if (!response.result.hasOwnProperty('message')) {
+          this.minimumOrderAmount = response.result.min_order_amt
+          // store zipcodes and regions in session
+          console.log(response);
+          sessionStorage.setItem('regions', JSON.stringify(response.result.regions))
+          sessionStorage.setItem('zipcodes', response.result.zipcodes)
+
+          let delivery_charges = {}
+          for(let shipping_method of response.result.shipping_methods) {
+            if(shipping_method.carrier_code === 'tablerate') {
+              shippingMethodFinal = 1;
+              delivery_charges[shipping_method.order_subtotal] = shipping_method
+            }
+          }
+          sessionStorage.setItem('delivery_charges', JSON.stringify(delivery_charges))
+          // loop through shipping methods and add
+          for (let i = 0; i < response.result.shipping_methods.length; i++) {
+            if (response.result.shipping_methods[i].method_code === 'flatrate') {
+              shippingMethodFinal = 2;
+              method = {
+                method_title: response.result.shipping_methods[i].method_title,
+                method_code: response.result.shipping_methods[i].method_code,
+                carrier_code: response.result.shipping_methods[i].carrier_code,
+                amount: response.result.shipping_methods[i].amount,
+                price_incl_tax: response.result.shipping_methods[i].price_incl_tax,
+                default: true,
+                offline: true
+              }
+            }
+          }
+        }
+        if (shippingMethodFinal !== 1) {
+          this.$store.dispatch('checkout/addShippingMethod', method, { root: true })
+        }
+      }
+      catch(err) {
+        console.log(err)
+      }
+    },
+    async makePayment(totals) {
+      this.$store.dispatch('cart/creation')
+      this.closeMicrocartExtend(totals)
+    },
     addDiscountCoupon () {
       this.addCouponPressed = true
     },
@@ -301,14 +374,29 @@ export default {
     },
     closeMicrocartExtend (totals) {
       if (this.$ga && totals[1].value) {
-        gaData = {
+        let gaData = {
           cart_amount: totals[1].value
         }
         this.$ga.event('Continue_Checkout', 'click', JSON.stringify(gaData));
+        this.$ga.ecommerce.setAction('checkout', {
+          'step': 4,
+          'option': 'Checkout'
+        })
+        this.$ga.ecommerce.send('checkout')
       }
+    },
+    goBack () {
       this.$store.dispatch('ui/closeMicrocart')
       this.$store.commit('ui/setSidebar', false)
       this.addCouponPressed = false
+    },
+    goCheckout () {
+      if (this.totals[0].value > this.minimumOrderAmount) {
+        this.$store.dispatch('ui/closeMicrocart')
+        this.$store.commit('ui/setSidebar', false)
+        this.addCouponPressed = false
+        this.$router.push(this.localizedRoute('/checkout'))
+      }
     },
     onEscapePress () {
       this.$store.dispatch('ui/closeMicrocart')
@@ -334,10 +422,52 @@ export default {
 
 <style lang="scss" scoped>
   @import "~theme/css/animations/transitions";
+  .nunito {
+    font-family: 'Nunito', sans-serif !important;
+  }
+  .minimum-order {
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: #f7f7f7;
+  }
+  .minimum-order-text {
+    color: red;
+    font-size: 12px;
+  }
+  .clear-cart {
+    justify-content: center;
+    text-align: right;
+    padding-top: 25px;
+    font-size: 12px;
+    color: #a6a8ab;
+  }
   .mt2 {
     @media (max-width: 767px) {
       margin-top: 2px;
     }
+  }
+  .overlay-wrapper {
+    height: 100%;
+    width: 100%;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998;
+    opacity: 0.5;
+
+  }
+  .loader {
+    width: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index: 999;
   }
 
   .back {
@@ -361,6 +491,10 @@ export default {
     margin-top: 17px;
   }
 
+  .saved-amount {
+    color: #35BC6C;
+  }
+
   .rupee-sign {
     font-size: 10px;
   }
@@ -381,6 +515,8 @@ export default {
     @media (max-width: 767px) {
       position: static;
     }
+    padding-left: 15px;
+    padding-right: 15px; 
   }
 
   .helvetica {
@@ -425,8 +561,33 @@ export default {
       // padding: 30px 15px;
     }
   }
+
+  .pb92 {
+    margin-bottom: 92px;
+  }
+  .bottom-sticky-buttons {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    margin-left: 0;
+  }
+  .cart-mobile-sticky-bottom {
+    @media (max-width: 767px) {
+      position: fixed;
+      width: 100%;
+      bottom: 6%;
+      background-color: #fff;
+      padding-top: 12px;
+      padding-bottom: 14px;
+      margin-left: 0px;
+      box-shadow: 0px -2px 8px #0000001F;
+      opacity: 1;
+    }
+  }
+
   .microcart {
     background: #fff;
+    height: 100%
   }
   .actions {
     box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -497,6 +658,7 @@ export default {
     text-decoration: none;
     font-size: 14px;
     border: none;
+    font-family: 'Nunito', sans-serif !important;
   }
 
   .payment-button {
@@ -508,6 +670,7 @@ export default {
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
+    border-width: 0px;
   }
 
   .checkout-button {
@@ -525,9 +688,14 @@ export default {
   }
   .summary {
     @media (max-width: 767px) {
-      padding:  0 15px;
+      // padding:  0 15px;
       font-size: 12px;
     }
+    @media (min-width: 768px) {
+      bottom: 0;
+      width: 100%; 
+    }
+    // padding: 0;
   }
 
   .summary-heading {
@@ -538,13 +706,14 @@ export default {
 
   .total-price-label {
     @media (max-width: 767px) {
-      font-size: 18px;
+      font-size: 16px;
+      padding-left: 0px;
     }
   }
 
   .total-price-value {
     @media (max-width: 767px) {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
 

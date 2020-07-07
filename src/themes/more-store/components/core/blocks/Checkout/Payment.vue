@@ -12,14 +12,14 @@
       <div class="col-xs-11 col-sm-9 col-md-11 mt20">
         <div class="row mb15">
           <div class="col-xs-9 col-md-7" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
-            <h3 class="m0 mb5 helvetica">
+            <h3 class="m0 mb5 nunito">
               {{ $t('Payment') }}
             </h3>
           </div>
           <div class="col-xs-3 col-md-5 pr30">
             <div class="lh30 flex end-lg" v-if="isFilled && !isActive">
               <a href="#" class="cl-tertiary flex" @click.prevent="edit">
-                <span class="pr5 helvetica">
+                <span class="pr5 nunito">
                   {{ $t('Edit') }}
                 </span>
                 <i class="material-icons cl-tertiary">edit</i>
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="row pl20 helvetica" v-if="isActive">
+    <div class="row pl20" v-if="isActive">
       <div class="hidden-xs col-sm-2 col-md-1" />
       <div class="col-xs-11 col-sm-9 col-md-10">
         <div class="row" v-if="isActive">
@@ -264,15 +264,15 @@
           </template>
 
           <div class="col-xs-12">
-            <h4>
+            <h4 class="nunito">
               {{ $t('Payment method') }}
             </h4>
           </div>
-          <div v-for="(method, index) in paymentMethods" :key="index" class="col-md-6">
+          <div v-for="(method, index) in paymentMethods" :key="index" class="col-md-6" style="display:flex;align-items:baseline">
             <input
               type="radio"
               :value="method.code"
-              class="radioBoxStyle"
+              class="radioBoxStyle nunito"
               name="payment-method"
               v-model="payment.paymentMethod"
               @change="$v.payment.paymentMethod.$touch(); changePaymentMethod();"
@@ -291,10 +291,10 @@
         <div class="row">
           <div class="col-xs-12 col-md-8 px20 mb30">
             <button-full
-              @click.native="sendDataToCheckout"
+              @click.native="sendPaymentDataToCheckout"
               data-testid="paymentSubmit"
               :disabled="$v.payment.$invalid"
-              class="submit-details no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+              class="submit-details nunito no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white fs-medium mt20 router-link-active no-underline pointer align-center border-box"
             >
               {{ $t('Go review the order') }}
             </button-full>
@@ -340,14 +340,12 @@
 <script>
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import { unicodeAlpha, unicodeAlphaNum } from '@vue-storefront/core/helpers/validators'
-
 import BaseCheckbox from 'theme/components/core/blocks/Form/BaseCheckbox'
 import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
 import BaseSelect from 'theme/components/core/blocks/Form/BaseSelect'
 import ButtonFull from 'theme/components/theme/ButtonFull'
 import Tooltip from 'theme/components/core/Tooltip'
 import { Payment } from '@vue-storefront/core/modules/checkout/components/Payment';
-
 export default {
   components: {
     BaseCheckbox,
@@ -482,6 +480,9 @@ export default {
 <style lang="scss" scoped>
 .helvetica {
   font-family: Helvetica;
+}
+.nunito {
+  font-family: 'Nunito', sans-serif !important;
 }
 .checkout-step-header-inactive {
    box-shadow: 2px 2px 5px 1px #e1e1e1;

@@ -3,6 +3,10 @@ import { SearchQuery } from 'storefront-query-builder'
 import config from 'config';
 import { DataResolver } from './types/DataResolver';
 import { Category } from 'core/modules/catalog-next/types/Category';
+import { processLocalizedURLAddress } from '@vue-storefront/core/helpers'
+import getApiEndpointUrl from '@vue-storefront/core/helpers/getApiEndpointUrl';
+import { TaskQueue } from '@vue-storefront/core/lib/sync'
+import Task from '@vue-storefront/core/lib/sync/types/Task'
 
 const getCategories = async ({
   parentId = null,
@@ -47,6 +51,18 @@ const getCategories = async ({
   return response.items as Category[]
 }
 
+const fetchBanners = async (): Promise<Task> =>
+  TaskQueue.execute({
+    url: processLocalizedURLAddress(getApiEndpointUrl(config.cart, 'fetchbanners_endpoint')),
+    payload: {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      mode: 'cors'
+    },
+    silent: true
+  });
+
 export const CategoryService: DataResolver.CategoryService = {
-  getCategories
+  getCategories,
+  fetchBanners
 }

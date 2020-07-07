@@ -1,5 +1,5 @@
 <template>
-  <div class="mb40 price helvetica">
+  <div class="price helvetica">
     <div
       class="h3 cl-secondary"
       v-if="initialPrice.special && price.default && price.original"

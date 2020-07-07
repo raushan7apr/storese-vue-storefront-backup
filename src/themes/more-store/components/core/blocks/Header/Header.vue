@@ -8,7 +8,8 @@
       :class="{ 'is-visible': navVisible }"
     >
       <div class="container-fluid large-screen">
-        <div class="row between-xs" v-if="!isCheckoutPage || isThankYouPage">
+        <!-- <div class="row between-xs" v-if="!isCheckoutPage || isThankYouPage"> -->
+        <div class="row between-xs">
           <div class="col-md-4 col-xs-2 middle-xs" style="display: none;">
             <div>
               <hamburger-icon class="p15 icon bg-cl-secondary pointer" />
@@ -30,12 +31,13 @@
               <!--<search-icon style="display: none;" class="p15 icon hidden-xs pointer" />-->
               <!--<wishlist-icon class="p15 icon hidden-xs pointer" />
               <compare-icon class="p15 icon hidden-xs pointer" />-->
-              <div class="col-md-8">
-                <microcart-icon class="p15 icon pointer" />
+              <div class="col-md-8" @click="openMicrocart">
+                <microcart-icon class="p15 icon pointer" v-if="!isCheckoutPage"/>
               </div>
-              <div class="col-md-1">
+              <div class="col-md-1" >
                 <span
                   class="minicart-count absolute flex center-xs middle-xs border-box py0 px2 h6 lh16 weight-700 cl-white bg-cl-silver"
+                  v-if="!isCheckoutPage"
                 >
                   {{ totalQuantity }}
                 </span>
@@ -76,30 +78,46 @@
       <div class="container-fluid mobile-screen">
         <div class="row">
           <div class="col-xs-2 start-xs">
-            <div v-if="!isCategoryPage">
+            <div v-if="isCheckoutPage">
+              <router-link
+                :to="localizedRoute('/')"
+                class="cl-tertiary links"
+              >
+               <i class="material-icons left-icon">arrow_back</i>
+              </router-link>
+            </div>
+            <div v-else-if="!isCategoryPage">
               <hamburger-icon class="p15 bg-f04d24cf icon" />
             </div>
             <div v-else>
               <i class="material-icons left-icon" @click="$router.go(-1)">arrow_back</i>
             </div>
           </div>
-          <div class="col-xs-8 center-xs">
-            <div v-if="!isCategoryPage || isProductPage">
+          <div v-if="isCheckoutPage && !isThankYouPage" class="col-xs-8 start-xs checkout-name-container">
+            <div class="checkout-name-header">
+              Checkout
+            </div>
+          </div>
+          <div v-else-if="isCategoryPage && !isProductPage" class="col-xs-8 start-xs category-name-container">
+            <div class="category-name-header">
+              {{ currentCategoryName }}
+            </div>
+          </div>
+          <div v-else class="col-xs-7 center-xs logo">
+            <div>
               <logo width="auto" height="60px" />
             </div>
-            <div v-else>
-              <span class="category-name">
-                {{ current | htmlDecode }}
-              </span>
-            </div>
           </div>
-          <div class="col-xs-1 end-xs mobile-search-icon">
-            <search-icon class="p15 bg-f04d24cf icon pointer" />
+          <div class="col-xs-1 end-xs mobile-search-icon" >
+            <search-icon class="p15 bg-f04d24cf icon pointer" v-if="!isCheckoutPage"/>
           </div>
-          <div class="col-xs-1 end-xs ml10">
-            <microcart-icon class="pt15 bg-f04d24cf icon pointer" />
+          <div class="col-xs-1 end-xs ml10" >
+            <microcart-icon class="pt15 bg-f04d24cf icon pointer" v-if="!isCheckoutPage"/>
+          </div>
+          <div v-if="!isCheckoutPage"  @click="openMicrocart" class="col-xs-1 end-xs ml10 item-count-icon" >
             <span
               class="minicart-count"
+              v-if="!isCheckoutPage"
             >
               {{ totalQuantity }}
             </span>
@@ -135,6 +153,40 @@
         </div>
       </div>
     </header>
+    <template v-if="showOutofStock">
+      <div class="overlay-wrap"></div>
+      <div class="microcartClear">
+        <div
+          class="microcart-clear-container cl-accent relative"
+          :class="[products.length ? 'bg-cl-secondary' : 'bg-cl-primary']"
+          data-testid="microcart"
+        >     
+          <div class="clearcart-header">
+            <span class="clearcart-header-title">
+              <img src="/assets/error-icon.png" class="error-image" style="width: 30px;">
+              <span class="error-msg">Following Products are not in stock</span>
+            </span>
+          </div>
+          <div class="items-container">
+            <div v-if="products.length" class="col-md-12 start-md product-container">
+              <product-mobile v-for="product in products" :key="product.server_item_id || product.id" :product="product" />
+            </div>
+          </div>
+          <div class="remove-item-msg">Remove Item to Continue</div>
+          <div class="buttons-container">
+            <button class="back-button" @click="goBack">BACK</button>
+            <button class="remove-item-button" @click="removeItems">REMOVE</button>
+          </div>
+        </div>
+      </div>
+    </template>
+    <loading
+      :active.sync="checkoutLoading"
+      :is-full-page="true"
+      background-color="#ffffff"
+      :opacity="0.5"
+      color="orange"
+    ></loading>
     <div class="header-placeholder" />
   </div>
 </template>
@@ -155,6 +207,11 @@ import { formatCategoryLink } from '@vue-storefront/core/modules/url/helpers'
 import SearchPanel from '../SearchPanel/SearchPanel';
 import { configureProducts } from '@vue-storefront/core/modules/catalog/helpers/configure'
 import { Breadcrumbs } from '@vue-storefront/core/modules/breadcrumbs/components/Breadcrumbs.ts'
+import ProductMobile from '../Microcart/ProductMobile'
+// Loader
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   name: 'Header',
@@ -167,7 +224,9 @@ export default {
     Logo,
     MicrocartIcon,
     SearchIcon,
-    WishlistIcon
+    WishlistIcon,
+    ProductMobile,
+    Loading
   },
   mixins: [CurrentPage, SidebarMenu, Breadcrumbs],
   data () {
@@ -177,12 +236,17 @@ export default {
       isScrolling: false,
       scrollTop: 0,
       lastScrollTop: 0,
-      navbarHeight: 54
+      navbarHeight: 54,
+      checkoutLoading: false,
+      showOutofStock: false,
+      products: [],
+      cartItems: []
     }
   },
   computed: {
     ...mapGetters({
-      totalQuantity: 'cart/getItemsTotalQuantity'
+      totalQuantity: 'cart/getItemsTotalQuantity',
+      productsInCart: 'cart/getCartItems'
     }),
     ...mapState({
       isOpenLogin: state => state.ui.signUp,
@@ -206,7 +270,21 @@ export default {
           return category.product_count > 0 || category.children_count > 0
         }
       })
+    },
+    currentCategoryName () {
+      let category = this.$route.params.slug.split("-").join(" ").replace(/[0-9]/g,'')
+      return category
     }
+  },
+  created () {
+    this.$bus.$on('load_checkout', this.loadCheckout)
+    this.$bus.$on('go_ahead_checkout', this.offCheckout)
+    this.$bus.$on('product_out_of_stock', this.loadProducts)
+  },
+  beforeDestroy () {
+    this.$bus.$off('load_checkout', this.loadCheckout)
+    this.$bus.$off('go_ahead_checkout', this.offCheckout)
+    this.$bus.$off('product_out_of_stock', this.loadProducts)
   },
   beforeMount () {
     window.addEventListener(
@@ -225,8 +303,42 @@ export default {
     }, 250)
   },
   methods: {
+    ...mapActions({
+      openMicrocart: 'ui/toggleMicrocart'
+    }),
+    loadCheckout () {
+      this.checkoutLoading = true
+    },
+    loadProducts (items) {
+      this.products = []
+      this.showOutofStock = true
+      this.cartItems = this.productsInCart.map(obj => Object.assign({}, obj))
+      for (let i = 0; i < this.cartItems.length; i++) {
+        for (let j = 0; j < items.length; j++) {
+          if (this.cartItems[i].sku === items[j].sku) {
+            this.cartItems[i]['og_qty'] = this.cartItems[i].qty
+            this.cartItems[i].qty = items[j].remove_qty
+            this.products.push(this.cartItems[i])
+          }
+        }
+      }
+      this.checkoutLoading = false
+    },
+    removeItems () {
+      this.checkoutLoading = true
+      for (let i = 0; i < this.products.length; i++) {
+        this.products[i]
+        this.$store.dispatch('cart/updateQuantity', { product: this.products[i], qty: this.products[i].og_qty - this.products[i].qty });
+      }
+      this.$store.dispatch('cart/creation')
+      this.products = []
+      this.showOutofStock = false
+    },
     goBack () {
-
+      this.showOutofStock = false
+    },
+    offCheckout () {
+      this.checkoutLoading = false
     },
     navBarCategoryToggle () {
       this.displayList = !this.displayList;
@@ -237,7 +349,7 @@ export default {
     hasScrolled () {
       this.scrollTop = window.scrollY
       if (
-        this.scrollTop > this.lastScrollTop &&
+        this.scrollTop > this.lastScrollTop &
         this.scrollTop > this.navbarHeight
       ) {
         this.navVisible = false
@@ -269,6 +381,136 @@ export default {
 @import '~theme/css/variables/colors';
 @import '~theme/css/helpers/functions/color';
 $color-icon-hover: color(secondary, $colors-background);
+.items-container {
+    height: 200px;
+    overflow-y: scroll;
+  }
+  .product-container {
+      padding: 0px;
+  }
+  .clearcart-header {
+    background: #ec6c34;
+    color: #fff;
+    height: 60px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .clearcart-header-title {
+    padding: 0px 20px;
+    line-height: 58px;
+  }
+  .logo {
+    margin-left: 18px;    
+  }
+  .minimum-order {
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: #f7f7f7;
+  }
+  .minimum-order-text {
+    color: red;
+    font-size: 12px;
+  }
+  .clear-cart {
+    justify-content: center;
+    text-align: right;
+    padding-top: 22px;
+    font-size: 12px;
+    color: #a6a8ab;
+  }
+  .buttons-container {
+      text-align: center
+  }
+  .mt2 {
+    @media (max-width: 767px) {
+      margin-top: 2px;
+    }
+  }
+  .microcart-clear-container {
+      border-radius: 10px;
+  }
+  .back {
+    background-color: #F7F7F7;
+  }
+  .item-count-icon {
+    margin-left: -10px;
+  }
+  .error-image {
+    width: 30px;
+    padding: 12px 0px;
+    float: left;
+  }
+  .error-msg {
+    margin-left: 6px;
+    float: left;
+    font-weight: 600;
+
+  }
+  .remove-item-msg {
+    text-align: center;
+    color: #E86026;
+    font-weight: 600;
+    margin: 25px 0px;
+  }
+  @media (max-width:767px){
+    .remove-item-msg {
+        text-align: center;
+        color: #E86026;
+        font-weight: 600;
+        margin: 16px 0px;;
+    }
+  }
+    .back-button {
+        display: inline-block;
+        color: #E86026;
+        background-color: #F7F7F7;
+        opacity: 1;
+        padding: 13px 24px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        border: solid;
+        border-color: #E86026;
+        width: 140px;
+        margin-right: 10px;
+    }
+    .remove-item-button {
+        display: inline-block;
+        color: #F7F7F7;
+        background-color: #E86026;
+        opacity: 1;
+        padding: 16px 24px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        border: none;
+        width: 140px;
+        margin-left: 10px;
+    }
+.checkout-name-header {
+  font-size: 18px;
+  padding-top: 18px;
+  color: #4D4D4D;
+}
+
+.category-name-header {
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #4D4D4D;
+}
+
+.checkout-name-container {
+  margin-left: -20px;
+}
+
+.category-name-container {
+  margin-left: -20px;
+  display: flex;
+  align-items: center;
+}
 
 .category-name {
   float: left;
@@ -277,11 +519,12 @@ $color-icon-hover: color(secondary, $colors-background);
   margin-left: -14px;
 }
 .left-icon {
-  width: 60px;
+  width: 40px;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #4d4d4d;
 }
 .cursor_pointer {
   cursor: pointer;
@@ -315,13 +558,23 @@ $color-icon-hover: color(secondary, $colors-background);
   }
 }
 .mobile-search-icon {
-  margin-left: -20px;
+    margin-left: -20px
 }
 .bg-f04d24cf {
   color: #4d4d4d;
   font-weight: 600;
 }
-
+.overlay-wrap {
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height:100%;
+  background-color: #000;
+  z-index:998;
+  opacity:0.4;
+  filter: alpha(opacity = 50)
+}
 .minicart-count {
         font-size: 9px;
     background-color: #f04d24;
@@ -333,14 +586,41 @@ $color-icon-hover: color(secondary, $colors-background);
     border-radius: 100%;
     margin-top: 9px;
 }
-
+ @media (max-width: 767px) {
+    .microcartClear {
+    width: 350px;
+    height: 380px;
+    background-color: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -190px;
+    margin-left: -175px;
+    z-index: 1000;
+    border-radius: 10px;
+  }
+    }
+  @media (min-width: 767px) {
+    .microcartClear {
+     width: 500px;
+    height: 400px;
+    background-color: #fff; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -250px;
+    z-index: 1000;
+    border-radius: 10px;
+  }
+  }
 @media (max-width: 45em) {
   .minicart-count {
-        background: #f36f51;
+    background: #f36f51;
     color: #fff;
-    position: absolute;
-    right: 6px;
-    top: 36px;
+    // position: absolute;
+    // right: 16px;
+    // top: 36px;
     padding: 2px;
     width: 12px;
     line-height: 13px;
@@ -368,7 +648,7 @@ $color-icon-hover: color(secondary, $colors-background);
 }
 .search-input-group {
   display: flex;
-  font: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+  // font: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
 .search-icon {
@@ -388,7 +668,7 @@ $color-icon-hover: color(secondary, $colors-background);
   border: none;
   outline: 0;
   font-size: 16px;
-  font-style: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+  // font-style: 400 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
 .no-results {
@@ -473,6 +753,12 @@ header {
   span {
     font-size: 12px;
   }
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+  }
 }
 
 .search-and-category {
@@ -482,8 +768,9 @@ header {
     margin-top:0px;
 }
 .categories-bar a {
-    font: 500 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
+    // font: 500 12px/1.35 Rajdhani, Helvetica Neue, Verdana, Arial, sans-serif;
     color: #343e5c;
+    font-size: 12px;
   }
   .categories-bar a:hover {
     color:#f04e23;

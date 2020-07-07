@@ -94,7 +94,8 @@ export default {
 	.quantity{
 		color: #EC6D34;
 		font-size: 13px;
-		display: block;																																																																																																																																																																																																																																																																																																																																																																																																																																																							
+    display: block;			
+    font-weight: 600;																																																																																																																																																																																																																																																																																																																																																																																																																																																				
 	}
 
   .blend {
@@ -128,6 +129,7 @@ export default {
 		padding-left: 12px;
 		padding-right: 12px;
 		padding-top: 12px;
-		padding-right: 12px;
+    padding-right: 12px;
+    border-bottom: 1px solid #c5bfbf;
 	}
 </style>

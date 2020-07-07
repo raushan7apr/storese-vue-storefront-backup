@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="sidebar-menu__container row" ref="container">
-      <div class="col-xs-12 h4 helvetica">
+      <div class="col-xs-12 h4 nunito">
         <ul class="p0 m0 relative sidebar-menu__list" :style="mainListStyles">
           <!-- <li
             @click="closeMenu"
@@ -275,6 +275,9 @@ $color-mine-shaft: color(mine-shaft);
 
 .helvetica {
   font-family: Helvetica;
+}
+.nunito {
+  font-family: 'Nunito', sans-serif !important;
 }
 .sidebar-element {
   padding: 15px 0px 15px 15px;

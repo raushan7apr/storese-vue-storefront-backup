@@ -32,6 +32,7 @@ export const Shipping = {
       myAddressDetails: {
         firstname: '',
         lastname: '',
+        emailAddress: '',
         country: '',
         region: '',
         city: '',
@@ -97,7 +98,7 @@ export const Shipping = {
         this.$store.dispatch('checkout/updatePropValue', ['lastName', receivedData.lastName])
       }
     },
-    sendDataToCheckout () {
+    sendShippingDataToCheckout () {
       this.$bus.$emit('checkout-after-shippingDetails', this.shipping, this.$v)
       this.isFilled = true
     },
@@ -129,6 +130,7 @@ export const Shipping = {
           country: this.myAddressDetails.country_id,
           state: this.myAddressDetails.region.region ? this.myAddressDetails.region.region : '',
           city: this.myAddressDetails.city,
+          emailAddress: this.myAddressDetails.emailAddress,
           streetAddress: this.myAddressDetails.street[0],
           apartmentNumber: this.myAddressDetails.street[1],
           zipCode: this.myAddressDetails.postcode,

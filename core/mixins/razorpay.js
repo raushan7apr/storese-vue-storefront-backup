@@ -28,7 +28,8 @@ export default {
   computed: {
     getGrandTotal () {
       let cartTotals = store.getters['cart/getTotals']
-      return cartTotals.find(seg => seg.code === 'grand_total').value
+      let shippingMethod = store.getters['checkout/getShippingMethods']
+      return cartTotals[0].value + shippingMethod[0].amount
     },
     getpersonalDetails () {
       return store.state.checkout.personalDetails

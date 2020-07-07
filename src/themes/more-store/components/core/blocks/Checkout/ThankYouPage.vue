@@ -25,6 +25,7 @@
           </p>
         </div>
       </div>
+      {{ myOrder }}
       <div class="row center-md">
         <div class="col-md-12 start-md mobile-bg-f7f7f7">
           <p class="sub-title">
@@ -51,10 +52,9 @@
             Purchased Items
           </p>
         </div>
-        
         <div class="col-md-12 start-md">
-          <product v-for="product in myProducts" :key="product.server_item_id || product.id" :product="product" class="hide-mobile" />
-          <product-mobile v-for="product in myProducts" :key="product.server_item_id || product.id" :product="product" class="hide-desktop" />
+          <product v-for="product in myOrderProducts" :key="product.server_item_id || product.id" :product="product" class="hide-mobile" />
+          <product-mobile v-for="product in myOrderProducts" :key="product.server_item_id || product.id" :product="product" class="hide-desktop" />
         </div>
 
         <div class="col-md-12 start-md mobile-bg-f7f7f7">
@@ -63,16 +63,18 @@
           </p>
         </div>
 
-        <div v-if="myProducts && myProducts.length" class="col-md-12 start-md">
+        <div v-if="myOrderProducts && myOrderProducts.length" class="col-md-12 start-md cart-details-container">
           <div class="row cart-content">
-            <div v-if="myProducts.length == 1" class="col-md-8 col-xs-6 start-md content">
-              Cart Amount | {{ myProducts.length }} Item
+            <div v-if="myOrderProducts.length == 1" class="col-md-8 col-xs-8 start-md content">
+              Cart Amount | {{ amountSaved[2] }} Item
+              <span v-if="amountSaved[0]" class="saved-amount"> <span class="pipe-char">|</span> Saved &#x20b9;{{ amountSaved[0] }}</span>
             </div>
-            <div v-else class="col-md-8 col-xs-6 start-md content">
-              Cart Amount | {{ myProducts.length }} Items
+            <div v-else class="col-md-8 col-xs-8 start-md content">
+              Cart Amount | {{ amountSaved[2] }} Items
+              <span v-if="amountSaved[0]" class="saved-amount"> <span class="pipe-char">|</span> Saved &#x20b9;{{ amountSaved[0] }}</span>
             </div>
-            <div class="pl20 col-md-3 col-xs-6 end-xs center-md content">
-              {{ myTotals[0].value | price(storeView) }}
+            <div class="pl20 col-md-3 col-xs-4 end-xs center-md content">
+              {{ amountSaved[1] | price(storeView) }}
             </div>
           </div>
 
@@ -80,8 +82,8 @@
             <div class="col-md-8 col-xs-6 start-md content">
               Shipping Charge
             </div>
-            <div v-if="myTotals[3].value && myTotals[3].value!=0" class="pl20 col-md-3 col-xs-6 end-xs center-md content">
-              {{ myTotals[3].value | price(storeView) }}
+            <div v-if="shippingMethods[0].amount && shippingMethods[0].amount!==0" class="pl20 col-md-3 col-xs-6 end-xs center-md content">
+              {{ shippingMethods[0].amount | price(storeView) }}
             </div>
             <div v-else class="pl20 col-md-3 col-xs-6 end-xs center-md content">
               Free
@@ -92,7 +94,7 @@
               Grand total
             </div>
             <div class="pl20 col-md-3 col-xs-6 end-xs center-md content weight-700 font-color-E86026">
-              {{ myTotals[0].value + myTotals[3].value | price(storeView) }}
+              {{ amountSaved[1] + shippingMethods[0].amount | price(storeView) }}
             </div>
           </div>
         </div>
@@ -202,15 +204,18 @@ export default {
   },
   data () {
     return {
-      feedback: '',
-      myProducts: [],
-      myTotals: []
+      feedback: ''
     }
   },
   computed: {
     ...mapGetters({
-      isThankYouPage: 'checkout/isThankYouPage'
+      isThankYouPage: 'checkout/isThankYouPage',
+      totalQuantity: 'cart/getItemsTotalQuantity',
+      totals: 'cart/getTotals',
     }),
+    storeView () {
+      return currentStoreView()
+    },
     lastOrderConfirmation () {
       return this.$store.state.order.last_order_confirmation ? this.$store.state.order.last_order_confirmation.confirmation : {}
     },
@@ -227,6 +232,21 @@ export default {
     },
     mailerElements () {
       return config.mailer.contactAddress
+    },
+    amountSaved () {
+      let amountSaved = 0;
+      let total = 0;
+      let itemQuantity = 0;
+      for(let product of this.myOrderProducts) {
+        amountSaved = amountSaved + (product.original_price - product.price)*product.qty
+        total = total + product.price*product.qty
+        itemQuantity = itemQuantity + product.qty
+      }
+      const cartInfo = [amountSaved, total, itemQuantity]
+      return cartInfo
+    },
+    myOrderProducts () {
+      return this.$store.state.order.last_order_confirmation.order.products;
     }
   },
   methods: {
@@ -276,10 +296,7 @@ export default {
   },
   watch: {
     isThankYouPage: function () {
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-      this.myProducts = this.productsInCart
-      this.myTotals = this.totals
-      this.$store.dispatch('cart/clear', { sync: false }, { root: true })
+      this.$store.dispatch('cart/clear', { sync: false }, { root: true });
     }
   },
   destroyed () {
@@ -327,7 +344,9 @@ export default {
       opacity: 1;
     }
   }
-
+  .cart-details-container {
+    margin-bottom: 50px;
+  }
   .delivery-details {
     @media (max-width: 767px) {
       font-size: 14px;
@@ -357,6 +376,7 @@ export default {
       background-color: #EC6D34;
       font-size: 14px;
     }
+    font-family: 'Nunito', sans-serif !important;
   }
 
   .sub-title {
@@ -384,6 +404,10 @@ export default {
 
   .content {
     margin: 12px 0;
+  }
+
+  .saved-amount {
+    color: #35BC6C;
   }
 
   .order-confirmation {

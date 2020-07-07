@@ -69,6 +69,7 @@ export default {
             &:focus {
                 outline: none;
             }
+            font-family: 'Nunito', sans-serif !important;
         }
         &__icon {
             position: absolute;

@@ -85,6 +85,7 @@ declare namespace DataResolver {
 
   interface CategoryService {
     getCategories: (searchRequest?: CategorySearchOptions) => Promise<Category[]>
+    fetchBanners: () => Promise<Task>,
   }
 
   interface UserService {
@@ -108,6 +109,7 @@ declare namespace DataResolver {
     getPaymentMethods: () => Promise<Task>,
     getShippingMethods: (address: any /*: ShippingMethodsData */) => Promise<Task>,
     getShippingInfo: (address: any /*: ShippingMethodsData */) => Promise<Task>,
+    cartCreation: (products: any, cart_id: any /*: ShippingMethodsData */) => Promise<Task>,
     getItems: () => Promise<Task>,
     applyCoupon: (couponCode: string) => Promise<Task>,
     removeCoupon: () => Promise<Task>

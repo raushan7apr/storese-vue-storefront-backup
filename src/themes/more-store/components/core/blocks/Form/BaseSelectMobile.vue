@@ -1,6 +1,7 @@
 <template>
-  <div class="select-wrapper relative">
+  <div class="select-wrapper relative pb10">
     <select
+      class="inputform"
       :name="name"
       :class="{
         'cl-tertiary' : options.length === 0,
@@ -12,7 +13,7 @@
       @change="$emit('change', $event.target.value)"
       @input="$emit('input', $event.target.value)"
     >
-      <option disabled selected value v-if="!selected" />
+      <option disabled selected v-if="!selected">{{name}}</option>
       <option
         v-for="(option, key) in options"
         :key="key"
@@ -22,18 +23,19 @@
         {{ option.label }}
       </option>
     </select>
-    <label>{{ placeholder }}</label>
+    <!-- <label>{{ placeholder }}</label> -->
 
-    <ValidationMessages v-if="validations" :validations="validations" />
+    <ValidationMessagesMobile v-if="validations" :validations="validations" />
   </div>
 </template>
 
 <script>
-import ValidationMessages from './ValidationMessages.vue'
+import ValidationMessagesMobile from './ValidationMessagesMobile.vue'
+
 export default {
-  name: 'BaseSelect',
+  name: 'BaseSelectMobile',
   components: {
-    ValidationMessages
+    ValidationMessagesMobile
   },
   props: {
     id: {
@@ -82,6 +84,14 @@ export default {
   $color-black: color(black);
   $color-puerto-rico: color(puerto-rico);
   $color-hover: color(tertiary, $colors-background);
+.inputform {
+    border-radius: 3px;
+    border-color: #a7a5a5;
+    padding-left: 15px;
+    border-width: 1px;
+    border-style: solid;
+    color: #000;
+  }
 .select-wrapper {
   &::after {
     content: '';
@@ -97,27 +107,28 @@ export default {
     pointer-events: none;
   }
   select {
-    @extend .h4;
-    border: none;
-    border-bottom: 1px solid $color-tertiary;
+    @extend .h6;
+    // border: none;
+    // border-bottom: 1px solid $color-tertiary;
     width: 100%;
     -moz-appearance: none;
     -webkit-appearance: none;
-    border-radius: 0;
+    // border-radius: 0;
     background-color: transparent;
+
     &:hover,
     &:focus {
       outline: none;
       border-color: #f04d24cf;
       // border-color: $color-puerto-rico;
     }
+
     &:disabled,
     &:disabled + label {
       opacity: 0.5;
       cursor: not-allowed;
       pointer-events: none;
     }
-    font-family: 'Nunito', sans-serif !important;
   }
   label {
     color: #999;

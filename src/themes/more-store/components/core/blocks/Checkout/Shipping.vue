@@ -12,14 +12,14 @@
       <div class="col-xs-11 col-sm-9 col-md-11 mt20">
         <div class="row mb15">
           <div class="col-xs-9 col-md-7" :class="{ 'cl-bg-tertiary' : !isFilled && !isActive }">
-            <h3 class="m0 mb5 helvetica">
+            <h3 class="m0 mb5 nunito">
               {{ $t('Shipping') }}
             </h3>
           </div>
           <div class="col-xs-3 col-md-5 pr30">
             <div class="lh30 flex end-lg" v-if="isFilled && !isActive">
               <a href="#" class="cl-tertiary flex" @click.prevent="edit">
-                <span class="pr5 helvetica">
+                <span class="pr5 nunito">
                   {{ $t('Edit') }}
                 </span>
                 <i class="material-icons cl-tertiary">edit</i>
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="row pl20 helvetica" v-if="isActive">
+    <div class="row pl20" v-if="isActive">
       <div class="hidden-xs col-sm-2 col-md-1" />
       <div class="col-xs-11 col-sm-9 col-md-10">
         <div class="row">
@@ -239,10 +239,10 @@
               :disabled="$v.shipping.$invalid || shippingMethods.length <= 0"
             > -->
             <button-full
-              class="submit-details no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white helvetica fs-medium mt20 router-link-active no-underline pointer align-center border-box"
+              class="submit-details no-outline button-full block w-100 px10 py20 bg-cl-mine-shaft :bg-cl-th-secondary ripple weight-400 h4 cl-white fs-medium mt20 router-link-active no-underline pointer align-center border-box nunito"
               data-testid="shippingSubmit"
               :disabled="$v.shipping.$invalid || shippingMethods.length <= 0 || !zipCodeOptions"
-              @click.native="sendDataToCheckout"
+              @click.native="sendShippingDataToCheckout"
             >
               {{ $t('Continue to payment') }}
             </button-full>
@@ -288,7 +288,6 @@
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import { unicodeAlpha, unicodeAlphaNum } from '@vue-storefront/core/helpers/validators'
 import { currentStoreView } from '@vue-storefront/core/lib/multistore'
-
 import BaseCheckbox from 'theme/components/core/blocks/Form/BaseCheckbox'
 import BaseInput from 'theme/components/core/blocks/Form/BaseInput'
 import BaseSelect from 'theme/components/core/blocks/Form/BaseSelect'
@@ -299,7 +298,6 @@ import totalsActions from '@vue-storefront/core/modules/cart/store/actions/total
 import { createOrderData, createShippingInfoData } from '@vue-storefront/core/modules/cart/helpers';
 import { Logger } from '@vue-storefront/core/lib/logger';
 import { Shipping } from '@vue-storefront/core/modules/checkout/components/Shipping';
-
 export default {
   components: {
     ButtonFull,
@@ -386,9 +384,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
 .helvetica {
   font-family: Helvetica;
+}
+.nunito {
+  font-family: 'Nunito', sans-serif !important;
 }
 .checkout-step-header-inactive {
    box-shadow: 2px 2px 5px 1px #e1e1e1;
@@ -432,5 +432,4 @@ export default {
   margin-top:10px;
   border-radius: 0 0 3px 3px;
 }
-
 </style>
