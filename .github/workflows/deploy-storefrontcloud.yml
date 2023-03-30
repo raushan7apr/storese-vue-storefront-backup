@@ -24,7 +24,7 @@ jobs:
           echo '{"server":{"useOutputCacheTagging":true,"useOutputCache":true,"dynamicConfigReload":true},"api":{"url":"https://demo.storefrontcloud.io"},"elasticsearch":{"index":"vue_storefront_magento_1"},"entities":{"attribute":{"loadByAttributeMetadata":true}},"urlModule":{"enableMapFallbackUrl":true}}' > config/local-cloud-next.json
           echo '{"server":{"useOutputCacheTagging":true,"useOutputCache":true,"dynamicConfigReload":true},"api":{"url":"https://test.storefrontcloud.io"},"elasticsearch":{"index":"vue_storefront_magento_1"},"entities":{"attribute":{"loadByAttributeMetadata":true}},"urlModule":{"enableMapFallbackUrl":true}}' > config/local-cloud-test.json
       - name: Build and publish docker image
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: demo-storefrontcloud-io/vue-storefront:${{ github.sha }}
           registry: registry.storefrontcloud.io
